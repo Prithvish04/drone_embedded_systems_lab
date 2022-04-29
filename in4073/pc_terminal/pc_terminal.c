@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
-#include "commmunication.h"
+#include "js_data_read.h"
 
 
 /*------------------------------------------------------------
@@ -174,7 +174,6 @@ int main(int argc, char **argv)
 
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
-
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
 	if (argc == 1) {
@@ -187,7 +186,8 @@ int main(int argc, char **argv)
 	}
 
 	term_puts("Type ^C to exit\n");
-
+	js_data_type js_values_read();
+	print_raw_js_data();
 	/* send & receive
 	 */
 	for (;;) {

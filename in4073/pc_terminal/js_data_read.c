@@ -1,13 +1,20 @@
-#include "joystick.h"
+
 #include <stdio.h>
-
-
 #include <fcntl.h>
-
+#include <stdlib.h>
+#include <unistd.h>
+#include "joystick.h"
 #include "js_data_read.h"
 
 
-js_data_type js_get_current_values() {
+
+/* current axis and button readings
+ */
+int	axis[6];
+int	button[12];
+
+
+js_data_type js_values_read() {
 
 	int fd;
 	struct js_event js;
@@ -38,9 +45,24 @@ js_data_type js_get_current_values() {
     js_data.pitch = axis[1]; 		// pitch
     js_data.yaw = axis[2];			// yaw
     js_data.lift = axis[3];			// Slider/throttle
-    js_data.abort = button[0];		// Fire button
+    js_data.panic = button[0];		// Fire button
 
 	close(fd);
 
 	return js_data;
 }
+
+void print_raw_js_data() {
+    unsigned int i;
+    printf( "Raw joystick data:");
+    for (i = 0; i < 6; i++) {
+        printf("%6d ",axis[i]);
+    }
+    printf(" |  ");
+    for (i = 0; i < 12; i++) {
+        printf("%d ",button[i]);
+    }
+    printf("\n");
+}
+
+
