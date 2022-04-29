@@ -95,11 +95,11 @@ int main (int argc, char **argv)
 
 		printf("\n");
 		printf("%5d   ",t);
-		msg.start_bit=170;
 		msg.roll=axis[0];
 		msg.pitch=axis[1];
 		msg.yaw=axis[2];
 		msg.lift=axis[3];
+		msg.abort = button[0];
 		for (i = 0; i < 6; i++) {
 			printf("%6d ",axis[i]);
 			
@@ -113,7 +113,6 @@ int main (int argc, char **argv)
 		if (button[0])
 			break;
 	}
-		msg.end_bit="\n";
 	printf("\n<exit>\n");
 
 }
