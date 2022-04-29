@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+#include "commmunication.h"
+
 
 /*------------------------------------------------------------
  * console I/O

@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include "joystick.h"
-#include "communication.h"
+#include "js_read_data.h"
 
 /* current axis and button readings
  */
@@ -45,7 +45,7 @@ void    mon_delay_ms(unsigned int ms)
 }
 
 
-#define JS_DEV	"/dev/input/js0"
+
 
 int main (int argc, char **argv)
 {
