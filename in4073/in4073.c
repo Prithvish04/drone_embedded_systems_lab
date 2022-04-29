@@ -118,7 +118,7 @@ int main(void)
 			adc_request_sample();
 			read_baro();
 			
-			//m_log.start = 
+			m_log.start = 170; 
 			m_log.timestamp = get_time_us();
 			m_log.mot0 = ae[0];
 			m_log.mot1 = ae[1];
@@ -141,7 +141,7 @@ int main(void)
 			printf("%6d %6d %6d | ", sp, sq, sr);
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
 			
-			print_message(m_log);
+			print_message_hex(m_log);
 
 			clear_timer_flag();
 		}

@@ -2,25 +2,9 @@
 #define MESSAGE_H_
 
 
-#include "in4073.h"
-#include <stdbool.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include "nrf_gpio.h"
-#include "nrf_delay.h"
-#include "app_util_platform.h"
-#include "adc.h"
-#include "barometer.h"
-#include "gpio.h"
-#include "spi_flash.h"
-#include "timers.h"
-#include "twi.h"
-#include "hal/uart.h"
-#include "control.h"
-#include "mpu6050/mpu6050.h"
-#include "utils/quad_ble.h"
 #include <stdlib.h>
-
+#include <stdio.h>
+#include <inttypes.h>
 
 struct message
 {
@@ -49,6 +33,7 @@ struct message
 
 void toBinary(unsigned n, int len);
 void print_message(struct message m);
+void print_message_hex(struct message m);
 
 
 #endif /* MESSAGE_H_ */

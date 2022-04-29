@@ -1,22 +1,8 @@
-#include "in4073.h"
-#include <stdbool.h>
+
+#include "message.h"
 #include <inttypes.h>
 #include <stdio.h>
-#include "nrf_gpio.h"
-#include "nrf_delay.h"
-#include "app_util_platform.h"
-#include "adc.h"
-#include "barometer.h"
-#include "gpio.h"
-#include "spi_flash.h"
-#include "timers.h"
-#include "twi.h"
-#include "hal/uart.h"
-#include "control.h"
-#include "mpu6050/mpu6050.h"
-#include "utils/quad_ble.h"
 #include <stdlib.h>
-#include "message.h"
 
 
 void print_message(struct message m)
@@ -46,4 +32,25 @@ void toBinary(unsigned n, int len)
 	{
 		(n & i) ? printf("1"):printf("0"); 
 	}
+}
+
+void print_message_hex(struct message m)
+{
+	printf("%02X", m.start);
+	printf("%08lX", m.timestamp);
+	printf("%04X", m.mot0);
+	printf("%04X", m.mot1);
+	printf("%04X", m.mot2);
+	printf("%04X", m.mot3);
+	printf("%04X", m.phi);
+	printf("%04X", m.theta);
+	printf("%04X", m.psi);
+	printf("%04X", m.gyro0);
+	printf("%04X", m.gyro1);
+	printf("%04X", m.gyro2);
+	printf("%04X", m.battery);
+	printf("%08lX", m.pressure);
+	printf("%02X", m.stop);
+	//printf("%08" PRIx8, m.start);
+	printf("\n");
 }
