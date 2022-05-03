@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+#include <math.h>
+#include <string.h>
 
 /*------------------------------------------------------------
  * console I/O
@@ -161,7 +163,30 @@ int serial_port_putchar(char c)
 	return result;
 }
 
+long long to_dec(char hex[], int length)
+{
+	long long decimal = 0, base = 1;
+	for(int i = length--; i >= 0; i--)
+	{
+		if(hex[i] >= '0' && hex[i] <= '9')
+		{
+		    decimal += (hex[i] - 48) * base;
+		    base *= 16;
+		}
+		else if(hex[i] >= 'A' && hex[i] <= 'F')
+		{
+		    decimal += (hex[i] - 55) * base;
+		    base *= 16;
+		}
+		else if(hex[i] >= 'a' && hex[i] <= 'f')
+		{
+		    decimal += (hex[i] - 87) * base;
+		    base *= 16;
+		}
+	}
+	return decimal;
 
+}
 /*----------------------------------------------------------------
  * main -- execute terminal
  *----------------------------------------------------------------
@@ -188,12 +213,81 @@ int main(int argc, char **argv)
 
 	/* send & receive
 	 */
+	 
+	int count = 0;
+	int message[60];
+	for (int i = 0; i<60;i++)
+	{
+		message[i] =0;
+	}
+	//int timestamp_start_find[8];
+	//long long decimal = 0, base = 1;  
+	char start_find[2] = {0, 0};
 	for (;;) {
+		start_find[0] = start_find[1];
+		start_find[1] = c;
+
 		if ((c = term_getchar_nb()) != -1) {
 			serial_port_putchar(c);
 		}
 		if ((c = serial_port_getchar()) != -1) {
-			term_putchar(c);
+			//term_putchar(start_find[0]);
+			//term_putchar(c);
+			//term_putchar('a');
+			
+			if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65 && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
+			{
+				
+				
+				if (count == 79 || count == 75)
+				{
+					//printf("%d ",count);
+					char buffer[5]; 
+					for (int i =8; i<12; i++)
+					{
+						buffer[i-8] = message[i];
+					} 
+					buffer[4] = '\n';
+					printf("%lld |",to_dec(buffer,3));
+					
+					for (int i =12; i<16; i++)
+					{
+						buffer[i-12] = message[i];
+					} 
+					buffer[4] = '\n';
+					printf("%lld |",to_dec(buffer,3));
+
+					for (int i =16; i<20; i++)
+					{
+						buffer[i-16] = message[i];
+					} 
+					buffer[4] = '\n';
+					printf("%lld |",to_dec(buffer,3));
+					
+					for (int i =20; i<24; i++)
+					{
+						buffer[i-20] = message[i];
+					} 
+					buffer[4] = '\n';
+					printf("%lld |\n",to_dec(buffer,3));
+				}
+
+				count = 0;
+				for (int i = 0; i<60;i++)
+				{
+					message[i] =0;
+				}
+				
+			}
+			else
+			{
+				message[count] = c; 
+				count+=1;
+			}
+			//printf(".");
+			//printf("\n");
+
+			
 		}
 	}
 
