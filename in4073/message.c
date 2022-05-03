@@ -23,7 +23,7 @@ void print_message(struct message m)
 	toBinary(m.pressure, 32);
 	toBinary(m.stop, 8);
 	
-	printf("\n");
+	//printf("\n");
 }
 
 void toBinary(unsigned n, int len)
@@ -36,21 +36,21 @@ void toBinary(unsigned n, int len)
 
 void print_message_hex(struct message m)
 {
-	printf("%02X", m.start);
-	printf("%08lX", m.timestamp);
-	printf("%04X", m.mot0);
-	printf("%04X", m.mot1);
-	printf("%04X", m.mot2);
-	printf("%04X", m.mot3);
-	printf("%04X", m.phi);
-	printf("%04X", m.theta);
-	printf("%04X", m.psi);
-	printf("%04X", m.gyro0);
-	printf("%04X", m.gyro1);
-	printf("%04X", m.gyro2);
-	printf("%04X", m.battery);
-	printf("%08lX", m.pressure);
-	printf("%02X", m.stop);
+	printf("%02X", m.start); //2
+	printf("%08lX", m.timestamp); //8
+	printf("%04X", m.mot0); // 4
+	printf("%04X", m.mot1); //4
+	printf("%04X", m.mot2); //4
+	printf("%04X", m.mot3); // 4
+	printf("%04X", m.phi); //4
+	printf("%04X", m.theta); //4
+	printf("%04X", m.psi); //4 
+	printf("%04X", m.gyro0); //4 
+	printf("%04X", m.gyro1); //4
+	printf("%04X", m.gyro2); //4
+	printf("%04X", m.battery); //4
+	printf("%08lX", m.pressure); //8
+	printf("%02X", m.stop); //2
 	//printf("%08" PRIx8, m.start);
-	printf("\n");
+	//printf("\n");
 }
