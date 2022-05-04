@@ -170,9 +170,11 @@ int serial_port_putchar(char c)
  */
 int main(int argc, char **argv)
 {
-	char c;
+	// char c;
+	js_data_type js_data;
 
 	term_initio();
+
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
@@ -186,17 +188,22 @@ int main(int argc, char **argv)
 	}
 
 	term_puts("Type ^C to exit\n");
-	js_data_type js_values_read();
-	print_raw_js_data();
+
 	/* send & receive
 	 */
 	for (;;) {
-		if ((c = term_getchar_nb()) != -1) {
-			serial_port_putchar(c);
-		}
-		if ((c = serial_port_getchar()) != -1) {
-			term_putchar(c);
-		}
+		
+		js_data = js_values_read();
+		// printf(js_data.roll);
+		print_raw_js_data();
+		
+		// if ((c = term_getchar_nb()) != -1) {
+		// 	serial_port_putchar(c);
+		// }
+		// if ((c = serial_port_getchar()) != -1) {
+		// 	term_putchar(c);
+		// }
+
 	}
 
 	term_exitio();
