@@ -65,4 +65,8 @@ void print_raw_js_data() {
     printf("\n");
 }
 
+int return_panic_state(){
+	return button[0];
+}
+
 
