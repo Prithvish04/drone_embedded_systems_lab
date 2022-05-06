@@ -12,12 +12,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
-<<<<<<< HEAD
 #include "send_msg.h"
-=======
-#include "js_data_read.h"
-
->>>>>>> joystick
+#include "js_data_read.c"
 
 /*------------------------------------------------------------
  * console I/O
@@ -174,17 +170,13 @@ int serial_port_putchar(char c)
  */
 int main(int argc, char **argv)
 {
-<<<<<<< HEAD
 	char c;
 	struct message mlog;
-=======
-	// char c;
-	js_data_type js_data;
->>>>>>> joystick
+	js_data_type jsdata;
 
 	term_initio();
-
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
+
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
 	if (argc == 1) {
@@ -201,40 +193,24 @@ int main(int argc, char **argv)
 	/* send & receive
 	 */
 	for (;;) {
-<<<<<<< HEAD
+		jsdata = js_values_read();
+		mlog.start = "0xAA";
+		mlog.roll = jsdata.roll; 
+		mlog.pitch =  jsdata.pitch;
+		mlog.yaw = jsdata.yaw;
+		mlog.lift = jsdata.lift;
+		mlog.mode = jsdata.panic;
+		mlog.stop = "\n";
+
+		print_message_hex(mlog);
+		
 		if ((c = term_getchar_nb()) != -1) {
 			serial_port_putchar(c);
 		}
 		if ((c = serial_port_getchar()) != -1) {
 			term_putchar(c);
 		}
-
-			mlog.start = 170; 
-			mlog_
-			mlog.stop = '\n';
 			
-
-			//printf("%10ld | \n", get_time_us());
-			/*sprintf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
-			printf("%6d %6d %6d | ", phi, theta, psi);
-			printf("%6d %6d %6d | ", sp, sq, sr);
-			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
-			
-			print_message_hex(m_log);
-=======
-		
-		js_data = js_values_read();
-		// printf(js_data.roll);
-		print_raw_js_data();
-		
-		// if ((c = term_getchar_nb()) != -1) {
-		// 	serial_port_putchar(c);
-		// }
-		// if ((c = serial_port_getchar()) != -1) {
-		// 	term_putchar(c);
-		// }
-
->>>>>>> joystick
 	}
 
 	term_exitio();

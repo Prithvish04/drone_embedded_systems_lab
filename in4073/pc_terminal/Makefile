@@ -4,11 +4,7 @@ EXEC = ./pc-terminal
 
 
 default:
-<<<<<<< HEAD
-	$(CC) $(CFLAGS) send_msg.c pc_terminal.c -o $(EXEC)
-=======
-	$(CC) $(CFLAGS)  pc_terminal.c js_data_read.c -o $(EXEC)
->>>>>>> joystick
+	$(CC) $(CFLAGS) send_msg.c js_data_read.c pc_terminal.c -o $(EXEC)
 
 clean:
 	rm $(EXEC)
