@@ -29,6 +29,7 @@
 #include "control.h"
 #include "mpu6050/mpu6050.h"
 #include "utils/quad_ble.h"
+#include "recieve_msg.h"
 
 bool demo_done;
 
