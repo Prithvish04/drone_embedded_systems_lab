@@ -13,7 +13,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include "send_msg.h"
-#include "js_data_read.c"
+#include "js_data_read.h"
 
 /*------------------------------------------------------------
  * console I/O
@@ -194,13 +194,13 @@ int main(int argc, char **argv)
 	 */
 	for (;;) {
 		jsdata = js_values_read();
-		mlog.start = "0xAA";
+		mlog.start = (uint8_t)"0xAA";
 		mlog.roll = jsdata.roll; 
 		mlog.pitch =  jsdata.pitch;
 		mlog.yaw = jsdata.yaw;
 		mlog.lift = jsdata.lift;
 		mlog.mode = jsdata.panic;
-		mlog.stop = "\n";
+		mlog.stop = (uint8_t)"\n";
 
 		print_message_hex(mlog);
 		

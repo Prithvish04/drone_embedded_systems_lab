@@ -263,6 +263,12 @@ Discarded input sections
  .text          0x0000000000000000        0x0 _build/in4073.o
  .data          0x0000000000000000        0x0 _build/in4073.o
  .bss           0x0000000000000000        0x0 _build/in4073.o
+ .text          0x0000000000000000        0x0 _build/recieve_msg.o
+ .data          0x0000000000000000        0x0 _build/recieve_msg.o
+ .bss           0x0000000000000000        0x0 _build/recieve_msg.o
+ .comment       0x0000000000000000       0x7a _build/recieve_msg.o
+ .ARM.attributes
+                0x0000000000000000       0x31 _build/recieve_msg.o
  .text          0x0000000000000000        0x0 _build/control.o
  .data          0x0000000000000000        0x0 _build/control.o
  .bss           0x0000000000000000        0x0 _build/control.o
@@ -940,6 +946,7 @@ LOAD /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-
 LOAD _build/system_nrf51.o
 LOAD _build/nrf_delay.o
 LOAD _build/in4073.o
+LOAD _build/recieve_msg.o
 LOAD _build/control.o
 LOAD _build/gpio.o
 LOAD _build/timers.o
