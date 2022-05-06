@@ -12,7 +12,12 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+<<<<<<< HEAD
 #include "send_msg.h"
+=======
+#include "js_data_read.h"
+
+>>>>>>> joystick
 
 /*------------------------------------------------------------
  * console I/O
@@ -169,12 +174,17 @@ int serial_port_putchar(char c)
  */
 int main(int argc, char **argv)
 {
+<<<<<<< HEAD
 	char c;
 	struct message mlog;
+=======
+	// char c;
+	js_data_type js_data;
+>>>>>>> joystick
 
 	term_initio();
-	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 
+	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
 	if (argc == 1) {
@@ -191,6 +201,7 @@ int main(int argc, char **argv)
 	/* send & receive
 	 */
 	for (;;) {
+<<<<<<< HEAD
 		if ((c = term_getchar_nb()) != -1) {
 			serial_port_putchar(c);
 		}
@@ -210,6 +221,20 @@ int main(int argc, char **argv)
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
 			
 			print_message_hex(m_log);
+=======
+		
+		js_data = js_values_read();
+		// printf(js_data.roll);
+		print_raw_js_data();
+		
+		// if ((c = term_getchar_nb()) != -1) {
+		// 	serial_port_putchar(c);
+		// }
+		// if ((c = serial_port_getchar()) != -1) {
+		// 	term_putchar(c);
+		// }
+
+>>>>>>> joystick
 	}
 
 	term_exitio();
