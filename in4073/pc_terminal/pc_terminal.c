@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 		mlog.mode = jsdata.panic;
 		mlog.stop = (uint8_t)"\n";
 
-		print_message_hex(mlog);
+		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
 			serial_port_putchar(c);
