@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+#include "send_msg.h"
 
 /*------------------------------------------------------------
  * console I/O
@@ -169,6 +170,7 @@ int serial_port_putchar(char c)
 int main(int argc, char **argv)
 {
 	char c;
+	struct message mlog;
 
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
@@ -195,6 +197,19 @@ int main(int argc, char **argv)
 		if ((c = serial_port_getchar()) != -1) {
 			term_putchar(c);
 		}
+
+			mlog.start = 170; 
+			mlog_
+			mlog.stop = '\n';
+			
+
+			//printf("%10ld | \n", get_time_us());
+			/*sprintf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
+			printf("%6d %6d %6d | ", phi, theta, psi);
+			printf("%6d %6d %6d | ", sp, sq, sr);
+			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
+			
+			print_message_hex(m_log);
 	}
 
 	term_exitio();
