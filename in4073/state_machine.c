@@ -10,17 +10,6 @@
 #include "nrf_gpio.h"
 #include "gpio.h"
 
-#include "parser.h"
-#include "modes.h"
-#include "control.h" 
-#include "communication.h" 
-#include "timers.h"
-#include "adc.h"
-#include "profiler.h"
-#include "yaw_control.h"
-#include "pitch_control.h"
-#include "roll_control.h"
-#include "mpu6050.h"
 
 
 static const uint32_t us_1_2 = (500ULL*1000ULL);
