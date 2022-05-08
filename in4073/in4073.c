@@ -29,10 +29,18 @@
 #include "control.h"
 #include "mpu6050/mpu6050.h"
 #include "utils/quad_ble.h"
-#include "recieve_msg.h"
+#include "parse.h"
 
 bool demo_done;
 
+
+
+bool process_message(char c){
+	if(c == 0xAA){
+		
+	}
+	return false
+}
 
 /*------------------------------------------------------------------
  * process_key -- process command keys
@@ -101,14 +109,15 @@ int main(void)
 
 	while (!demo_done) {
 		if (rx_queue.count) {
-			process_key(dequeue(&rx_queue));
+			if(process_message(dequeue(&rx_queue));
+
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));
 		}
 
 		if (check_timer_flag()) {
-			if (counter++%20 == 0) {
+			if (counter++%5 == 0) {
 				nrf_gpio_pin_toggle(BLUE);
 			}
 
@@ -131,7 +140,7 @@ int main(void)
 	}	
 
 	printf("\n\t Goodbye \n\n");
-	nrf_delay_ms(100);
+	nrf_delay_ms(10);
 
 	NVIC_SystemReset();
 }

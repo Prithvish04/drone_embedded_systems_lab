@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS = -g   -lm
+CFLAGS = -g -Wextra -Wall -Werror  -lm
 EXEC = ./pc-terminal
 
 

@@ -164,6 +164,16 @@ int serial_port_putchar(char c)
 	return result;
 }
 
+int serial_port_buffer(char* buf)
+{
+	int result;
+	do {
+		result = (int) write(fd_serial_port, &buf, sizeof(buf));
+	} while (result ==0);
+	assert (result ==1);
+	return result;
+}
+
 
 /*----------------------------------------------------------------
  * main -- execute terminal
@@ -174,9 +184,10 @@ int main(int argc, char **argv)
 	char c;
 	struct message mlog;
 	js_data_type jsdata;
-	current_mode = "1";
+	char current_mode = 49;
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
+	char* buf;
 
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
@@ -195,58 +206,61 @@ int main(int argc, char **argv)
 	 */
 	for (;;) {
 		jsdata = js_values_read();
-		mlog.start = (uint8_t)"0xAA";
+		mlog.start = (uint8_t)0xAA;
 		mlog.roll = jsdata.roll; 
 		mlog.pitch =  jsdata.pitch;
 		mlog.yaw = jsdata.yaw;
 		mlog.lift = jsdata.lift;
 		mlog.mode = current_mode;
-		mlog.stop = (uint8_t)"\n";
-		printf(sizeof(mlog));
+		mlog.stop = (uint8_t)39;
+		
 
 		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
 			if(c == 49){
-				mlog.mode = "1";
+				mlog.mode = 49;
 				break;
 			}
 			else if (c == 50){
-				mlog.mode = "2";
+				mlog.mode = 50;
 				break;
 			}
 			else if (c == 51){
-				mlog.mode = "3";
+				mlog.mode = 51;
 				break;
 			}
 			else if (c == 52){
-				mlog.mode = "4";
+				mlog.mode = 52;
 				break;
 			}
 			else if (c == 53){
-				mlog.mode = "5";
+				mlog.mode = 53;
 				break;
 			}
 			else if (c == 54){
-				mlog.mode = "6";
+				mlog.mode = 54;
 				break;
 			}
 			else if (c == 55){
-				mlog.mode = "7";
+				mlog.mode = 55;
 				break;
 			}
 			else if (c == 56){
-				mlog.mode = "8";
+				mlog.mode = 56;
 				break;
 			}
 			else if (c == 27){
-				mlog.mode = "2";
+				mlog.mode = 27;
 				break;
 			}
 			else{
 				break;
 			}
-			serial_port_putchar(c);
+			buf= (char*)&mlog;
+			for (size_t i = 0; i < sizeof(struct message); i++) {
+					serial_port_buffer(buf);
+			}	
 		}
 		if ((c = serial_port_getchar()) != -1) {
 			term_putchar(c);
