@@ -9,7 +9,7 @@
 #include "recieve_msg.h"
     
        
-void print_message_block(int message[],int start_index, int length) 
+long long message_block(int message[],int start_index, int length) 
 {
     char buffer[length+1]; 
     for (int i =start_index; i<start_index+length; i++)
@@ -18,5 +18,7 @@ void print_message_block(int message[],int start_index, int length)
     } 
     buffer[length] = '\n';
 
-    printf("%lld |",to_dec(buffer,length-1));
+    return to_dec(buffer,length-1);
+
+    //printf("%lld |",to_dec(buffer,length-1));
 }
