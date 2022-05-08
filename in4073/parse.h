@@ -19,9 +19,10 @@ typedef struct
 } drone_message;
 
 
-long long to_dec(char hex[], int length); 
 
+long long to_dec(char hex[], int length); 
 void print_message_block(int message[],int start_index, int length);
+void process_key(uint8_t);
 
 #endif /* PARSE_H_ */
 

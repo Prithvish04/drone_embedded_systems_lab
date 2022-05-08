@@ -31,60 +31,14 @@
 #include "utils/quad_ble.h"
 #include "parse.h"
 
-bool demo_done;
-
 
 
 bool process_message(char c){
-	if(c == 0xAA){
-		
-	}
-	return false
+
+	return false; 
 }
 
-/*------------------------------------------------------------------
- * process_key -- process command keys
- *------------------------------------------------------------------
- */
-void process_key(uint8_t c)
-{
-	switch (c) {
-	case 'q':
-		ae[0] += 10;
-		break;
-	case 'a':
-		ae[0] -= 10;
-		if (ae[0] < 0) ae[0] = 0;
-		break;
-	case 'w':
-		ae[1] += 10;
-		break;
-	case 's':
-		ae[1] -= 10;
-		if (ae[1] < 0) ae[1] = 0;
-		break;
-	case 'e':
-		ae[2] += 10;
-		break;
-	case 'd':
-		ae[2] -= 10;
-		if (ae[2] < 0) ae[2] = 0;
-		break;
-	case 'r':
-		ae[3] += 10;
-		break;
-	case 'f':
-		ae[3] -= 10;
-		if (ae[3] < 0) ae[3] = 0;
-		break;
-	case 27:
-		demo_done = true;
-		//panic mode 
-		break;
-	default:
-		nrf_gpio_pin_toggle(RED);
-	}
-}
+
 
 
 /*------------------------------------------------------------------
@@ -109,8 +63,9 @@ int main(void)
 
 	while (!demo_done) {
 		if (rx_queue.count) {
-			if(process_message(dequeue(&rx_queue));
-
+			if(process_message(dequeue(&rx_queue))){
+				printf("abc");
+			}
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));

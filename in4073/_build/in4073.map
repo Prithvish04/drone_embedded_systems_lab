@@ -45,7 +45,7 @@ Archive member included to satisfy reference by file (symbol)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_aeabi_ldivmod.o)
                               _build/inv_mpu.o (__aeabi_ldivmod)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
-                              _build/recieve_msg.o (__aeabi_lmul)
+                              _build/parse.o (__aeabi_lmul)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
                               _build/inv_mpu_dmp_motion_driver.o (__aeabi_f2uiz)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(bpabi.o)
@@ -222,7 +222,7 @@ __lock___dd_hash_mutex
                     0x1               /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
 __lock___tz_mutex   0x1               /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
 sr                  0x2               _build/mpu6050.o
-demo_done           0x1               _build/in4073.o
+demo_done           0x1               _build/parse.o
 __lock___sfp_recursive_mutex
                     0x1               /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
 
@@ -263,17 +263,16 @@ Discarded input sections
  .text          0x0000000000000000        0x0 _build/in4073.o
  .data          0x0000000000000000        0x0 _build/in4073.o
  .bss           0x0000000000000000        0x0 _build/in4073.o
- .text          0x0000000000000000        0x0 _build/recieve_msg.o
- .data          0x0000000000000000        0x0 _build/recieve_msg.o
- .bss           0x0000000000000000        0x0 _build/recieve_msg.o
- .text.to_dec   0x0000000000000000       0x74 _build/recieve_msg.o
+ .text.process_message
+                0x0000000000000000        0x4 _build/in4073.o
+ .text          0x0000000000000000        0x0 _build/parse.o
+ .data          0x0000000000000000        0x0 _build/parse.o
+ .bss           0x0000000000000000        0x0 _build/parse.o
+ .text.to_dec   0x0000000000000000       0x74 _build/parse.o
  .rodata.print_message_block.str1.4
-                0x0000000000000000        0x7 _build/recieve_msg.o
+                0x0000000000000000        0x7 _build/parse.o
  .text.print_message_block
-                0x0000000000000000       0xb0 _build/recieve_msg.o
- .comment       0x0000000000000000       0x7a _build/recieve_msg.o
- .ARM.attributes
-                0x0000000000000000       0x2c _build/recieve_msg.o
+                0x0000000000000000       0xb0 _build/parse.o
  .text          0x0000000000000000        0x0 _build/control.o
  .data          0x0000000000000000        0x0 _build/control.o
  .bss           0x0000000000000000        0x0 _build/control.o
@@ -951,7 +950,7 @@ LOAD /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-
 LOAD _build/system_nrf51.o
 LOAD _build/nrf_delay.o
 LOAD _build/in4073.o
-LOAD _build/recieve_msg.o
+LOAD _build/parse.o
 LOAD _build/control.o
 LOAD _build/gpio.o
 LOAD _build/timers.o
@@ -1024,609 +1023,609 @@ END GROUP
  .text.nrf_delay_ms
                 0x0000000000018298       0x3c _build/nrf_delay.o
                 0x0000000000018298                nrf_delay_ms
- .text.process_key
-                0x00000000000182d4       0xd4 _build/in4073.o
-                0x00000000000182d4                process_key
  .text.startup.main
-                0x00000000000183a8      0x1d0 _build/in4073.o
-                0x00000000000183a8                main
+                0x00000000000182d4      0x1cc _build/in4073.o
+                0x00000000000182d4                main
+ .text.process_key
+                0x00000000000184a0       0xd4 _build/parse.o
+                0x00000000000184a0                process_key
  .text.run_filters_and_control
-                0x0000000000018578       0x20 _build/control.o
-                0x0000000000018578                run_filters_and_control
+                0x0000000000018574       0x20 _build/control.o
+                0x0000000000018574                run_filters_and_control
  .text.gpio_init
-                0x0000000000018598       0x8c _build/gpio.o
-                0x0000000000018598                gpio_init
+                0x0000000000018594       0x8c _build/gpio.o
+                0x0000000000018594                gpio_init
  .text.quadrupel_timer_handler
-                0x0000000000018624        0xc _build/timers.o
-                0x0000000000018624                quadrupel_timer_handler
+                0x0000000000018620        0xc _build/timers.o
+                0x0000000000018620                quadrupel_timer_handler
  .text.TIMER2_IRQHandler
-                0x0000000000018630       0x88 _build/timers.o
-                0x0000000000018630                TIMER2_IRQHandler
+                0x000000000001862c       0x88 _build/timers.o
+                0x000000000001862c                TIMER2_IRQHandler
  .text.TIMER1_IRQHandler
-                0x00000000000186b8       0x98 _build/timers.o
-                0x00000000000186b8                TIMER1_IRQHandler
+                0x00000000000186b4       0x98 _build/timers.o
+                0x00000000000186b4                TIMER1_IRQHandler
  .text.get_time_us
-                0x0000000000018750       0x20 _build/timers.o
-                0x0000000000018750                get_time_us
+                0x000000000001874c       0x20 _build/timers.o
+                0x000000000001874c                get_time_us
  .text.check_timer_flag
-                0x0000000000018770        0xc _build/timers.o
-                0x0000000000018770                check_timer_flag
+                0x000000000001876c        0xc _build/timers.o
+                0x000000000001876c                check_timer_flag
  .text.clear_timer_flag
-                0x000000000001877c        0xc _build/timers.o
-                0x000000000001877c                clear_timer_flag
+                0x0000000000018778        0xc _build/timers.o
+                0x0000000000018778                clear_timer_flag
  .text.timers_init
-                0x0000000000018788      0x1d0 _build/timers.o
-                0x0000000000018788                timers_init
- .text._write   0x0000000000018958       0xa4 _build/uart.o
-                0x0000000000018958                _write
+                0x0000000000018784      0x1d0 _build/timers.o
+                0x0000000000018784                timers_init
+ .text._write   0x0000000000018954       0xa4 _build/uart.o
+                0x0000000000018954                _write
  .text.UART0_IRQHandler
-                0x00000000000189fc       0x84 _build/uart.o
-                0x00000000000189fc                UART0_IRQHandler
+                0x00000000000189f8       0x84 _build/uart.o
+                0x00000000000189f8                UART0_IRQHandler
  .text.uart_init
-                0x0000000000018a80       0xa0 _build/uart.o
-                0x0000000000018a80                uart_init
+                0x0000000000018a7c       0xa0 _build/uart.o
+                0x0000000000018a7c                uart_init
  .text.i2c_read
-                0x0000000000018b20       0xb4 _build/twi.o
-                0x0000000000018b20                i2c_read
+                0x0000000000018b1c       0xb4 _build/twi.o
+                0x0000000000018b1c                i2c_read
  .text.i2c_write
-                0x0000000000018bd4       0x68 _build/twi.o
-                0x0000000000018bd4                i2c_write
+                0x0000000000018bd0       0x68 _build/twi.o
+                0x0000000000018bd0                i2c_write
  .text.SPI0_TWI0_IRQHandler
-                0x0000000000018c3c       0x74 _build/twi.o
-                0x0000000000018c3c                SPI0_TWI0_IRQHandler
+                0x0000000000018c38       0x74 _build/twi.o
+                0x0000000000018c38                SPI0_TWI0_IRQHandler
  .text.twi_init
-                0x0000000000018cb0       0x84 _build/twi.o
-                0x0000000000018cb0                twi_init
+                0x0000000000018cac       0x84 _build/twi.o
+                0x0000000000018cac                twi_init
  .text.adc_request_sample
-                0x0000000000018d34       0x18 _build/adc.o
-                0x0000000000018d34                adc_request_sample
+                0x0000000000018d30       0x18 _build/adc.o
+                0x0000000000018d30                adc_request_sample
  .text.ADC_IRQHandler
-                0x0000000000018d4c       0x24 _build/adc.o
-                0x0000000000018d4c                ADC_IRQHandler
+                0x0000000000018d48       0x24 _build/adc.o
+                0x0000000000018d48                ADC_IRQHandler
  .text.adc_init
-                0x0000000000018d70       0x3c _build/adc.o
-                0x0000000000018d70                adc_init
+                0x0000000000018d6c       0x3c _build/adc.o
+                0x0000000000018d6c                adc_init
  .text.read_baro
-                0x0000000000018dac      0x1ac _build/barometer.o
-                0x0000000000018dac                read_baro
+                0x0000000000018da8      0x1ac _build/barometer.o
+                0x0000000000018da8                read_baro
  .text.baro_init
-                0x0000000000018f58       0x34 _build/barometer.o
-                0x0000000000018f58                baro_init
+                0x0000000000018f54       0x34 _build/barometer.o
+                0x0000000000018f54                baro_init
  .text.spi_flash_init
-                0x0000000000018f8c      0x220 _build/spi_flash.o
-                0x0000000000018f8c                spi_flash_init
+                0x0000000000018f88      0x220 _build/spi_flash.o
+                0x0000000000018f88                spi_flash_init
  .text.sd_ble_gap_disconnect
+                0x00000000000191a8        0x4 _build/quad_ble.o
+ .text.sd_ble_gap_ppcp_set
                 0x00000000000191ac        0x4 _build/quad_ble.o
- .text.sd_ble_gap_ppcp_set
-                0x00000000000191b0        0x4 _build/quad_ble.o
  .text.sd_ble_gap_device_name_set
-                0x00000000000191b4        0x4 _build/quad_ble.o
+                0x00000000000191b0        0x4 _build/quad_ble.o
  .text.sd_ble_gap_sec_params_reply
-                0x00000000000191b8        0x4 _build/quad_ble.o
+                0x00000000000191b4        0x4 _build/quad_ble.o
  .text.sd_ble_gatts_sys_attr_set
-                0x00000000000191bc        0x4 _build/quad_ble.o
+                0x00000000000191b8        0x4 _build/quad_ble.o
  .text.sd_ble_enable
+                0x00000000000191bc        0x4 _build/quad_ble.o
+ .text.sd_nvic_EnableIRQ
                 0x00000000000191c0        0x4 _build/quad_ble.o
- .text.sd_nvic_EnableIRQ
-                0x00000000000191c4        0x4 _build/quad_ble.o
  .text.sd_nvic_ClearPendingIRQ
-                0x00000000000191c8        0x4 _build/quad_ble.o
+                0x00000000000191c4        0x4 _build/quad_ble.o
  .text.sd_nvic_SetPriority
-                0x00000000000191cc        0x4 _build/quad_ble.o
+                0x00000000000191c8        0x4 _build/quad_ble.o
  .text.sd_radio_notification_cfg_set
-                0x00000000000191d0        0x4 _build/quad_ble.o
+                0x00000000000191cc        0x4 _build/quad_ble.o
  .text.conn_params_error_handler
-                0x00000000000191d4       0x1c _build/quad_ble.o
+                0x00000000000191d0       0x1c _build/quad_ble.o
  .text.nus_data_handler
-                0x00000000000191f0       0x20 _build/quad_ble.o
+                0x00000000000191ec       0x20 _build/quad_ble.o
  .text.ble_evt_dispatch
-                0x0000000000019210       0x94 _build/quad_ble.o
+                0x000000000001920c       0x94 _build/quad_ble.o
  .text.on_conn_params_evt
-                0x00000000000192a4       0x38 _build/quad_ble.o
+                0x00000000000192a0       0x38 _build/quad_ble.o
  .text.SWI1_IRQHandler
-                0x00000000000192dc       0x38 _build/quad_ble.o
-                0x00000000000192dc                SWI1_IRQHandler
+                0x00000000000192d8       0x38 _build/quad_ble.o
+                0x00000000000192d8                SWI1_IRQHandler
  .text.quad_ble_init
-                0x0000000000019314      0x22c _build/quad_ble.o
-                0x0000000000019314                quad_ble_init
+                0x0000000000019310      0x22c _build/quad_ble.o
+                0x0000000000019310                quad_ble_init
  .text.init_queue
-                0x0000000000019540       0x14 _build/queue.o
-                0x0000000000019540                init_queue
- .text.enqueue  0x0000000000019554       0x20 _build/queue.o
-                0x0000000000019554                enqueue
- .text.dequeue  0x0000000000019574       0x20 _build/queue.o
-                0x0000000000019574                dequeue
+                0x000000000001953c       0x14 _build/queue.o
+                0x000000000001953c                init_queue
+ .text.enqueue  0x0000000000019550       0x20 _build/queue.o
+                0x0000000000019550                enqueue
+ .text.dequeue  0x0000000000019570       0x20 _build/queue.o
+                0x0000000000019570                dequeue
  .text.set_int_enable
-                0x0000000000019594       0x84 _build/inv_mpu.o
+                0x0000000000019590       0x84 _build/inv_mpu.o
  .text.mpu_reset_fifo
-                0x0000000000019618      0x180 _build/inv_mpu.o
-                0x0000000000019618                mpu_reset_fifo
+                0x0000000000019614      0x180 _build/inv_mpu.o
+                0x0000000000019614                mpu_reset_fifo
  .text.mpu_lp_accel_mode
-                0x0000000000019798      0x19c _build/inv_mpu.o
-                0x0000000000019798                mpu_lp_accel_mode
+                0x0000000000019794      0x19c _build/inv_mpu.o
+                0x0000000000019794                mpu_lp_accel_mode
  .text.mpu_get_accel_fsr
-                0x0000000000019934       0x64 _build/inv_mpu.o
-                0x0000000000019934                mpu_get_accel_fsr
+                0x0000000000019930       0x64 _build/inv_mpu.o
+                0x0000000000019930                mpu_get_accel_fsr
  .text.mpu_set_lpf
-                0x0000000000019998       0x88 _build/inv_mpu.o
-                0x0000000000019998                mpu_set_lpf
+                0x0000000000019994       0x88 _build/inv_mpu.o
+                0x0000000000019994                mpu_set_lpf
  .text.mpu_set_sample_rate
-                0x0000000000019a20       0xf0 _build/inv_mpu.o
-                0x0000000000019a20                mpu_set_sample_rate
+                0x0000000000019a1c       0xf0 _build/inv_mpu.o
+                0x0000000000019a1c                mpu_set_sample_rate
  .text.mpu_configure_fifo
-                0x0000000000019b10       0xa8 _build/inv_mpu.o
-                0x0000000000019b10                mpu_configure_fifo
+                0x0000000000019b0c       0xa8 _build/inv_mpu.o
+                0x0000000000019b0c                mpu_configure_fifo
  .text.mpu_set_sensors
-                0x0000000000019bb8      0x140 _build/inv_mpu.o
-                0x0000000000019bb8                mpu_set_sensors
+                0x0000000000019bb4      0x140 _build/inv_mpu.o
+                0x0000000000019bb4                mpu_set_sensors
  .text.mpu_init
-                0x0000000000019cf8      0x1e8 _build/inv_mpu.o
-                0x0000000000019cf8                mpu_init
+                0x0000000000019cf4      0x1e8 _build/inv_mpu.o
+                0x0000000000019cf4                mpu_init
  .text.mpu_read_fifo
-                0x0000000000019ee0      0x268 _build/inv_mpu.o
-                0x0000000000019ee0                mpu_read_fifo
+                0x0000000000019edc      0x268 _build/inv_mpu.o
+                0x0000000000019edc                mpu_read_fifo
  .text.mpu_read_fifo_stream
-                0x000000000001a148       0xa8 _build/inv_mpu.o
-                0x000000000001a148                mpu_read_fifo_stream
+                0x000000000001a144       0xa8 _build/inv_mpu.o
+                0x000000000001a144                mpu_read_fifo_stream
  .text.mpu_set_bypass
-                0x000000000001a1f0       0xec _build/inv_mpu.o
-                0x000000000001a1f0                mpu_set_bypass
+                0x000000000001a1ec       0xec _build/inv_mpu.o
+                0x000000000001a1ec                mpu_set_bypass
  .text.mpu_set_int_level
-                0x000000000001a2dc       0x10 _build/inv_mpu.o
-                0x000000000001a2dc                mpu_set_int_level
+                0x000000000001a2d8       0x10 _build/inv_mpu.o
+                0x000000000001a2d8                mpu_set_int_level
  .text.mpu_set_int_latched
-                0x000000000001a2ec       0x6c _build/inv_mpu.o
-                0x000000000001a2ec                mpu_set_int_latched
+                0x000000000001a2e8       0x6c _build/inv_mpu.o
+                0x000000000001a2e8                mpu_set_int_latched
  .text.mpu_write_mem
-                0x000000000001a358       0x58 _build/inv_mpu.o
-                0x000000000001a358                mpu_write_mem
+                0x000000000001a354       0x58 _build/inv_mpu.o
+                0x000000000001a354                mpu_write_mem
  .text.mpu_load_firmware
-                0x000000000001a3b0       0xf0 _build/inv_mpu.o
-                0x000000000001a3b0                mpu_load_firmware
+                0x000000000001a3ac       0xf0 _build/inv_mpu.o
+                0x000000000001a3ac                mpu_load_firmware
  .text.mpu_set_dmp_state
-                0x000000000001a4a0       0x88 _build/inv_mpu.o
-                0x000000000001a4a0                mpu_set_dmp_state
+                0x000000000001a49c       0x88 _build/inv_mpu.o
+                0x000000000001a49c                mpu_set_dmp_state
  .text.dmp_load_motion_driver_firmware
-                0x000000000001a528       0x1c _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a528                dmp_load_motion_driver_firmware
+                0x000000000001a524       0x1c _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a524                dmp_load_motion_driver_firmware
  .text.dmp_set_orientation
-                0x000000000001a544      0x118 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a544                dmp_set_orientation
+                0x000000000001a540      0x118 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a540                dmp_set_orientation
  .text.dmp_set_fifo_rate
-                0x000000000001a65c       0x64 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a65c                dmp_set_fifo_rate
+                0x000000000001a658       0x64 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a658                dmp_set_fifo_rate
  .text.dmp_set_tap_thresh
-                0x000000000001a6c0      0x170 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a6c0                dmp_set_tap_thresh
+                0x000000000001a6bc      0x170 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a6bc                dmp_set_tap_thresh
  .text.dmp_enable_feature
-                0x000000000001a830      0x28c _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a830                dmp_enable_feature
+                0x000000000001a82c      0x28c _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a82c                dmp_enable_feature
  .text.dmp_read_fifo
-                0x000000000001aabc      0x218 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001aabc                dmp_read_fifo
+                0x000000000001aab8      0x218 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001aab8                dmp_read_fifo
  .text.inv_orientation_matrix_to_scalar
-                0x000000000001acd4      0x138 _build/ml.o
-                0x000000000001acd4                inv_orientation_matrix_to_scalar
+                0x000000000001acd0      0x138 _build/ml.o
+                0x000000000001acd0                inv_orientation_matrix_to_scalar
  .text.update_euler_from_quaternions
-                0x000000000001ae0c      0x19c _build/mpu6050.o
-                0x000000000001ae0c                update_euler_from_quaternions
+                0x000000000001ae08      0x19c _build/mpu6050.o
+                0x000000000001ae08                update_euler_from_quaternions
  .text.get_sensor_data
-                0x000000000001afa8       0xd4 _build/mpu6050.o
-                0x000000000001afa8                get_sensor_data
+                0x000000000001afa4       0xd4 _build/mpu6050.o
+                0x000000000001afa4                get_sensor_data
  .text.check_sensor_int_flag
-                0x000000000001b07c       0x24 _build/mpu6050.o
-                0x000000000001b07c                check_sensor_int_flag
+                0x000000000001b078       0x24 _build/mpu6050.o
+                0x000000000001b078                check_sensor_int_flag
  .text.imu_init
-                0x000000000001b0a0      0x114 _build/mpu6050.o
-                0x000000000001b0a0                imu_init
+                0x000000000001b09c      0x114 _build/mpu6050.o
+                0x000000000001b09c                imu_init
  .text.app_error_handler
-                0x000000000001b1b4       0x40 _build/app_error.o
-                0x000000000001b1b4                app_error_handler
+                0x000000000001b1b0       0x40 _build/app_error.o
+                0x000000000001b1b0                app_error_handler
  .text.rtc1_stop
-                0x000000000001b1f4       0x78 _build/app_timer.o
+                0x000000000001b1f0       0x78 _build/app_timer.o
  .text.RTC1_IRQHandler
-                0x000000000001b26c       0xe0 _build/app_timer.o
-                0x000000000001b26c                RTC1_IRQHandler
+                0x000000000001b268       0xe0 _build/app_timer.o
+                0x000000000001b268                RTC1_IRQHandler
  .text.SWI0_IRQHandler
-                0x000000000001b34c      0x4f4 _build/app_timer.o
-                0x000000000001b34c                SWI0_IRQHandler
+                0x000000000001b348      0x4f4 _build/app_timer.o
+                0x000000000001b348                SWI0_IRQHandler
  .text.app_timer_init
-                0x000000000001b840       0xe4 _build/app_timer.o
-                0x000000000001b840                app_timer_init
+                0x000000000001b83c       0xe4 _build/app_timer.o
+                0x000000000001b83c                app_timer_init
  .text.app_timer_create
-                0x000000000001b924       0x2c _build/app_timer.o
-                0x000000000001b924                app_timer_create
+                0x000000000001b920       0x2c _build/app_timer.o
+                0x000000000001b920                app_timer_create
  .text.app_timer_start
-                0x000000000001b950       0xf0 _build/app_timer.o
-                0x000000000001b950                app_timer_start
+                0x000000000001b94c       0xf0 _build/app_timer.o
+                0x000000000001b94c                app_timer_start
  .text.app_timer_stop
-                0x000000000001ba40       0xc0 _build/app_timer.o
-                0x000000000001ba40                app_timer_stop
+                0x000000000001ba3c       0xc0 _build/app_timer.o
+                0x000000000001ba3c                app_timer_stop
  .text.pstorage_access_status_get
-                0x000000000001bb00       0x28 _build/pstorage.o
-                0x000000000001bb00                pstorage_access_status_get
+                0x000000000001bafc       0x28 _build/pstorage.o
+                0x000000000001bafc                pstorage_access_status_get
  .text.sd_ble_gap_address_get
-                0x000000000001bb28        0x4 _build/ble_advdata.o
+                0x000000000001bb24        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_adv_data_set
-                0x000000000001bb2c        0x4 _build/ble_advdata.o
+                0x000000000001bb28        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_appearance_get
-                0x000000000001bb30        0x4 _build/ble_advdata.o
+                0x000000000001bb2c        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_device_name_get
-                0x000000000001bb34        0x4 _build/ble_advdata.o
+                0x000000000001bb30        0x4 _build/ble_advdata.o
  .text.sd_ble_uuid_encode
-                0x000000000001bb38        0x4 _build/ble_advdata.o
+                0x000000000001bb34        0x4 _build/ble_advdata.o
  .text.uuid_list_sized_encode.isra.0
-                0x000000000001bb3c       0xf8 _build/ble_advdata.o
+                0x000000000001bb38       0xf8 _build/ble_advdata.o
  .text.adv_data_encode
-                0x000000000001bc34      0x5bc _build/ble_advdata.o
-                0x000000000001bc34                adv_data_encode
+                0x000000000001bc30      0x5bc _build/ble_advdata.o
+                0x000000000001bc30                adv_data_encode
  .text.ble_advdata_set
-                0x000000000001c1f0       0x6c _build/ble_advdata.o
-                0x000000000001c1f0                ble_advdata_set
+                0x000000000001c1ec       0x6c _build/ble_advdata.o
+                0x000000000001c1ec                ble_advdata_set
  .text.sd_ble_gap_adv_start
-                0x000000000001c25c        0x4 _build/ble_advertising.o
+                0x000000000001c258        0x4 _build/ble_advertising.o
  .text.ble_advertising_start.part.0
-                0x000000000001c260      0x2b8 _build/ble_advertising.o
+                0x000000000001c25c      0x2b8 _build/ble_advertising.o
  .text.ble_advertising_init
-                0x000000000001c518      0x148 _build/ble_advertising.o
-                0x000000000001c518                ble_advertising_init
+                0x000000000001c514      0x148 _build/ble_advertising.o
+                0x000000000001c514                ble_advertising_init
  .text.ble_advertising_start
-                0x000000000001c660       0x3c _build/ble_advertising.o
-                0x000000000001c660                ble_advertising_start
+                0x000000000001c65c       0x3c _build/ble_advertising.o
+                0x000000000001c65c                ble_advertising_start
  .text.ble_advertising_on_ble_evt
-                0x000000000001c69c      0x100 _build/ble_advertising.o
-                0x000000000001c69c                ble_advertising_on_ble_evt
+                0x000000000001c698      0x100 _build/ble_advertising.o
+                0x000000000001c698                ble_advertising_on_ble_evt
  .text.sd_ble_gap_conn_param_update
-                0x000000000001c79c        0x4 _build/ble_conn_params.o
+                0x000000000001c798        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_disconnect
-                0x000000000001c7a0        0x4 _build/ble_conn_params.o
+                0x000000000001c79c        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_ppcp_set
-                0x000000000001c7a4        0x4 _build/ble_conn_params.o
+                0x000000000001c7a0        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_ppcp_get
-                0x000000000001c7a8        0x4 _build/ble_conn_params.o
+                0x000000000001c7a4        0x4 _build/ble_conn_params.o
  .text.update_timeout_handler
-                0x000000000001c7ac       0x78 _build/ble_conn_params.o
+                0x000000000001c7a8       0x78 _build/ble_conn_params.o
  .text.conn_params_negotiation
-                0x000000000001c824       0x88 _build/ble_conn_params.o
+                0x000000000001c820       0x88 _build/ble_conn_params.o
  .text.ble_conn_params_init
-                0x000000000001c8ac       0x78 _build/ble_conn_params.o
-                0x000000000001c8ac                ble_conn_params_init
+                0x000000000001c8a8       0x78 _build/ble_conn_params.o
+                0x000000000001c8a8                ble_conn_params_init
  .text.ble_conn_params_on_ble_evt
-                0x000000000001c924       0xac _build/ble_conn_params.o
-                0x000000000001c924                ble_conn_params_on_ble_evt
+                0x000000000001c920       0xac _build/ble_conn_params.o
+                0x000000000001c920                ble_conn_params_on_ble_evt
  .text.sd_ble_gatts_service_add
-                0x000000000001c9d0        0x4 _build/ble_nus.o
+                0x000000000001c9cc        0x4 _build/ble_nus.o
  .text.sd_ble_gatts_characteristic_add
-                0x000000000001c9d4        0x4 _build/ble_nus.o
+                0x000000000001c9d0        0x4 _build/ble_nus.o
  .text.sd_ble_uuid_vs_add
-                0x000000000001c9d8        0x4 _build/ble_nus.o
+                0x000000000001c9d4        0x4 _build/ble_nus.o
  .text.ble_nus_on_ble_evt
-                0x000000000001c9dc       0x68 _build/ble_nus.o
-                0x000000000001c9dc                ble_nus_on_ble_evt
+                0x000000000001c9d8       0x68 _build/ble_nus.o
+                0x000000000001c9d8                ble_nus_on_ble_evt
  .text.ble_nus_init
-                0x000000000001ca44      0x190 _build/ble_nus.o
-                0x000000000001ca44                ble_nus_init
+                0x000000000001ca40      0x190 _build/ble_nus.o
+                0x000000000001ca40                ble_nus_init
  .text.sd_nvic_EnableIRQ
-                0x000000000001cbd4        0x4 _build/softdevice_handler.o
+                0x000000000001cbd0        0x4 _build/softdevice_handler.o
  .text.sd_evt_get
-                0x000000000001cbd8        0x4 _build/softdevice_handler.o
+                0x000000000001cbd4        0x4 _build/softdevice_handler.o
  .text.sd_softdevice_enable
-                0x000000000001cbdc        0x4 _build/softdevice_handler.o
+                0x000000000001cbd8        0x4 _build/softdevice_handler.o
  .text.sd_ble_evt_get
-                0x000000000001cbe0        0x4 _build/softdevice_handler.o
+                0x000000000001cbdc        0x4 _build/softdevice_handler.o
  .text.softdevice_assertion_handler
-                0x000000000001cbe4        0xc _build/softdevice_handler.o
-                0x000000000001cbe4                softdevice_assertion_handler
+                0x000000000001cbe0        0xc _build/softdevice_handler.o
+                0x000000000001cbe0                softdevice_assertion_handler
  .text.intern_softdevice_events_execute.part.0
-                0x000000000001cbf0      0x108 _build/softdevice_handler.o
+                0x000000000001cbec      0x108 _build/softdevice_handler.o
  .text.softdevice_handler_init
-                0x000000000001ccf8       0x48 _build/softdevice_handler.o
-                0x000000000001ccf8                softdevice_handler_init
+                0x000000000001ccf4       0x48 _build/softdevice_handler.o
+                0x000000000001ccf4                softdevice_handler_init
  .text.softdevice_ble_evt_handler_set
-                0x000000000001cd40       0x14 _build/softdevice_handler.o
-                0x000000000001cd40                softdevice_ble_evt_handler_set
+                0x000000000001cd3c       0x14 _build/softdevice_handler.o
+                0x000000000001cd3c                softdevice_ble_evt_handler_set
  .text.SWI2_IRQHandler
-                0x000000000001cd54       0x34 _build/softdevice_handler.o
-                0x000000000001cd54                SWI2_IRQHandler
- .text          0x000000000001cd88       0x54 _build/gcc_startup_nrf51.o
-                0x000000000001cd88                Reset_Handler
-                0x000000000001cdd0                NMI_Handler
-                0x000000000001cdd2                HardFault_Handler
-                0x000000000001cdd4                SVC_Handler
-                0x000000000001cdd6                PendSV_Handler
-                0x000000000001cdd8                SysTick_Handler
-                0x000000000001cdda                RTC0_IRQHandler
-                0x000000000001cdda                GPIOTE_IRQHandler
-                0x000000000001cdda                POWER_CLOCK_IRQHandler
-                0x000000000001cdda                RADIO_IRQHandler
-                0x000000000001cdda                LPCOMP_IRQHandler
-                0x000000000001cdda                SWI4_IRQHandler
-                0x000000000001cdda                TEMP_IRQHandler
-                0x000000000001cdda                QDEC_IRQHandler
-                0x000000000001cdda                SWI5_IRQHandler
-                0x000000000001cdda                TIMER0_IRQHandler
-                0x000000000001cdda                ECB_IRQHandler
-                0x000000000001cdda                Default_Handler
-                0x000000000001cdda                SWI3_IRQHandler
-                0x000000000001cdda                CCM_AAR_IRQHandler
-                0x000000000001cdda                WDT_IRQHandler
-                0x000000000001cdda                RNG_IRQHandler
-                0x000000000001cdda                SPI1_TWI1_IRQHandler
+                0x000000000001cd50       0x34 _build/softdevice_handler.o
+                0x000000000001cd50                SWI2_IRQHandler
+ .text          0x000000000001cd84       0x54 _build/gcc_startup_nrf51.o
+                0x000000000001cd84                Reset_Handler
+                0x000000000001cdcc                NMI_Handler
+                0x000000000001cdce                HardFault_Handler
+                0x000000000001cdd0                SVC_Handler
+                0x000000000001cdd2                PendSV_Handler
+                0x000000000001cdd4                SysTick_Handler
+                0x000000000001cdd6                RTC0_IRQHandler
+                0x000000000001cdd6                GPIOTE_IRQHandler
+                0x000000000001cdd6                POWER_CLOCK_IRQHandler
+                0x000000000001cdd6                RADIO_IRQHandler
+                0x000000000001cdd6                LPCOMP_IRQHandler
+                0x000000000001cdd6                SWI4_IRQHandler
+                0x000000000001cdd6                TEMP_IRQHandler
+                0x000000000001cdd6                QDEC_IRQHandler
+                0x000000000001cdd6                SWI5_IRQHandler
+                0x000000000001cdd6                TIMER0_IRQHandler
+                0x000000000001cdd6                ECB_IRQHandler
+                0x000000000001cdd6                Default_Handler
+                0x000000000001cdd6                SWI3_IRQHandler
+                0x000000000001cdd6                CCM_AAR_IRQHandler
+                0x000000000001cdd6                WDT_IRQHandler
+                0x000000000001cdd6                RNG_IRQHandler
+                0x000000000001cdd6                SPI1_TWI1_IRQHandler
  .text.copysign
-                0x000000000001cddc       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_copysign.o)
-                0x000000000001cddc                copysign
- .text.fabs     0x000000000001cdec        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
-                0x000000000001cdec                fabs
- .text.asin     0x000000000001cdf4       0xbc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
-                0x000000000001cdf4                asin
- .text.atan2    0x000000000001ceb0        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
-                0x000000000001ceb0                atan2
+                0x000000000001cdd8       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_copysign.o)
+                0x000000000001cdd8                copysign
+ .text.fabs     0x000000000001cde8        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
+                0x000000000001cde8                fabs
+ .text.asin     0x000000000001cdf0       0xbc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x000000000001cdf0                asin
+ .text.atan2    0x000000000001ceac        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
+                0x000000000001ceac                atan2
  .text.__ieee754_asin
-                0x000000000001ceb8      0x3e8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
-                0x000000000001ceb8                __ieee754_asin
+                0x000000000001ceb4      0x3e8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
+                0x000000000001ceb4                __ieee754_asin
  .text.__ieee754_atan2
-                0x000000000001d2a0      0x174 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
-                0x000000000001d2a0                __ieee754_atan2
+                0x000000000001d29c      0x174 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
+                0x000000000001d29c                __ieee754_atan2
  .text.__ieee754_sqrt
-                0x000000000001d414      0x1b0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
-                0x000000000001d414                __ieee754_sqrt
- .text.atan     0x000000000001d5c4      0x338 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
-                0x000000000001d5c4                atan
- .text.matherr  0x000000000001d8fc        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
-                0x000000000001d8fc                matherr
- .text.nan      0x000000000001d900        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
-                0x000000000001d900                nan
- .text          0x000000000001d90c      0x114 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
-                0x000000000001d90c                __udivsi3
-                0x000000000001d90c                __aeabi_uidiv
-                0x000000000001da18                __aeabi_uidivmod
- .text          0x000000000001da20      0x1d4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
-                0x000000000001da20                __aeabi_idiv
-                0x000000000001da20                __divsi3
-                0x000000000001dbec                __aeabi_idivmod
- .text          0x000000000001dbf4        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
-                0x000000000001dbf4                __aeabi_ldiv0
-                0x000000000001dbf4                __aeabi_idiv0
- .text          0x000000000001dbf8       0x7c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
-                0x000000000001dbf8                __aeabi_cdrcmple
-                0x000000000001dc08                __aeabi_cdcmple
-                0x000000000001dc08                __aeabi_cdcmpeq
-                0x000000000001dc18                __aeabi_dcmpeq
-                0x000000000001dc24                __aeabi_dcmplt
-                0x000000000001dc38                __aeabi_dcmple
-                0x000000000001dc4c                __aeabi_dcmpgt
-                0x000000000001dc60                __aeabi_dcmpge
- .text          0x000000000001dc74       0x74 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
-                0x000000000001dc74                __aeabi_cfrcmple
-                0x000000000001dc7c                __aeabi_cfcmple
-                0x000000000001dc7c                __aeabi_cfcmpeq
-                0x000000000001dc8c                __aeabi_fcmpeq
-                0x000000000001dc98                __aeabi_fcmplt
-                0x000000000001dcac                __aeabi_fcmple
-                0x000000000001dcc0                __aeabi_fcmpgt
-                0x000000000001dcd4                __aeabi_fcmpge
- .text          0x000000000001dce8       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
-                0x000000000001dce8                __aeabi_lmul
-                0x000000000001dce8                __muldi3
- .text          0x000000000001dd38       0x30 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
-                0x000000000001dd38                __aeabi_f2uiz
-                0x000000000001dd38                __fixunssfsi
- .text          0x000000000001dd68      0x338 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
-                0x000000000001dd68                __aeabi_fadd
- .text          0x000000000001e0a0      0x218 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
-                0x000000000001e0a0                __aeabi_fdiv
- .text          0x000000000001e2b8       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
-                0x000000000001e2b8                __nesf2
-                0x000000000001e2b8                __eqsf2
- .text          0x000000000001e308       0x98 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
-                0x000000000001e308                __gtsf2
-                0x000000000001e308                __gesf2
- .text          0x000000000001e3a0       0x94 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
-                0x000000000001e3a0                __lesf2
-                0x000000000001e3a0                __ltsf2
- .text          0x000000000001e434      0x234 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
-                0x000000000001e434                __aeabi_fmul
- .text          0x000000000001e668      0x390 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
-                0x000000000001e668                __aeabi_fsub
- .text          0x000000000001e9f8       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
-                0x000000000001e9f8                __aeabi_f2iz
- .text          0x000000000001ea38       0x8c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
-                0x000000000001ea38                __aeabi_i2f
- .text          0x000000000001eac4       0x78 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
-                0x000000000001eac4                __aeabi_ui2f
- .text          0x000000000001eb3c      0x6d4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
-                0x000000000001eb3c                __aeabi_dadd
- .text          0x000000000001f210      0x5d0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
-                0x000000000001f210                __aeabi_ddiv
- .text          0x000000000001f7e0       0x78 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
-                0x000000000001f7e0                __eqdf2
-                0x000000000001f7e0                __nedf2
- .text          0x000000000001f858       0xe4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
-                0x000000000001f858                __gtdf2
-                0x000000000001f858                __gedf2
- .text          0x000000000001f93c       0xe0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
-                0x000000000001f93c                __ltdf2
-                0x000000000001f93c                __ledf2
- .text          0x000000000001fa1c      0x4d8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
-                0x000000000001fa1c                __aeabi_dmul
- .text          0x000000000001fef4      0x724 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
-                0x000000000001fef4                __aeabi_dsub
- .text          0x0000000000020618       0x3c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
-                0x0000000000020618                __aeabi_dcmpun
- .text          0x0000000000020654       0x6c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
-                0x0000000000020654                __aeabi_d2iz
- .text          0x00000000000206c0       0x90 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
-                0x00000000000206c0                __aeabi_f2d
- .text          0x0000000000020750       0x3c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
-                0x0000000000020750                __clzsi2
- .text.abs      0x000000000002078c        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-abs.o)
-                0x000000000002078c                abs
- .text.__errno  0x0000000000020794        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
-                0x0000000000020794                __errno
- .text.memcmp   0x00000000000207a0       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
-                0x00000000000207a0                memcmp
- .text.memcpy   0x00000000000207bc       0x12 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
-                0x00000000000207bc                memcpy
- *fill*         0x00000000000207ce        0x2 
- .text.printf   0x00000000000207d0       0x34 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
-                0x00000000000207d0                printf
-                0x00000000000207d0                iprintf
- .text.sprintf  0x0000000000020804       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
-                0x0000000000020804                sprintf
-                0x0000000000020804                siprintf
- .text          0x0000000000020844        0xe /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
-                0x0000000000020844                strlen
- *fill*         0x0000000000020852        0x2 
- .text.std      0x0000000000020854       0x48 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x000000000001d410      0x1b0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
+                0x000000000001d410                __ieee754_sqrt
+ .text.atan     0x000000000001d5c0      0x338 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+                0x000000000001d5c0                atan
+ .text.matherr  0x000000000001d8f8        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
+                0x000000000001d8f8                matherr
+ .text.nan      0x000000000001d8fc        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
+                0x000000000001d8fc                nan
+ .text          0x000000000001d908      0x114 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                0x000000000001d908                __udivsi3
+                0x000000000001d908                __aeabi_uidiv
+                0x000000000001da14                __aeabi_uidivmod
+ .text          0x000000000001da1c      0x1d4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                0x000000000001da1c                __aeabi_idiv
+                0x000000000001da1c                __divsi3
+                0x000000000001dbe8                __aeabi_idivmod
+ .text          0x000000000001dbf0        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x000000000001dbf0                __aeabi_ldiv0
+                0x000000000001dbf0                __aeabi_idiv0
+ .text          0x000000000001dbf4       0x7c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
+                0x000000000001dbf4                __aeabi_cdrcmple
+                0x000000000001dc04                __aeabi_cdcmple
+                0x000000000001dc04                __aeabi_cdcmpeq
+                0x000000000001dc14                __aeabi_dcmpeq
+                0x000000000001dc20                __aeabi_dcmplt
+                0x000000000001dc34                __aeabi_dcmple
+                0x000000000001dc48                __aeabi_dcmpgt
+                0x000000000001dc5c                __aeabi_dcmpge
+ .text          0x000000000001dc70       0x74 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x000000000001dc70                __aeabi_cfrcmple
+                0x000000000001dc78                __aeabi_cfcmple
+                0x000000000001dc78                __aeabi_cfcmpeq
+                0x000000000001dc88                __aeabi_fcmpeq
+                0x000000000001dc94                __aeabi_fcmplt
+                0x000000000001dca8                __aeabi_fcmple
+                0x000000000001dcbc                __aeabi_fcmpgt
+                0x000000000001dcd0                __aeabi_fcmpge
+ .text          0x000000000001dce4       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
+                0x000000000001dce4                __aeabi_lmul
+                0x000000000001dce4                __muldi3
+ .text          0x000000000001dd34       0x30 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
+                0x000000000001dd34                __aeabi_f2uiz
+                0x000000000001dd34                __fixunssfsi
+ .text          0x000000000001dd64      0x338 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                0x000000000001dd64                __aeabi_fadd
+ .text          0x000000000001e09c      0x218 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
+                0x000000000001e09c                __aeabi_fdiv
+ .text          0x000000000001e2b4       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                0x000000000001e2b4                __nesf2
+                0x000000000001e2b4                __eqsf2
+ .text          0x000000000001e304       0x98 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                0x000000000001e304                __gtsf2
+                0x000000000001e304                __gesf2
+ .text          0x000000000001e39c       0x94 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                0x000000000001e39c                __lesf2
+                0x000000000001e39c                __ltsf2
+ .text          0x000000000001e430      0x234 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                0x000000000001e430                __aeabi_fmul
+ .text          0x000000000001e664      0x390 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
+                0x000000000001e664                __aeabi_fsub
+ .text          0x000000000001e9f4       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
+                0x000000000001e9f4                __aeabi_f2iz
+ .text          0x000000000001ea34       0x8c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
+                0x000000000001ea34                __aeabi_i2f
+ .text          0x000000000001eac0       0x78 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                0x000000000001eac0                __aeabi_ui2f
+ .text          0x000000000001eb38      0x6d4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
+                0x000000000001eb38                __aeabi_dadd
+ .text          0x000000000001f20c      0x5d0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
+                0x000000000001f20c                __aeabi_ddiv
+ .text          0x000000000001f7dc       0x78 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
+                0x000000000001f7dc                __eqdf2
+                0x000000000001f7dc                __nedf2
+ .text          0x000000000001f854       0xe4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
+                0x000000000001f854                __gtdf2
+                0x000000000001f854                __gedf2
+ .text          0x000000000001f938       0xe0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
+                0x000000000001f938                __ltdf2
+                0x000000000001f938                __ledf2
+ .text          0x000000000001fa18      0x4d8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
+                0x000000000001fa18                __aeabi_dmul
+ .text          0x000000000001fef0      0x724 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
+                0x000000000001fef0                __aeabi_dsub
+ .text          0x0000000000020614       0x3c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
+                0x0000000000020614                __aeabi_dcmpun
+ .text          0x0000000000020650       0x6c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
+                0x0000000000020650                __aeabi_d2iz
+ .text          0x00000000000206bc       0x90 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
+                0x00000000000206bc                __aeabi_f2d
+ .text          0x000000000002074c       0x3c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                0x000000000002074c                __clzsi2
+ .text.abs      0x0000000000020788        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-abs.o)
+                0x0000000000020788                abs
+ .text.__errno  0x0000000000020790        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
+                0x0000000000020790                __errno
+ .text.memcmp   0x000000000002079c       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
+                0x000000000002079c                memcmp
+ .text.memcpy   0x00000000000207b8       0x12 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
+                0x00000000000207b8                memcpy
+ *fill*         0x00000000000207ca        0x2 
+ .text.printf   0x00000000000207cc       0x34 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
+                0x00000000000207cc                printf
+                0x00000000000207cc                iprintf
+ .text.sprintf  0x0000000000020800       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
+                0x0000000000020800                sprintf
+                0x0000000000020800                siprintf
+ .text          0x0000000000020840        0xe /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
+                0x0000000000020840                strlen
+ *fill*         0x000000000002084e        0x2 
+ .text.std      0x0000000000020850       0x48 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
  .text._cleanup_r
-                0x000000000002089c       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x000000000002089c                _cleanup_r
+                0x0000000000020898       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020898                _cleanup_r
  .text.__sfmoreglue
-                0x00000000000208ac       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000208ac                __sfmoreglue
+                0x00000000000208a8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x00000000000208a8                __sfmoreglue
  .text.__sfp_lock_acquire
-                0x00000000000208d8       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000208d8                __sfp_lock_acquire
+                0x00000000000208d4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x00000000000208d4                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x00000000000208e8       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000208e8                __sfp_lock_release
+                0x00000000000208e4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x00000000000208e4                __sfp_lock_release
  .text.__sinit_lock_acquire
-                0x00000000000208f8       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000208f8                __sinit_lock_acquire
+                0x00000000000208f4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x00000000000208f4                __sinit_lock_acquire
  .text.__sinit_lock_release
-                0x0000000000020908       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020908                __sinit_lock_release
- .text.__sinit  0x0000000000020918       0x70 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020918                __sinit
- .text.__sfp    0x0000000000020988       0x90 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020988                __sfp
+                0x0000000000020904       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020904                __sinit_lock_release
+ .text.__sinit  0x0000000000020914       0x70 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020914                __sinit
+ .text.__sfp    0x0000000000020984       0x90 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020984                __sfp
  .text._fwalk_reent
-                0x0000000000020a18       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
-                0x0000000000020a18                _fwalk_reent
+                0x0000000000020a14       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
+                0x0000000000020a14                _fwalk_reent
  .text.__retarget_lock_init_recursive
-                0x0000000000020a58        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x0000000000020a58                __retarget_lock_init_recursive
+                0x0000000000020a54        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x0000000000020a54                __retarget_lock_init_recursive
  .text.__retarget_lock_acquire_recursive
-                0x0000000000020a5a        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x0000000000020a5a                __retarget_lock_acquire_recursive
+                0x0000000000020a56        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x0000000000020a56                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x0000000000020a5c        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x0000000000020a5c                __retarget_lock_release_recursive
- *fill*         0x0000000000020a5e        0x2 
+                0x0000000000020a58        0x2 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x0000000000020a58                __retarget_lock_release_recursive
+ *fill*         0x0000000000020a5a        0x2 
  .text._malloc_r
-                0x0000000000020a60       0xbc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
-                0x0000000000020a60                _malloc_r
+                0x0000000000020a5c       0xbc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000000020a5c                _malloc_r
  .text.__ssputs_r
-                0x0000000000020b1c       0xc4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000000020b1c                __ssputs_r
+                0x0000000000020b18       0xc4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000020b18                __ssputs_r
  .text._svfprintf_r
-                0x0000000000020be0      0x200 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000000020be0                _svfprintf_r
-                0x0000000000020be0                _svfiprintf_r
+                0x0000000000020bdc      0x200 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000020bdc                _svfprintf_r
+                0x0000000000020bdc                _svfiprintf_r
  .text.__sfputc_r
-                0x0000000000020de0       0x2a /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000020ddc       0x2a /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
  .text.__sfputs_r
-                0x0000000000020e0a       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
-                0x0000000000020e0a                __sfputs_r
- *fill*         0x0000000000020e2e        0x2 
+                0x0000000000020e06       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000020e06                __sfputs_r
+ *fill*         0x0000000000020e2a        0x2 
  .text._vfprintf_r
-                0x0000000000020e30      0x274 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
-                0x0000000000020e30                _vfiprintf_r
-                0x0000000000020e30                _vfprintf_r
+                0x0000000000020e2c      0x274 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000020e2c                _vfiprintf_r
+                0x0000000000020e2c                _vfprintf_r
  .text._printf_common
-                0x00000000000210a4       0xde /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00000000000210a4                _printf_common
- *fill*         0x0000000000021182        0x2 
+                0x00000000000210a0       0xde /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00000000000210a0                _printf_common
+ *fill*         0x000000000002117e        0x2 
  .text._printf_i
-                0x0000000000021184      0x224 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000000021184                _printf_i
- .text._sbrk_r  0x00000000000213a8       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
-                0x00000000000213a8                _sbrk_r
- .text.__sread  0x00000000000213cc       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x00000000000213cc                __sread
+                0x0000000000021180      0x224 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000021180                _printf_i
+ .text._sbrk_r  0x00000000000213a4       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
+                0x00000000000213a4                _sbrk_r
+ .text.__sread  0x00000000000213c8       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x00000000000213c8                __sread
  .text.__swrite
-                0x00000000000213f4       0x38 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x00000000000213f4                __swrite
- .text.__sseek  0x000000000002142c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x000000000002142c                __sseek
+                0x00000000000213f0       0x38 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x00000000000213f0                __swrite
+ .text.__sseek  0x0000000000021428       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000021428                __sseek
  .text.__sclose
-                0x0000000000021458        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x0000000000021458                __sclose
+                0x0000000000021454        0xc /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000021454                __sclose
  .text.__swbuf_r
-                0x0000000000021464       0xac /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
-                0x0000000000021464                __swbuf_r
+                0x0000000000021460       0xac /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
+                0x0000000000021460                __swbuf_r
  .text._write_r
-                0x0000000000021510       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
-                0x0000000000021510                _write_r
+                0x000000000002150c       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
+                0x000000000002150c                _write_r
  .text.__swsetup_r
-                0x0000000000021538       0xf0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
-                0x0000000000021538                __swsetup_r
+                0x0000000000021534       0xf0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
+                0x0000000000021534                __swsetup_r
  .text._close_r
-                0x0000000000021628       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
-                0x0000000000021628                _close_r
+                0x0000000000021624       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
+                0x0000000000021624                _close_r
  .text.__sflush_r
-                0x000000000002164c      0x118 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
-                0x000000000002164c                __sflush_r
+                0x0000000000021648      0x118 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
+                0x0000000000021648                __sflush_r
  .text._fflush_r
-                0x0000000000021764       0x80 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
-                0x0000000000021764                _fflush_r
+                0x0000000000021760       0x80 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
+                0x0000000000021760                _fflush_r
  .text._lseek_r
-                0x00000000000217e4       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
-                0x00000000000217e4                _lseek_r
+                0x00000000000217e0       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
+                0x00000000000217e0                _lseek_r
  .text.__swhatbuf_r
-                0x000000000002180c       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
-                0x000000000002180c                __swhatbuf_r
+                0x0000000000021808       0x50 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
+                0x0000000000021808                __swhatbuf_r
  .text.__smakebuf_r
-                0x000000000002185c       0x88 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
-                0x000000000002185c                __smakebuf_r
- .text.memchr   0x00000000000218e4       0x16 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
-                0x00000000000218e4                memchr
- .text.memmove  0x00000000000218fa       0x26 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
-                0x00000000000218fa                memmove
+                0x0000000000021858       0x88 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
+                0x0000000000021858                __smakebuf_r
+ .text.memchr   0x00000000000218e0       0x16 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
+                0x00000000000218e0                memchr
+ .text.memmove  0x00000000000218f6       0x26 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
+                0x00000000000218f6                memmove
  .text.__malloc_lock
-                0x0000000000021920       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
-                0x0000000000021920                __malloc_lock
+                0x000000000002191c       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
+                0x000000000002191c                __malloc_lock
  .text.__malloc_unlock
-                0x0000000000021930       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
-                0x0000000000021930                __malloc_unlock
- .text._free_r  0x0000000000021940       0x94 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
-                0x0000000000021940                _free_r
+                0x000000000002192c       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
+                0x000000000002192c                __malloc_unlock
+ .text._free_r  0x000000000002193c       0x94 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
+                0x000000000002193c                _free_r
  .text._realloc_r
-                0x00000000000219d4       0x4c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
-                0x00000000000219d4                _realloc_r
- .text._read_r  0x0000000000021a20       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
-                0x0000000000021a20                _read_r
+                0x00000000000219d0       0x4c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
+                0x00000000000219d0                _realloc_r
+ .text._read_r  0x0000000000021a1c       0x28 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
+                0x0000000000021a1c                _read_r
  .text._fstat_r
-                0x0000000000021a48       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
-                0x0000000000021a48                _fstat_r
+                0x0000000000021a44       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
+                0x0000000000021a44                _fstat_r
  .text._isatty_r
-                0x0000000000021a6c       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
-                0x0000000000021a6c                _isatty_r
+                0x0000000000021a68       0x24 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
+                0x0000000000021a68                _isatty_r
  .text._malloc_usable_size_r
-                0x0000000000021a90       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
-                0x0000000000021a90                _malloc_usable_size_r
- .text          0x0000000000021aa0       0x14 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_thumb1_case_shi.o)
-                0x0000000000021aa0                __gnu_thumb1_case_shi
- .text._close   0x0000000000021ab4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
-                0x0000000000021ab4                _close
- .text._fstat   0x0000000000021ac4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
-                0x0000000000021ac4                _fstat
- .text._isatty  0x0000000000021ad4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
-                0x0000000000021ad4                _isatty
- .text._lseek   0x0000000000021ae4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
-                0x0000000000021ae4                _lseek
- .text._read    0x0000000000021af4       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
-                0x0000000000021af4                _read
- .text._sbrk    0x0000000000021b04       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
-                0x0000000000021b04                _sbrk
+                0x0000000000021a8c       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
+                0x0000000000021a8c                _malloc_usable_size_r
+ .text          0x0000000000021a9c       0x14 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_thumb1_case_shi.o)
+                0x0000000000021a9c                __gnu_thumb1_case_shi
+ .text._close   0x0000000000021ab0       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
+                0x0000000000021ab0                _close
+ .text._fstat   0x0000000000021ac0       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
+                0x0000000000021ac0                _fstat
+ .text._isatty  0x0000000000021ad0       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
+                0x0000000000021ad0                _isatty
+ .text._lseek   0x0000000000021ae0       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
+                0x0000000000021ae0                _lseek
+ .text._read    0x0000000000021af0       0x10 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
+                0x0000000000021af0                _read
+ .text._sbrk    0x0000000000021b00       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
+                0x0000000000021b00                _sbrk
  *(.init)
- .init          0x0000000000021b20        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crti.o
-                0x0000000000021b20                _init
- .init          0x0000000000021b24        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
+ .init          0x0000000000021b1c        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crti.o
+                0x0000000000021b1c                _init
+ .init          0x0000000000021b20        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
  *(.fini)
- .fini          0x0000000000021b2c        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crti.o
-                0x0000000000021b2c                _fini
- .fini          0x0000000000021b30        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
+ .fini          0x0000000000021b28        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crti.o
+                0x0000000000021b28                _fini
+ .fini          0x0000000000021b2c        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -1639,60 +1638,60 @@ END GROUP
  *(.dtors)
  *(.rodata*)
  .rodata._global_impure_ptr
-                0x0000000000021b38        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-impure.o)
-                0x0000000000021b38                _global_impure_ptr
- .rodata.process_key
-                0x0000000000021b3c       0x5c _build/in4073.o
+                0x0000000000021b34        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-impure.o)
+                0x0000000000021b34                _global_impure_ptr
  .rodata.main.str1.4
-                0x0000000000021b98       0x52 _build/in4073.o
- *fill*         0x0000000000021bea        0x2 
+                0x0000000000021b38       0x52 _build/in4073.o
+ *fill*         0x0000000000021b8a        0x2 
+ .rodata.process_key
+                0x0000000000021b8c       0x5c _build/parse.o
  .rodata.quadrupel_timer.6390
-                0x0000000000021bec        0x4 _build/timers.o
+                0x0000000000021be8        0x4 _build/timers.o
  .rodata.UART0_IRQHandler.str1.4
-                0x0000000000021bf0       0x11 _build/uart.o
- *fill*         0x0000000000021c01        0x3 
+                0x0000000000021bec       0x11 _build/uart.o
+ *fill*         0x0000000000021bfd        0x3 
  .rodata.SPI0_TWI0_IRQHandler.str1.4
-                0x0000000000021c04       0x38 _build/twi.o
+                0x0000000000021c00       0x38 _build/twi.o
  .rodata.quad_ble_init.str1.4
-                0x0000000000021c3c       0x12 _build/quad_ble.o
- *fill*         0x0000000000021c4e        0x2 
+                0x0000000000021c38       0x12 _build/quad_ble.o
+ *fill*         0x0000000000021c4a        0x2 
  .rodata.mpu_init.str1.4
-                0x0000000000021c50       0x96 _build/inv_mpu.o
- *fill*         0x0000000000021ce6        0x2 
- .rodata.hw     0x0000000000021ce8        0xc _build/inv_mpu.o
-                0x0000000000021ce8                hw
- .rodata.reg    0x0000000000021cf4       0x1e _build/inv_mpu.o
-                0x0000000000021cf4                reg
- *fill*         0x0000000000021d12        0x2 
- .rodata.test   0x0000000000021d14       0x28 _build/inv_mpu.o
-                0x0000000000021d14                test
+                0x0000000000021c4c       0x96 _build/inv_mpu.o
+ *fill*         0x0000000000021ce2        0x2 
+ .rodata.hw     0x0000000000021ce4        0xc _build/inv_mpu.o
+                0x0000000000021ce4                hw
+ .rodata.reg    0x0000000000021cf0       0x1e _build/inv_mpu.o
+                0x0000000000021cf0                reg
+ *fill*         0x0000000000021d0e        0x2 
+ .rodata.test   0x0000000000021d10       0x28 _build/inv_mpu.o
+                0x0000000000021d10                test
  .rodata.dmp_set_orientation.str1.4
-                0x0000000000021d3c       0x10 _build/inv_mpu_dmp_motion_driver.o
+                0x0000000000021d38       0x10 _build/inv_mpu_dmp_motion_driver.o
  .rodata.dmp_set_fifo_rate.str1.4
-                0x0000000000021d4c        0xd _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x0000000000021d59        0x3 
+                0x0000000000021d48        0xd _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000021d55        0x3 
  .rodata.dmp_enable_feature.str1.4
-                0x0000000000021d5c       0x16 _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x0000000000021d72        0x2 
+                0x0000000000021d58       0x16 _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000021d6e        0x2 
  .rodata.dmp_memory
-                0x0000000000021d74      0xbf6 _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x000000000002296a        0x2 
+                0x0000000000021d70      0xbf6 _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000022966        0x2 
  .rodata.get_sensor_data.str1.4
-                0x000000000002296c       0x47 _build/mpu6050.o
- *fill*         0x00000000000229b3        0x1 
+                0x0000000000022968       0x47 _build/mpu6050.o
+ *fill*         0x00000000000229af        0x1 
  .rodata.imu_init.str1.4
-                0x00000000000229b4      0x106 _build/mpu6050.o
- *fill*         0x0000000000022aba        0x2 
+                0x00000000000229b0      0x106 _build/mpu6050.o
+ *fill*         0x0000000000022ab6        0x2 
  .rodata.app_error_handler.str1.4
-                0x0000000000022abc       0x27 _build/app_error.o
- *fill*         0x0000000000022ae3        0x1 
+                0x0000000000022ab8       0x27 _build/app_error.o
+ *fill*         0x0000000000022adf        0x1 
  .rodata.m_conn_params_timer_id
-                0x0000000000022ae4        0x4 _build/ble_conn_params.o
- .rodata        0x0000000000022ae8       0x10 _build/ble_nus.o
+                0x0000000000022ae0        0x4 _build/ble_conn_params.o
+ .rodata        0x0000000000022ae4       0x10 _build/ble_nus.o
  .rodata.asin.str1.4
-                0x0000000000022af8        0x5 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x0000000000022af4        0x5 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
                                           0x9 (size before relaxing)
- *fill*         0x0000000000022afd        0x3 
+ *fill*         0x0000000000022af9        0x7 
  .rodata.CSWTCH.8
                 0x0000000000022b00       0x18 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
  .rodata.CSWTCH.9
@@ -1952,7 +1951,7 @@ END GROUP
  .bss.heap_end.4144
                 0x00000000200025f8        0x4 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
  *(COMMON)
- COMMON         0x00000000200025fc        0x1 _build/in4073.o
+ COMMON         0x00000000200025fc        0x1 _build/parse.o
                 0x00000000200025fc                demo_done
  *fill*         0x00000000200025fd        0x3 
  COMMON         0x0000000020002600       0x14 _build/control.o
@@ -2041,217 +2040,220 @@ OUTPUT(_build/in4073.out elf32-littlearm)
  .ARM.attributes
                 0x0000000000000199       0x2c _build/in4073.o
  .ARM.attributes
-                0x00000000000001c5       0x2c _build/control.o
+                0x00000000000001c5       0x2c _build/parse.o
  .ARM.attributes
-                0x00000000000001f1       0x2c _build/gpio.o
+                0x00000000000001f1       0x2c _build/control.o
  .ARM.attributes
-                0x000000000000021d       0x2c _build/timers.o
+                0x000000000000021d       0x2c _build/gpio.o
  .ARM.attributes
-                0x0000000000000249       0x2c _build/uart.o
+                0x0000000000000249       0x2c _build/timers.o
  .ARM.attributes
-                0x0000000000000275       0x2c _build/twi.o
+                0x0000000000000275       0x2c _build/uart.o
  .ARM.attributes
-                0x00000000000002a1       0x2c _build/adc.o
+                0x00000000000002a1       0x2c _build/twi.o
  .ARM.attributes
-                0x00000000000002cd       0x2c _build/barometer.o
+                0x00000000000002cd       0x2c _build/adc.o
  .ARM.attributes
-                0x00000000000002f9       0x2c _build/spi_flash.o
+                0x00000000000002f9       0x2c _build/barometer.o
  .ARM.attributes
-                0x0000000000000325       0x2c _build/quad_ble.o
+                0x0000000000000325       0x2c _build/spi_flash.o
  .ARM.attributes
-                0x0000000000000351       0x2c _build/queue.o
+                0x0000000000000351       0x2c _build/quad_ble.o
  .ARM.attributes
-                0x000000000000037d       0x2c _build/inv_mpu.o
+                0x000000000000037d       0x2c _build/queue.o
  .ARM.attributes
-                0x00000000000003a9       0x2c _build/inv_mpu_dmp_motion_driver.o
+                0x00000000000003a9       0x2c _build/inv_mpu.o
  .ARM.attributes
-                0x00000000000003d5       0x2c _build/ml.o
+                0x00000000000003d5       0x2c _build/inv_mpu_dmp_motion_driver.o
  .ARM.attributes
-                0x0000000000000401       0x2c _build/mpu6050.o
+                0x0000000000000401       0x2c _build/ml.o
  .ARM.attributes
-                0x000000000000042d       0x2c _build/app_error.o
+                0x000000000000042d       0x2c _build/mpu6050.o
  .ARM.attributes
-                0x0000000000000459       0x2c _build/app_timer.o
+                0x0000000000000459       0x2c _build/app_error.o
  .ARM.attributes
-                0x0000000000000485       0x2c _build/pstorage.o
+                0x0000000000000485       0x2c _build/app_timer.o
  .ARM.attributes
-                0x00000000000004b1       0x2c _build/ble_advdata.o
+                0x00000000000004b1       0x2c _build/pstorage.o
  .ARM.attributes
-                0x00000000000004dd       0x2c _build/ble_advertising.o
+                0x00000000000004dd       0x2c _build/ble_advdata.o
  .ARM.attributes
-                0x0000000000000509       0x2c _build/ble_conn_params.o
+                0x0000000000000509       0x2c _build/ble_advertising.o
  .ARM.attributes
-                0x0000000000000535       0x2c _build/ble_nus.o
+                0x0000000000000535       0x2c _build/ble_conn_params.o
  .ARM.attributes
-                0x0000000000000561       0x2c _build/softdevice_handler.o
+                0x0000000000000561       0x2c _build/ble_nus.o
  .ARM.attributes
-                0x000000000000058d       0x1b _build/gcc_startup_nrf51.o
+                0x000000000000058d       0x2c _build/softdevice_handler.o
  .ARM.attributes
-                0x00000000000005a8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_copysign.o)
+                0x00000000000005b9       0x1b _build/gcc_startup_nrf51.o
  .ARM.attributes
-                0x00000000000005d4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
+                0x00000000000005d4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_copysign.o)
  .ARM.attributes
-                0x0000000000000600       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x0000000000000600       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
  .ARM.attributes
-                0x000000000000062c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
+                0x000000000000062c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
  .ARM.attributes
-                0x0000000000000658       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
+                0x0000000000000658       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
  .ARM.attributes
-                0x0000000000000684       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
+                0x0000000000000684       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
  .ARM.attributes
-                0x00000000000006b0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
+                0x00000000000006b0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
  .ARM.attributes
-                0x00000000000006dc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+                0x00000000000006dc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
  .ARM.attributes
-                0x0000000000000708       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_lib_ver.o)
+                0x0000000000000708       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
  .ARM.attributes
-                0x0000000000000734       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
+                0x0000000000000734       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_lib_ver.o)
  .ARM.attributes
-                0x0000000000000760       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
+                0x0000000000000760       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
  .ARM.attributes
-                0x000000000000078c       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                0x000000000000078c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
  .ARM.attributes
-                0x00000000000007aa       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                0x00000000000007b8       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
  .ARM.attributes
-                0x00000000000007c8       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x00000000000007d6       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
  .ARM.attributes
-                0x00000000000007e6       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
+                0x00000000000007f4       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x0000000000000804       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x0000000000000812       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
  .ARM.attributes
-                0x0000000000000822       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
+                0x0000000000000830       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
  .ARM.attributes
-                0x000000000000084e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
+                0x000000000000084e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
  .ARM.attributes
-                0x000000000000087a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                0x000000000000087a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
  .ARM.attributes
-                0x00000000000008a6       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
+                0x00000000000008a6       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
  .ARM.attributes
-                0x00000000000008d2       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                0x00000000000008d2       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
  .ARM.attributes
-                0x00000000000008fe       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                0x00000000000008fe       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
  .ARM.attributes
-                0x000000000000092a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                0x000000000000092a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
  .ARM.attributes
-                0x0000000000000956       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                0x0000000000000956       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
  .ARM.attributes
-                0x0000000000000982       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
+                0x0000000000000982       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
  .ARM.attributes
-                0x00000000000009ae       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
+                0x00000000000009ae       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
  .ARM.attributes
-                0x00000000000009da       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
+                0x00000000000009da       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
  .ARM.attributes
-                0x0000000000000a06       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                0x0000000000000a06       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
  .ARM.attributes
-                0x0000000000000a32       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
+                0x0000000000000a32       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
  .ARM.attributes
-                0x0000000000000a5e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
+                0x0000000000000a5e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
  .ARM.attributes
-                0x0000000000000a8a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
+                0x0000000000000a8a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
  .ARM.attributes
-                0x0000000000000ab6       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
+                0x0000000000000ab6       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
  .ARM.attributes
-                0x0000000000000ae2       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
+                0x0000000000000ae2       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
  .ARM.attributes
-                0x0000000000000b0e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
+                0x0000000000000b0e       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
  .ARM.attributes
-                0x0000000000000b3a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
+                0x0000000000000b3a       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
  .ARM.attributes
-                0x0000000000000b66       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
+                0x0000000000000b66       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
  .ARM.attributes
-                0x0000000000000b92       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
+                0x0000000000000b92       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
  .ARM.attributes
-                0x0000000000000bbe       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
+                0x0000000000000bbe       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
  .ARM.attributes
-                0x0000000000000bea       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                0x0000000000000bea       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
  .ARM.attributes
-                0x0000000000000c08       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-abs.o)
+                0x0000000000000c16       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
  .ARM.attributes
-                0x0000000000000c34       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
+                0x0000000000000c34       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-abs.o)
  .ARM.attributes
-                0x0000000000000c60       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
+                0x0000000000000c60       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
  .ARM.attributes
-                0x0000000000000c8c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000000000000c8c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
  .ARM.attributes
-                0x0000000000000cb8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
+                0x0000000000000cb8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x0000000000000ce4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
+                0x0000000000000ce4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
  .ARM.attributes
-                0x0000000000000d10       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
+                0x0000000000000d10       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
  .ARM.attributes
-                0x0000000000000d2c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000000d3c       0x1c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
  .ARM.attributes
-                0x0000000000000d58       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
+                0x0000000000000d58       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
  .ARM.attributes
-                0x0000000000000d84       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x0000000000000d84       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
  .ARM.attributes
-                0x0000000000000db0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000000000db0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
  .ARM.attributes
-                0x0000000000000ddc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000000ddc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
  .ARM.attributes
-                0x0000000000000e08       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000000e08       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
  .ARM.attributes
-                0x0000000000000e34       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000000e34       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
  .ARM.attributes
-                0x0000000000000e60       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
+                0x0000000000000e60       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
  .ARM.attributes
-                0x0000000000000e8c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000000e8c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
  .ARM.attributes
-                0x0000000000000eb8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
+                0x0000000000000eb8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
  .ARM.attributes
-                0x0000000000000ee4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
+                0x0000000000000ee4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
  .ARM.attributes
-                0x0000000000000f10       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
+                0x0000000000000f10       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
  .ARM.attributes
-                0x0000000000000f3c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
+                0x0000000000000f3c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
  .ARM.attributes
-                0x0000000000000f68       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
+                0x0000000000000f68       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
  .ARM.attributes
-                0x0000000000000f94       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
+                0x0000000000000f94       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
  .ARM.attributes
-                0x0000000000000fc0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
+                0x0000000000000fc0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
  .ARM.attributes
-                0x0000000000000fec       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
+                0x0000000000000fec       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
  .ARM.attributes
-                0x0000000000001018       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
+                0x0000000000001018       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
  .ARM.attributes
-                0x0000000000001044       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
+                0x0000000000001044       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
  .ARM.attributes
-                0x0000000000001070       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000000001070       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
  .ARM.attributes
-                0x000000000000109c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
+                0x000000000000109c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
  .ARM.attributes
-                0x00000000000010c8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
+                0x00000000000010c8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
  .ARM.attributes
-                0x00000000000010f4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-reent.o)
+                0x00000000000010f4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
  .ARM.attributes
-                0x0000000000001120       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
+                0x0000000000001120       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-reent.o)
  .ARM.attributes
-                0x000000000000114c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
+                0x000000000000114c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
  .ARM.attributes
-                0x0000000000001178       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
+                0x0000000000001178       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
  .ARM.attributes
-                0x00000000000011a4       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_thumb1_case_shi.o)
+                0x00000000000011a4       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
  .ARM.attributes
-                0x00000000000011c2       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
+                0x00000000000011d0       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_thumb1_case_shi.o)
  .ARM.attributes
-                0x00000000000011e0       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
+                0x00000000000011ee       0x1e /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtn.o
  .ARM.attributes
-                0x000000000000120c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
+                0x000000000000120c       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
  .ARM.attributes
-                0x0000000000001238       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
+                0x0000000000001238       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
  .ARM.attributes
-                0x0000000000001264       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
+                0x0000000000001264       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
  .ARM.attributes
-                0x0000000000001290       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
+                0x0000000000001290       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
  .ARM.attributes
-                0x00000000000012bc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
+                0x00000000000012bc       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
+ .ARM.attributes
+                0x00000000000012e8       0x2c /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
 
 .comment        0x0000000000000000       0x79
  .comment       0x0000000000000000       0x79 _build/system_nrf51.o
                                          0x7a (size before relaxing)
  .comment       0x0000000000000079       0x7a _build/nrf_delay.o
  .comment       0x0000000000000079       0x7a _build/in4073.o
+ .comment       0x0000000000000079       0x7a _build/parse.o
  .comment       0x0000000000000079       0x7a _build/control.o
  .comment       0x0000000000000079       0x7a _build/gpio.o
  .comment       0x0000000000000079       0x7a _build/timers.o

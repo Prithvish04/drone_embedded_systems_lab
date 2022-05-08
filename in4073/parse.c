@@ -4,17 +4,14 @@
 #include <inttypes.h>
 #include <math.h>
 #include <string.h>
+#include <stdbool.h>
+#include "nrf_gpio.h"
 #include "parse.h"
+#include "gpio.h"
+#include "control.h"
 
-struct Message {
-	uint8_t start;
-	int16_t pitch;
-	int16_t roll;
-	int16_t yaw;
-    int16_t lift;
-    int8_t mode;
-	uint8_t stop;	
-};
+bool demo_done;
+
 
 long long to_dec(char hex[], int length)
 {
@@ -50,3 +47,50 @@ void print_message_block(int message[],int start_index, int length)
     buffer[length] = '\n';
     printf("%lld |",to_dec(buffer,length-1));
 }
+
+/*------------------------------------------------------------------
+ * process_key -- process command keys
+ *------------------------------------------------------------------
+ */
+
+
+void process_key(uint8_t c)
+{
+	switch (c) {
+	case 'q':
+		ae[0] += 10;
+		break;
+	case 'a':
+		ae[0] -= 10;
+		if (ae[0] < 0) ae[0] = 0;
+		break;
+	case 'w':
+		ae[1] += 10;
+		break;
+	case 's':
+		ae[1] -= 10;
+		if (ae[1] < 0) ae[1] = 0;
+		break;
+	case 'e':
+		ae[2] += 10;
+		break;
+	case 'd':
+		ae[2] -= 10;
+		if (ae[2] < 0) ae[2] = 0;
+		break;
+	case 'r':
+		ae[3] += 10;
+		break;
+	case 'f':
+		ae[3] -= 10;
+		if (ae[3] < 0) ae[3] = 0;
+		break;
+	case 27:
+		demo_done = true;
+		//panic mode 
+		break;
+	default:
+		nrf_gpio_pin_toggle(RED);
+	}
+}
+
