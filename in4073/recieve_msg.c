@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <termios.h>
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
@@ -7,6 +6,15 @@
 #include <string.h>
 #include "recieve_msg.h"
 
+struct Message {
+	uint8_t start;
+	int16_t pitch;
+	int16_t roll;
+	int16_t yaw;
+    int16_t lift;
+    int8_t mode;
+	uint8_t stop;	
+};
 
 long long to_dec(char hex[], int length)
 {

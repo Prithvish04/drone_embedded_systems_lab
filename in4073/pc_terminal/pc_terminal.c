@@ -84,6 +84,7 @@ int	term_getchar()
 #include <time.h>
 
 static int fd_serial_port;
+char current_mode;
 /*
  * Open the terminal I/O interface to the serial/pseudo serial port.
  *
@@ -173,7 +174,7 @@ int main(int argc, char **argv)
 	char c;
 	struct message mlog;
 	js_data_type jsdata;
-
+	current_mode = "1";
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 
@@ -199,12 +200,52 @@ int main(int argc, char **argv)
 		mlog.pitch =  jsdata.pitch;
 		mlog.yaw = jsdata.yaw;
 		mlog.lift = jsdata.lift;
-		mlog.mode = jsdata.panic;
+		mlog.mode = current_mode;
 		mlog.stop = (uint8_t)"\n";
+		printf(sizeof(mlog));
 
 		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
+			if(c == 49){
+				mlog.mode = "1";
+				break;
+			}
+			else if (c == 50){
+				mlog.mode = "2";
+				break;
+			}
+			else if (c == 51){
+				mlog.mode = "3";
+				break;
+			}
+			else if (c == 52){
+				mlog.mode = "4";
+				break;
+			}
+			else if (c == 53){
+				mlog.mode = "5";
+				break;
+			}
+			else if (c == 54){
+				mlog.mode = "6";
+				break;
+			}
+			else if (c == 55){
+				mlog.mode = "7";
+				break;
+			}
+			else if (c == 56){
+				mlog.mode = "8";
+				break;
+			}
+			else if (c == 27){
+				mlog.mode = "2";
+				break;
+			}
+			else{
+				break;
+			}
 			serial_port_putchar(c);
 		}
 		if ((c = serial_port_getchar()) != -1) {

@@ -45,7 +45,7 @@ Archive member included to satisfy reference by file (symbol)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_aeabi_ldivmod.o)
                               _build/inv_mpu.o (__aeabi_ldivmod)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
-                              _build/barometer.o (__aeabi_lmul)
+                              _build/recieve_msg.o (__aeabi_lmul)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
                               _build/inv_mpu_dmp_motion_driver.o (__aeabi_f2uiz)
 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(bpabi.o)
@@ -266,9 +266,14 @@ Discarded input sections
  .text          0x0000000000000000        0x0 _build/recieve_msg.o
  .data          0x0000000000000000        0x0 _build/recieve_msg.o
  .bss           0x0000000000000000        0x0 _build/recieve_msg.o
+ .text.to_dec   0x0000000000000000       0x74 _build/recieve_msg.o
+ .rodata.print_message_block.str1.4
+                0x0000000000000000        0x7 _build/recieve_msg.o
+ .text.print_message_block
+                0x0000000000000000       0xb0 _build/recieve_msg.o
  .comment       0x0000000000000000       0x7a _build/recieve_msg.o
  .ARM.attributes
-                0x0000000000000000       0x31 _build/recieve_msg.o
+                0x0000000000000000       0x2c _build/recieve_msg.o
  .text          0x0000000000000000        0x0 _build/control.o
  .data          0x0000000000000000        0x0 _build/control.o
  .bss           0x0000000000000000        0x0 _build/control.o

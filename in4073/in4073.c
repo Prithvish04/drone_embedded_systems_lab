@@ -71,6 +71,7 @@ void process_key(uint8_t c)
 		break;
 	case 27:
 		demo_done = true;
+		//panic mode 
 		break;
 	default:
 		nrf_gpio_pin_toggle(RED);

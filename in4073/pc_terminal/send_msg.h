@@ -9,11 +9,11 @@
 struct message
 {
 	uint8_t start;
+	uint8_t mode;
 	int16_t pitch;
 	int16_t roll;
 	int16_t yaw;
     int16_t lift;
-    int8_t mode;
 	uint8_t stop;	
 };
 
