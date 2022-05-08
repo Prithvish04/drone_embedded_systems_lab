@@ -25,6 +25,7 @@
 uint16_t motor[4];
 int16_t ae[4];
 bool wireless_mode;
+int motor_land_speed = 20;
 
 void update_motors(void)
 {
@@ -43,3 +44,44 @@ void run_filters_and_control()
 	// ae[0] = xxx, ae[1] = yyy etc etc
 	update_motors();
 }
+
+void all_motors_grad_slow();
+{
+	while(1)
+	{
+		if (ae[0] > motor_land_speed || ae[1] > motor_land_speed || ae[2] > motor_land_speed || ae[3] > motor_land_speed)
+		{
+			all_motors_slow_down();
+		}
+		else
+		{
+			update_motors();
+			break;
+		}
+		update_motors();
+	}
+}
+
+void all_motors_slow_down()
+{
+	ae[0] -= 10;
+	ae[1] -= 10;
+	ae[2] -= 10;
+	ae[3] -= 10;
+}
+
+void all_motors_hold_speed()
+{
+	nrf_delay_ms(2000);
+	update_motors();
+}
+
+void all_motors_stop()
+{
+	ae[0] = 0;
+	ae[1] = 0;
+	ae[2] = 0;
+	ae[3] = 0;
+}
+
+

@@ -10,12 +10,40 @@
 #include "nrf_gpio.h"
 #include "gpio.h"
 
+enum Mode {
+    Safe = 0,
+    Panic = 1,
+    Manual = 2,
+    Calibration = 3,
+    YawControl = 4,
+    FullControl = 5,
+    Raw = 6,
+    HeightControl = 7,
+    Wireless = 8,
+};
 
+static enum Mode current_state = Safe; 
 
 static const uint32_t us_1_2 = (500ULL*1000ULL);
 static const uint32_t us_1 = (2ULL * us_1_2);
 static const uint32_t us_2 = (2ULL * us_1);
 static const uint32_t critical_time = (1ULL * us_1_2);
+
+static void panic_handler() {
+    nrf_gpio_pin_clear(RED);
+    all_motors_grad_slow();
+    all_motors_hold_speed(us_2);
+    all_motors_stop();
+    nrf_gpio_pin_set(RED);
+    printf("Landed in Panic Mode!")
+    change_mode(Safe);
+}    
+
+void change_mode(const enum Mode changed_mode)
+{
+    current_state = changed_mode;
+} 
+
 
 void state_machine()
 {
@@ -26,7 +54,7 @@ void state_machine()
             break;
         
         case Panic:
-            //panic_handler();
+            panic_handler();
             //change_mode(Safe);
             break; 
         
