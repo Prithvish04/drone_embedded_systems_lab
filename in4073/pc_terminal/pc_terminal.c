@@ -196,6 +196,7 @@ int main(int argc, char **argv)
 	 
 	int count = 0;
 	int message[84];
+	struct message m_rec;
 	for (int i = 0; i<60;i++)
 	{
 		message[i] =0;
@@ -224,9 +225,13 @@ int main(int argc, char **argv)
 			//printf(" %d ", count);
 			if (count == 73)
 			{
-				term_putchar('M');
-				//print_message_block(message,7,4);
-				
+				//term_putchar('M');
+				m_rec.timestamp = message_block(message,0,7);
+				m_rec.mot0 = message_block(message,7,4);
+				m_rec.mot1 = message_block(message,11,4);
+				m_rec.mot2 = message_block(message,15,4);
+				m_rec.mot3 = message_block(message,19,4);
+
 				count = 0;
 			}
 			if ((int) start_find[0] == 65 && ((int) start_find[1]) == 65)
