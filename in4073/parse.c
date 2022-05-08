@@ -94,3 +94,10 @@ void process_key(uint8_t c)
 	}
 }
 
+
+bool process_message(uint8_t c){
+	if(c == 0xAA){
+		printf("first byte");
+	}
+	return false;
+}

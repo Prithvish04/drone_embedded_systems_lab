@@ -50,6 +50,10 @@ void	term_putchar(char c)
 	putc(c,stderr);
 }
 
+void term_printf(char* buf){
+	printf("%s", buf);
+}
+
 int	term_getchar_nb()
 {
 	static unsigned char 	line [2];
@@ -175,21 +179,8 @@ int serial_port_buffer(char* buf)
 }
 
 
-/*----------------------------------------------------------------
- * main -- execute terminal
- *----------------------------------------------------------------
- */
-int main(int argc, char **argv)
-{
-	char c;
-	struct message mlog;
-	js_data_type jsdata;
-	char current_mode = 49;
-	term_initio();
-	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
-	char* buf;
-
-	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
+int open_serial(int argc,char ** argv){
+		// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
 	if (argc == 1) {
 		serial_port_open("/dev/ttyUSB0");
@@ -201,6 +192,26 @@ int main(int argc, char **argv)
 	}
 
 	term_puts("Type ^C to exit\n");
+	return 0;
+}
+
+/*----------------------------------------------------------------
+ * main -- execute terminal
+ *----------------------------------------------------------------
+ */
+int main(int argc, char **argv)
+{
+	char c;
+	struct message mlog;
+	js_data_type jsdata;
+	char current_mode = 49;
+	char* buf;
+
+	term_initio();
+	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
+	if(open_serial(argc, argv)==-1){
+		return -1;
+	}
 
 	/* send & receive
 	 */
@@ -218,49 +229,10 @@ int main(int argc, char **argv)
 		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
-			if(c == 49){
-				mlog.mode = 49;
-				break;
-			}
-			else if (c == 50){
-				mlog.mode = 50;
-				break;
-			}
-			else if (c == 51){
-				mlog.mode = 51;
-				break;
-			}
-			else if (c == 52){
-				mlog.mode = 52;
-				break;
-			}
-			else if (c == 53){
-				mlog.mode = 53;
-				break;
-			}
-			else if (c == 54){
-				mlog.mode = 54;
-				break;
-			}
-			else if (c == 55){
-				mlog.mode = 55;
-				break;
-			}
-			else if (c == 56){
-				mlog.mode = 56;
-				break;
-			}
-			else if (c == 27){
-				mlog.mode = 27;
-				break;
-			}
-			else{
-				break;
-			}
+			mlog.mode = c;
 			buf= (char*)&mlog;
-			for (size_t i = 0; i < sizeof(struct message); i++) {
-					serial_port_buffer(buf);
-			}	
+			serial_port_buffer(buf);
+			term_printf(buf);
 		}
 		if ((c = serial_port_getchar()) != -1) {
 			term_putchar(c);
