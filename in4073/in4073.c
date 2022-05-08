@@ -33,12 +33,6 @@
 
 
 
-bool process_message(char c){
-
-	return false; 
-}
-
-
 
 
 /*------------------------------------------------------------------
@@ -64,7 +58,7 @@ int main(void)
 	while (!demo_done) {
 		if (rx_queue.count) {
 			if(process_message(dequeue(&rx_queue))){
-				printf("abc");
+				
 			}
 		}
 		if (ble_rx_queue.count) {
