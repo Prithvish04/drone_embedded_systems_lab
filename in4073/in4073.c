@@ -142,7 +142,7 @@ int main(void)
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
 			
 			print_message_hex(m_log);
-
+			printf("\n");
 			clear_timer_flag();
 		}
 

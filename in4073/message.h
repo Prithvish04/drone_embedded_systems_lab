@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+
 struct message
 {
 	uint8_t start;
@@ -28,7 +29,29 @@ struct message
 	uint16_t battery;
 	uint32_t pressure;
 	
-	uint8_t stop;	
+	uint8_t stop;
+	
+	/*int start;
+	
+	int timestamp;
+	
+	int mot0;
+	int mot1;
+	int mot2;
+	int mot3;
+	
+	int phi;
+	int theta;
+	int psi;
+	
+	int gyro0;
+	int gyro1;
+	int gyro2;
+	
+	int battery;
+	int pressure;
+	
+	int stop;*/		
 };
 
 void toBinary(unsigned n, int len);

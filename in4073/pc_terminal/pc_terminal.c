@@ -15,6 +15,7 @@
 #include <math.h>
 #include <string.h>
 #include "recieve_msg.h"
+#include "parsing_drone.h"
 
 /*------------------------------------------------------------
  * console I/O
@@ -83,6 +84,7 @@ int	term_getchar()
 #include <stdio.h>
 #include <assert.h>
 #include <time.h>
+#include "parsing_drone.h"
 
 static int fd_serial_port;
 /*
@@ -193,7 +195,7 @@ int main(int argc, char **argv)
 	 */
 	 
 	int count = 0;
-	int message[60];
+	int message[84];
 	for (int i = 0; i<60;i++)
 	{
 		message[i] =0;
@@ -201,33 +203,52 @@ int main(int argc, char **argv)
 	//int timestamp_start_find[8];
 	//long long decimal = 0, base = 1;  
 	char start_find[2] = {0, 0};
-	for (;;) {
+	for (;;) 
+	{
 		start_find[0] = start_find[1];
 		start_find[1] = c;
 
 		if ((c = term_getchar_nb()) != -1) {
 			serial_port_putchar(c);
 		}
-		if ((c = serial_port_getchar()) != -1) {
+		if ((c = serial_port_getchar()) != -1) 
+		{
+			message[count] = c;
 			//term_putchar(start_find[0]);
 			//term_putchar(c);
+			count = count+1;
+			//term_putchar((char)count);
+
+			//printf("%d\n",count);
+
+			//printf(" %d ", count);
+			if (count == 73)
+			{
+				term_putchar('M');
+				//print_message_block(message,7,4);
+				
+				count = 0;
+			}
+			if ((int) start_find[0] == 65 && ((int) start_find[1]) == 65)
+			{
+				count = 0;
+			}
+		//	}
+
 			//term_putchar('a');
 			
-			if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65 && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
+			/*if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65)// && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
 			{
 				
 				
-				if (count == 79 || count == 75)
+				if (count == 84)
 				{
-					//printf("%d ",count);
-					char buffer[5]; 
-					for (int i =8; i<12; i++)
-					{
-						buffer[i-8] = message[i];
-					} 
-					buffer[4] = '\n';
-					printf("%lld |",to_dec(buffer,3));
+					printf("OK");
+					printf("%d ",count);
+					print_message_block(message,8, 4); 
 					
+
+					char buffer[5]; 
 					for (int i =12; i<16; i++)
 					{
 						buffer[i-12] = message[i];
@@ -241,7 +262,7 @@ int main(int argc, char **argv)
 					} 
 					buffer[4] = '\n';
 					printf("%lld |",to_dec(buffer,3));
-					
+				
 					for (int i =20; i<24; i++)
 					{
 						buffer[i-20] = message[i];
@@ -255,21 +276,24 @@ int main(int argc, char **argv)
 					} 
 					buffer[4] = '\n';
 					printf("%lld |\n",to_dec(buffer,3));
-
+					count = 0;
+					count = 0;
 				}
+			}
 
-				count = 0;
+				
 				for (int i = 0; i<60;i++)
 				{
 					message[i] =0;
 				}
 				
-			}
+			}*/
+/*			
 			else
 			{
 				message[count] = c; 
 				count+=1;
-			}
+			}*/
 			//printf(".");
 			//printf("\n");
 

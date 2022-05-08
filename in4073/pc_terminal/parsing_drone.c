@@ -17,5 +17,6 @@ void print_message_block(int message[],int start_index, int length)
         buffer[i-start_index] = message[i];
     } 
     buffer[length] = '\n';
+
     printf("%lld |",to_dec(buffer,length-1));
 }
