@@ -12,10 +12,15 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+<<<<<<< HEAD
 #include <math.h>
 #include <string.h>
 #include "recieve_msg.h"
 #include "parsing_drone.h"
+=======
+#include "send_msg.h"
+#include "js_data_read.h"
+>>>>>>> 2923c9ee770e424f07d134e37a7c7a534e5a16b5
 
 /*------------------------------------------------------------
  * console I/O
@@ -87,6 +92,7 @@ int	term_getchar()
 #include "parsing_drone.h"
 
 static int fd_serial_port;
+char current_mode;
 /*
  * Open the terminal I/O interface to the serial/pseudo serial port.
  *
@@ -166,6 +172,16 @@ int serial_port_putchar(char c)
 	return result;
 }
 
+int serial_port_buffer(char* buf)
+{
+	int result;
+	do {
+		result = (int) write(fd_serial_port, &buf, sizeof(buf));
+	} while (result ==0);
+	assert (result ==1);
+	return result;
+}
+
 
 /*----------------------------------------------------------------
  * main -- execute terminal
@@ -174,9 +190,12 @@ int serial_port_putchar(char c)
 int main(int argc, char **argv)
 {
 	char c;
-
+	struct message mlog;
+	js_data_type jsdata;
+	char current_mode = 49;
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
+	char* buf;
 
 	// if no argument is given at execution time, /dev/ttyUSB0 is assumed
 	// asserts are in the function
@@ -193,6 +212,7 @@ int main(int argc, char **argv)
 
 	/* send & receive
 	 */
+<<<<<<< HEAD
 	 
 	int count = 0;
 	int message[84];
@@ -208,8 +228,65 @@ int main(int argc, char **argv)
 		start_find[0] = start_find[1];
 		start_find[1] = c;
 
+=======
+	for (;;) {
+		jsdata = js_values_read();
+		mlog.start = (uint8_t)0xAA;
+		mlog.roll = jsdata.roll; 
+		mlog.pitch =  jsdata.pitch;
+		mlog.yaw = jsdata.yaw;
+		mlog.lift = jsdata.lift;
+		mlog.mode = current_mode;
+		mlog.stop = (uint8_t)39;
+		
+
+		// print_message_hex(mlog);
+		
+>>>>>>> 2923c9ee770e424f07d134e37a7c7a534e5a16b5
 		if ((c = term_getchar_nb()) != -1) {
-			serial_port_putchar(c);
+			if(c == 49){
+				mlog.mode = 49;
+				break;
+			}
+			else if (c == 50){
+				mlog.mode = 50;
+				break;
+			}
+			else if (c == 51){
+				mlog.mode = 51;
+				break;
+			}
+			else if (c == 52){
+				mlog.mode = 52;
+				break;
+			}
+			else if (c == 53){
+				mlog.mode = 53;
+				break;
+			}
+			else if (c == 54){
+				mlog.mode = 54;
+				break;
+			}
+			else if (c == 55){
+				mlog.mode = 55;
+				break;
+			}
+			else if (c == 56){
+				mlog.mode = 56;
+				break;
+			}
+			else if (c == 27){
+				mlog.mode = 27;
+				break;
+			}
+			else{
+				break;
+			}
+			buf= (char*)&mlog;
+			for (size_t i = 0; i < sizeof(struct message); i++) {
+					serial_port_buffer(buf);
+			}	
 		}
 		if ((c = serial_port_getchar()) != -1) 
 		{
@@ -299,6 +376,7 @@ int main(int argc, char **argv)
 
 			
 		}
+			
 	}
 
 	term_exitio();

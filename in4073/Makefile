@@ -39,6 +39,7 @@ C_SOURCE_FILES += \
 $(abspath ../components/toolchain/system_nrf51.c) \
 $(abspath ../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ./in4073.c) \
+$(abspath ./parse.c)\
 $(abspath ./control.c) \
 $(abspath ./message.c) \
 $(abspath ./hal/gpio.c) \
