@@ -31,8 +31,7 @@
 #include "utils/quad_ble.h"
 #include "parse.h"
 
-
-
+bool demo_done;
 
 
 /*------------------------------------------------------------------
@@ -56,8 +55,9 @@ int main(void)
 	wireless_mode = false;
 
 	while (!demo_done) {
+		// printf(".");
 		if (rx_queue.count) {
-			printf("%c ",(dequeue(&rx_queue)));
+			process_message(dequeue(&rx_queue));
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));
@@ -87,7 +87,7 @@ int main(void)
 	}	
 
 	printf("\n\t Goodbye \n\n");
-	nrf_delay_ms(10);
+	nrf_delay_ms(100);
 
 	NVIC_SystemReset();
 }

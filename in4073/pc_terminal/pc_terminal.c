@@ -196,9 +196,10 @@ int open_serial(int argc,char ** argv){
 int main(int argc, char **argv)
 {
 	char c;
-	// struct message mlog;
-	// js_data_type jsdata;
-	// char current_mode = 49;
+	struct message mlog;
+	js_data_type jsdata;
+	char current_mode = 49; 
+	char* buf;
 
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
@@ -209,22 +210,24 @@ int main(int argc, char **argv)
 	/* send & receive
 	 */
 	for (;;) {
-		// jsdata = js_values_read();
-		// mlog.start = (uint8_t)0xAA;
-		// mlog.roll = jsdata.roll; 
-		// mlog.pitch =  jsdata.pitch;
-		// mlog.yaw = jsdata.yaw;
-		// mlog.lift = jsdata.lift;
-		// mlog.mode = current_mode;
-		// mlog.stop = (uint8_t)39;
+		jsdata = js_values_read();
+		mlog.start = (uint8_t)0xAA;
+		mlog.roll = jsdata.roll; 
+		mlog.pitch =  jsdata.pitch;
+		mlog.yaw = jsdata.yaw;
+		mlog.lift = jsdata.lift;
+		mlog.mode = current_mode;
+		mlog.stop = (uint8_t)'\n';
 		
-		// term_printf(buf, sizeof(mlog));
 
-		// print_message_hex(mlog);
+		print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
-			// mlog.mode = c;
-			serial_port_putchar(c);
+			mlog.mode = c;
+			buf = (char *)&mlog; 
+			for(long unsigned int i; i < sizeof(mlog); i++){
+				serial_port_putchar(*buf++);
+			}
 		}
 		c = serial_port_getchar();
 		if (c != '\0') {
