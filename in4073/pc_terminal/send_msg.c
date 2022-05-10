@@ -11,11 +11,11 @@
 
 void print_message_hex(struct message m)
 {
-	printf("%02X", m.start); //2
-	printf("%04X", m.pitch); // 4
-	printf("%04X", m.roll); //4
-	printf("%04X", m.yaw); //4
-	printf("%04X", m.lift); //4
-	printf("%02X", m.mode); // 2
-	printf("%02X", m.stop); //2
+	printf("%2X ", m.start); //2
+	printf("%4X ", m.pitch); // 4
+	printf("%4X ", m.roll); //4
+	printf("%4X ", m.yaw); //4
+	printf("%4X ", m.lift); //4
+	printf("%2X ", m.mode); // 2
+	printf("%2X ", m.stop); //2
 }

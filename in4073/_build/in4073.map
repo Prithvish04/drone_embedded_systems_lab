@@ -997,7 +997,7 @@ END GROUP
  *(fs_data)
                 [!provide]                        PROVIDE (__stop_fs_data = .)
 
-.text           0x0000000000018000     0xac7c
+.text           0x0000000000018000     0xac74
  *(.Vectors)
  .Vectors       0x0000000000018000       0xc0 _build/gcc_startup_nrf51.o
                 0x0000000000018000                __Vectors
@@ -1647,120 +1647,120 @@ END GROUP
  .rodata.process_key
                 0x0000000000021abc       0x5c _build/parse.o
  .rodata.process_message.str1.4
-                0x0000000000021b18        0xb _build/parse.o
- *fill*         0x0000000000021b23        0x1 
+                0x0000000000021b18        0x2 _build/parse.o
+ *fill*         0x0000000000021b1a        0x2 
  .rodata.quadrupel_timer.6390
-                0x0000000000021b24        0x4 _build/timers.o
+                0x0000000000021b1c        0x4 _build/timers.o
  .rodata.UART0_IRQHandler.str1.4
-                0x0000000000021b28       0x11 _build/uart.o
- *fill*         0x0000000000021b39        0x3 
+                0x0000000000021b20       0x11 _build/uart.o
+ *fill*         0x0000000000021b31        0x3 
  .rodata.SPI0_TWI0_IRQHandler.str1.4
-                0x0000000000021b3c       0x38 _build/twi.o
+                0x0000000000021b34       0x38 _build/twi.o
  .rodata.quad_ble_init.str1.4
-                0x0000000000021b74       0x12 _build/quad_ble.o
- *fill*         0x0000000000021b86        0x2 
+                0x0000000000021b6c       0x12 _build/quad_ble.o
+ *fill*         0x0000000000021b7e        0x2 
  .rodata.mpu_init.str1.4
-                0x0000000000021b88       0x96 _build/inv_mpu.o
- *fill*         0x0000000000021c1e        0x2 
- .rodata.hw     0x0000000000021c20        0xc _build/inv_mpu.o
-                0x0000000000021c20                hw
- .rodata.reg    0x0000000000021c2c       0x1e _build/inv_mpu.o
-                0x0000000000021c2c                reg
- *fill*         0x0000000000021c4a        0x2 
- .rodata.test   0x0000000000021c4c       0x28 _build/inv_mpu.o
-                0x0000000000021c4c                test
+                0x0000000000021b80       0x96 _build/inv_mpu.o
+ *fill*         0x0000000000021c16        0x2 
+ .rodata.hw     0x0000000000021c18        0xc _build/inv_mpu.o
+                0x0000000000021c18                hw
+ .rodata.reg    0x0000000000021c24       0x1e _build/inv_mpu.o
+                0x0000000000021c24                reg
+ *fill*         0x0000000000021c42        0x2 
+ .rodata.test   0x0000000000021c44       0x28 _build/inv_mpu.o
+                0x0000000000021c44                test
  .rodata.dmp_set_orientation.str1.4
-                0x0000000000021c74       0x10 _build/inv_mpu_dmp_motion_driver.o
+                0x0000000000021c6c       0x10 _build/inv_mpu_dmp_motion_driver.o
  .rodata.dmp_set_fifo_rate.str1.4
-                0x0000000000021c84        0xd _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x0000000000021c91        0x3 
+                0x0000000000021c7c        0xd _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000021c89        0x3 
  .rodata.dmp_enable_feature.str1.4
-                0x0000000000021c94       0x16 _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x0000000000021caa        0x2 
+                0x0000000000021c8c       0x16 _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000021ca2        0x2 
  .rodata.dmp_memory
-                0x0000000000021cac      0xbf6 _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x00000000000228a2        0x2 
+                0x0000000000021ca4      0xbf6 _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x000000000002289a        0x2 
  .rodata.get_sensor_data.str1.4
-                0x00000000000228a4       0x47 _build/mpu6050.o
- *fill*         0x00000000000228eb        0x1 
+                0x000000000002289c       0x47 _build/mpu6050.o
+ *fill*         0x00000000000228e3        0x1 
  .rodata.imu_init.str1.4
-                0x00000000000228ec      0x106 _build/mpu6050.o
- *fill*         0x00000000000229f2        0x2 
+                0x00000000000228e4      0x106 _build/mpu6050.o
+ *fill*         0x00000000000229ea        0x2 
  .rodata.app_error_handler.str1.4
-                0x00000000000229f4       0x27 _build/app_error.o
- *fill*         0x0000000000022a1b        0x1 
+                0x00000000000229ec       0x27 _build/app_error.o
+ *fill*         0x0000000000022a13        0x1 
  .rodata.m_conn_params_timer_id
-                0x0000000000022a1c        0x4 _build/ble_conn_params.o
- .rodata        0x0000000000022a20       0x10 _build/ble_nus.o
+                0x0000000000022a14        0x4 _build/ble_conn_params.o
+ .rodata        0x0000000000022a18       0x10 _build/ble_nus.o
  .rodata.asin.str1.4
-                0x0000000000022a30        0x5 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x0000000000022a28        0x5 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
                                           0x9 (size before relaxing)
- *fill*         0x0000000000022a35        0x3 
+ *fill*         0x0000000000022a2d        0x3 
  .rodata.CSWTCH.8
-                0x0000000000022a38       0x18 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
+                0x0000000000022a30       0x18 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
  .rodata.CSWTCH.9
-                0x0000000000022a50       0x18 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
+                0x0000000000022a48       0x18 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
  .rodata.atanhi
-                0x0000000000022a68       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+                0x0000000000022a60       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
  .rodata.atanlo
-                0x0000000000022a88       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
- .rodata        0x0000000000022aa8       0x80 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
- .rodata        0x0000000000022b28       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
- .rodata        0x0000000000022b68       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
- .rodata        0x0000000000022ba8       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
+                0x0000000000022a80       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+ .rodata        0x0000000000022aa0       0x80 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
+ .rodata        0x0000000000022b20       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .rodata        0x0000000000022b60       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
+ .rodata        0x0000000000022ba0       0x40 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
  .rodata.__sf_fake_stderr
-                0x0000000000022be8       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022be8                __sf_fake_stderr
+                0x0000000000022be0       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022be0                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x0000000000022c08       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022c08                __sf_fake_stdin
+                0x0000000000022c00       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022c00                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x0000000000022c28       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022c28                __sf_fake_stdout
+                0x0000000000022c20       0x20 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022c20                __sf_fake_stdout
  .rodata._svfprintf_r.str1.1
-                0x0000000000022c48       0x11 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000022c40       0x11 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
  .rodata._vfprintf_r.str1.1
-                0x0000000000022c59       0x11 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000022c51       0x11 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
  .rodata._printf_i.str1.1
-                0x0000000000022c59       0x22 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000022c51       0x22 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
  *(.eh_frame*)
- *fill*         0x0000000000022c7b        0x1 
- .eh_frame      0x0000000000022c7c        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
-                0x0000000000022c7c                . = ALIGN (0x4)
+ *fill*         0x0000000000022c73        0x1 
+ .eh_frame      0x0000000000022c74        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
+                0x0000000000022c74                . = ALIGN (0x4)
 
-.glue_7         0x0000000000022c7c        0x0
- .glue_7        0x0000000000022c7c        0x0 linker stubs
+.glue_7         0x0000000000022c74        0x0
+ .glue_7        0x0000000000022c74        0x0 linker stubs
 
-.glue_7t        0x0000000000022c7c        0x0
- .glue_7t       0x0000000000022c7c        0x0 linker stubs
+.glue_7t        0x0000000000022c74        0x0
+ .glue_7t       0x0000000000022c74        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000022c7c        0x0
- .vfp11_veneer  0x0000000000022c7c        0x0 linker stubs
+.vfp11_veneer   0x0000000000022c74        0x0
+ .vfp11_veneer  0x0000000000022c74        0x0 linker stubs
 
-.v4_bx          0x0000000000022c7c        0x0
- .v4_bx         0x0000000000022c7c        0x0 linker stubs
+.v4_bx          0x0000000000022c74        0x0
+ .v4_bx         0x0000000000022c74        0x0 linker stubs
 
-.iplt           0x0000000000022c7c        0x0
- .iplt          0x0000000000022c7c        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
+.iplt           0x0000000000022c74        0x0
+ .iplt          0x0000000000022c74        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.ARM.extab      0x0000000000022c7c        0x0
+.ARM.extab      0x0000000000022c74        0x0
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000000000022c7c                . = ALIGN (0x4)
-                0x0000000000022c7c                __exidx_start = .
+                0x0000000000022c74                . = ALIGN (0x4)
+                0x0000000000022c74                __exidx_start = .
 
-.ARM.exidx      0x0000000000022c7c        0x8
+.ARM.exidx      0x0000000000022c74        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000000000022c7c        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/crt0.o
- .ARM.exidx     0x0000000000022c84        0x0 _build/gcc_startup_nrf51.o
+ .ARM.exidx     0x0000000000022c74        0x8 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/crt0.o
+ .ARM.exidx     0x0000000000022c7c        0x0 _build/gcc_startup_nrf51.o
                                           0x8 (size before relaxing)
-                0x0000000000022c84                . = ALIGN (0x4)
-                0x0000000000022c84                __exidx_end = .
-                0x0000000000022c84                __etext = .
+                0x0000000000022c7c                . = ALIGN (0x4)
+                0x0000000000022c7c                __exidx_end = .
+                0x0000000000022c7c                __etext = .
 
-.rel.dyn        0x0000000000022c84        0x0
- .rel.iplt      0x0000000000022c84        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
+.rel.dyn        0x0000000000022c7c        0x0
+ .rel.iplt      0x0000000000022c7c        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.data           0x0000000020002000       0xb4 load address 0x0000000000022c84
+.data           0x0000000020002000       0xb4 load address 0x0000000000022c7c
                 0x0000000020002000                __data_start__ = .
  *(vtable)
  *(.data*)
@@ -1807,10 +1807,10 @@ END GROUP
                 0x00000000200020b4                . = ALIGN (0x4)
                 0x00000000200020b4                __data_end__ = .
 
-.igot.plt       0x00000000200020b4        0x0 load address 0x0000000000022d38
+.igot.plt       0x00000000200020b4        0x0 load address 0x0000000000022d30
  .igot.plt      0x00000000200020b4        0x0 /home/prithvish/ESL/fcb_software/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.bss            0x00000000200020b4      0x9a8 load address 0x0000000000022d38
+.bss            0x00000000200020b4      0x9a8 load address 0x0000000000022d30
                 0x00000000200020b4                . = ALIGN (0x4)
                 0x00000000200020b4                __bss_start__ = .
  *(.bss*)

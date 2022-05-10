@@ -50,10 +50,6 @@ void	term_putchar(char c)
 	putc(c,stderr);
 }
 
-void term_printf(char* buf){
-	printf("%s", buf);
-}
-
 int	term_getchar_nb()
 {
 	static unsigned char 	line [2];
@@ -168,11 +164,11 @@ int serial_port_putchar(char c)
 	return result;
 }
 
-int serial_port_buffer(char* buf)
+int serial_port_buffer(char* buf,int  size_buf)
 {
 	int result;
 	do {
-		result = (int) write(fd_serial_port, &buf, sizeof(buf));
+		result = (int) write(fd_serial_port, &buf, size_buf);
 	} while (result ==0);
 	assert (result ==1);
 	return result;
@@ -202,10 +198,9 @@ int open_serial(int argc,char ** argv){
 int main(int argc, char **argv)
 {
 	char c;
-	struct message mlog;
-	js_data_type jsdata;
-	char current_mode = 49;
-	char* buf;
+	// struct message mlog;
+	// js_data_type jsdata;
+	// char current_mode = 49;
 
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
@@ -216,23 +211,24 @@ int main(int argc, char **argv)
 	/* send & receive
 	 */
 	for (;;) {
-		jsdata = js_values_read();
-		mlog.start = (uint8_t)0xAA;
-		mlog.roll = jsdata.roll; 
-		mlog.pitch =  jsdata.pitch;
-		mlog.yaw = jsdata.yaw;
-		mlog.lift = jsdata.lift;
-		mlog.mode = current_mode;
-		mlog.stop = (uint8_t)39;
+		// jsdata = js_values_read();
+		// mlog.start = (uint8_t)0xAA;
+		// mlog.roll = jsdata.roll; 
+		// mlog.pitch =  jsdata.pitch;
+		// mlog.yaw = jsdata.yaw;
+		// mlog.lift = jsdata.lift;
+		// mlog.mode = current_mode;
+		// mlog.stop = (uint8_t)39;
 		
+		// term_printf(buf, sizeof(mlog));
 
 		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
-			mlog.mode = c;
-			buf= (char*)&mlog;
-			serial_port_buffer(buf);
-			term_printf(buf);
+			// mlog.mode = c;
+			serial_port_putchar(0xAA);
+			term_putchar(49);
+
 		}
 		if ((c = serial_port_getchar()) != -1) {
 			term_putchar(c);

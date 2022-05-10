@@ -9,6 +9,7 @@
 #include "parse.h"
 #include "gpio.h"
 #include "control.h"
+#include <stdio.h>
 
 bool demo_done;
 
@@ -95,9 +96,9 @@ void process_key(uint8_t c)
 }
 
 
-bool process_message(uint8_t c){
+bool process_message(char c){
 	if(c == 0xAA){
-		printf("first byte");
+		printf("s");
 	}
 	return false;
 }
