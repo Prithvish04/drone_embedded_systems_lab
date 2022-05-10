@@ -57,7 +57,7 @@ int main(void)
 
 	while (!demo_done) {
 		if (rx_queue.count) {
-			process_message(dequeue(&rx_queue));
+			printf("%c ",(dequeue(&rx_queue)));
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));

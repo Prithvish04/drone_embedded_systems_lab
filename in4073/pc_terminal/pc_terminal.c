@@ -140,13 +140,11 @@ void serial_port_close(void)
 
 uint8_t serial_port_getchar()
 {
-	int8_t result;
-	uint8_t c;
-
-	do {
-		result = read(fd_serial_port, &c, 1);
-	} while (result != 1);
-
+	// int8_t result;
+	uint8_t c = '\0';
+	// do {
+	read(fd_serial_port, &c, 1);
+	// } while (result != 1);
 	//	assert(result == 1);
 	return c;
 }
@@ -226,11 +224,10 @@ int main(int argc, char **argv)
 		
 		if ((c = term_getchar_nb()) != -1) {
 			// mlog.mode = c;
-			serial_port_putchar(0xAA);
-			term_putchar(49);
-
+			serial_port_putchar(c);
 		}
-		if ((c = serial_port_getchar()) != -1) {
+		c = serial_port_getchar();
+		if (c != '\0') {
 			term_putchar(c);
 		}
 			
