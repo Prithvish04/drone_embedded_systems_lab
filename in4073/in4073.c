@@ -29,6 +29,8 @@
 #include "control.h"
 #include "mpu6050/mpu6050.h"
 #include "utils/quad_ble.h"
+#include <stdlib.h>
+#include "message.h"
 #include "parse.h"
 
 bool demo_done;
@@ -51,6 +53,8 @@ int main(void)
 	quad_ble_init();
 
 	uint32_t counter = 0;
+	struct message m_log;
+	
 	demo_done = false;
 	wireless_mode = false;
 
@@ -70,13 +74,32 @@ int main(void)
 
 			adc_request_sample();
 			read_baro();
+			
+			m_log.start = 170; 
+			m_log.timestamp = get_time_us();
+			m_log.mot0 = ae[0];
+			m_log.mot1 = ae[1];
+			m_log.mot2 = ae[2];
+			m_log.mot3 = ae[3];
+			m_log.phi = phi;
+			m_log.theta = theta;
+			m_log.psi = psi;
+			m_log.gyro0 = sp;
+			m_log.gyro1 = sq;
+			m_log.gyro2 = sr;
+			m_log.battery = bat_volt;
+			m_log.pressure = pressure;
+			m_log.stop = '\n';
+			
 
-			// printf("%10ld | ", get_time_us());
-			// printf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
-			// printf("%6d %6d %6d | ", phi, theta, psi);
-			// printf("%6d %6d %6d | ", sp, sq, sr);
-			// printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
-
+			//printf("%10ld | \n", get_time_us());
+			/*sprintf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
+			printf("%6d %6d %6d | ", phi, theta, psi);
+			printf("%6d %6d %6d | ", sp, sq, sr);
+			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
+			
+			print_message_hex(m_log);
+			printf("\n");
 			clear_timer_flag();
 		}
 

@@ -9,5 +9,6 @@ extern int16_t ae[4];
 extern bool wireless_mode;
 
 void run_filters_and_control();
+void all_motors_grad_slow();
 
 #endif /* CONTROL_H_ */
