@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include "message.h"
 #include "parse.h"
+#include "state_machine.c"
 
 bool demo_done;
 
@@ -98,8 +99,11 @@ int main(void)
 			printf("%6d %6d %6d | ", sp, sq, sr);
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
 			
-			print_message_hex(m_log);
-			printf("\n");
+			// print_message_hex(m_log);
+			// printf("\n");
+
+			
+
 			clear_timer_flag();
 		}
 
