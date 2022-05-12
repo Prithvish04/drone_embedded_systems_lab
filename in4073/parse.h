@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-typedef struct 
+typedef struct drone_message
 {
 	uint8_t start;
 	uint8_t mode;

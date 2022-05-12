@@ -1,26 +1,19 @@
 
+
 #include "state_machine.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
 #include <string.h> 
+#include <stdbool.h>
 
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
 #include "gpio.h"
+#include "parse.h"
 
-enum Mode {
-    Safe = 0,
-    Panic = 1,
-    Manual = 2,
-    Calibration = 3,
-    YawControl = 4,
-    FullControl = 5,
-    Raw = 6,
-    HeightControl = 7,
-    Wireless = 8,
-};
+
 
 static enum Mode current_state = Safe; 
 
@@ -35,9 +28,18 @@ static void panic_handler() {
     all_motors_hold_speed(us_2);
     all_motors_stop();
     nrf_gpio_pin_set(RED);
-    printf("Landed in Panic Mode!")
+    printf("Landed in Panic Mode!");
     change_mode(Safe);
 }    
+
+static void safe_hand
+
+bool check_panic(struct drone_message){
+    if(drone_message.mode == 31 || drone_message.mode == 27 ){
+        return true
+    }
+    return false
+}
 
 void change_mode(const enum Mode changed_mode)
 {
@@ -47,10 +49,14 @@ void change_mode(const enum Mode changed_mode)
 
 void state_machine()
 {
-    uint32_t current_time = get_time_us();
+    // why do we need time here ?
+    // uint32_t current_time = get_time_us();
     switch(current_state){
         case Safe:
             printf("In safe mode\n");
+            if(check_panic() == true){
+                change_mode(Panic)
+            }
             break;
         
         case Panic:

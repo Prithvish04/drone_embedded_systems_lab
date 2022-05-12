@@ -8,8 +8,9 @@
 #include <inttypes.h>
 #include <math.h>
 #include <string.h>
-#include "recieve_msg.h"
+#include "parsing_drone.h"
 
-void print_message_block(int message[],int start_index, int length); 
+long long message_block(int message[],int start_index, int length); 
+long long to_dec(char hex[], int length); 
 
 #endif /* PARSING_DRONE_H__*/

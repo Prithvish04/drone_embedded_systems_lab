@@ -12,15 +12,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
-<<<<<<< HEAD
 #include <math.h>
 #include <string.h>
-#include "recieve_msg.h"
 #include "parsing_drone.h"
-=======
 #include "send_msg.h"
 #include "js_data_read.h"
->>>>>>> 2923c9ee770e424f07d134e37a7c7a534e5a16b5
 
 /*------------------------------------------------------------
  * console I/O
@@ -217,25 +213,22 @@ int main(int argc, char **argv)
 
 	/* send & receive
 	 */
-<<<<<<< HEAD
 	 
-	int count = 0;
-	int message[84];
-	struct message m_rec;
-	for (int i = 0; i<60;i++)
-	{
-		message[i] =0;
-	}
+	// int count = 0;
+	// int message[84];
+	// struct message m_rec;
+	// for (int i = 0; i<60;i++)
+	// {
+	// 	message[i] =0;
+	// }
 	//int timestamp_start_find[8];
 	//long long decimal = 0, base = 1;  
 	char start_find[2] = {0, 0};
-	for (;;) 
-	{
+
+	for (;;) {
 		start_find[0] = start_find[1];
 		start_find[1] = c;
 
-=======
-	for (;;) {
 		jsdata = js_values_read();
 		mlog.start = (uint8_t)0xAA;
 		mlog.roll = jsdata.roll; 
@@ -248,110 +241,107 @@ int main(int argc, char **argv)
 
 		// print_message_hex(mlog);
 		
->>>>>>> 2923c9ee770e424f07d134e37a7c7a534e5a16b5
 		if ((c = term_getchar_nb()) != -1) {
 			mlog.mode = c;
 			term_putchar(mlog.mode);
 			char* buf = (char *)&mlog; 
 			serial_port_buffer(buf, sizeof(struct message));
 		}
-<<<<<<< HEAD
 		c = serial_port_getchar();
 		if (c != '\0') {
 			term_putchar(c);
-=======
-		if ((c = serial_port_getchar()) != -1) 
-		{
-			message[count] = c;
-			//term_putchar(start_find[0]);
-			//term_putchar(c);
-			count = count+1;
-			//term_putchar((char)count);
 
-			//printf("%d\n",count);
+// 		if ((c = serial_port_getchar()) != -1) 
+// 		{
+// 			message[count] = c;
+// 			//term_putchar(start_find[0]);
+// 			//term_putchar(c);
+// 			count = count+1;
+// 			//term_putchar((char)count);
 
-			//printf(" %d ", count);
-			if (count == 73)
-			{
-				//term_putchar('M');
-				m_rec.timestamp = message_block(message,0,7);
-				m_rec.mot0 = message_block(message,7,4);
-				m_rec.mot1 = message_block(message,11,4);
-				m_rec.mot2 = message_block(message,15,4);
-				m_rec.mot3 = message_block(message,19,4);
+// 			//printf("%d\n",count);
 
-				count = 0;
-			}
-			if ((int) start_find[0] == 65 && ((int) start_find[1]) == 65)
-			{
-				count = 0;
-			}
-		//	}
+// 			//printf(" %d ", count);
+// 			if (count == 73)
+// 			{
+// 				//term_putchar('M');
+// 				m_rec.timestamp = message_block(message,0,7);
+// 				m_rec.mot0 = message_block(message,7,4);
+// 				m_rec.mot1 = message_block(message,11,4);
+// 				m_rec.mot2 = message_block(message,15,4);
+// 				m_rec.mot3 = message_block(message,19,4);
 
-			//term_putchar('a');
+// 				count = 0;
+// 			}
+// 			if ((int) start_find[0] == 65 && ((int) start_find[1]) == 65)
+// 			{
+// 				count = 0;
+// 			}
+// 		//	}
+
+// 			//term_putchar('a');
 			
-			/*if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65)// && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
-			{
+// 			/*if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65)// && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
+// 			{
 				
 				
-				if (count == 84)
-				{
-					printf("OK");
-					printf("%d ",count);
-					print_message_block(message,8, 4); 
+// 				if (count == 84)
+// 				{
+// 					printf("OK");
+// 					printf("%d ",count);
+// 					print_message_block(message,8, 4); 
 					
 
-					char buffer[5]; 
-					for (int i =12; i<16; i++)
-					{
-						buffer[i-12] = message[i];
-					} 
-					buffer[4] = '\n';
-					printf("%lld |",to_dec(buffer,3));
+// 					char buffer[5]; 
+// 					for (int i =12; i<16; i++)
+// 					{
+// 						buffer[i-12] = message[i];
+// 					} 
+// 					buffer[4] = '\n';
+// 					printf("%lld |",to_dec(buffer,3));
 
-					for (int i =16; i<20; i++)
-					{
-						buffer[i-16] = message[i];
-					} 
-					buffer[4] = '\n';
-					printf("%lld |",to_dec(buffer,3));
+// 					for (int i =16; i<20; i++)
+// 					{
+// 						buffer[i-16] = message[i];
+// 					} 
+// 					buffer[4] = '\n';
+// 					printf("%lld |",to_dec(buffer,3));
 				
-					for (int i =20; i<24; i++)
-					{
-						buffer[i-20] = message[i];
-					} 
-					buffer[4] = '\n';
-					printf("%lld |",to_dec(buffer,3));
+// 					for (int i =20; i<24; i++)
+// 					{
+// 						buffer[i-20] = message[i];
+// 					} 
+// 					buffer[4] = '\n';
+// 					printf("%lld |",to_dec(buffer,3));
 					
-					for (int i =24; i<28; i++)
-					{
-						buffer[i-24] = message[i];
-					} 
-					buffer[4] = '\n';
-					printf("%lld |\n",to_dec(buffer,3));
-					count = 0;
-					count = 0;
-				}
-			}
+// 					for (int i =24; i<28; i++)
+// 					{
+// 						buffer[i-24] = message[i];
+// 					} 
+// 					buffer[4] = '\n';
+// 					printf("%lld |\n",to_dec(buffer,3));
+// 					count = 0;
+// 					count = 0;
+// 				}
+// 			}
 
 				
-				for (int i = 0; i<60;i++)
-				{
-					message[i] =0;
-				}
+// 				for (int i = 0; i<60;i++)
+// 				{
+// 					message[i] =0;
+// 				}
 				
-			}*/
-/*			
-			else
-			{
-				message[count] = c; 
-				count+=1;
-			}*/
-			//printf(".");
-			//printf("\n");
+// 			}*/
+// /*			
+// 			else
+// 			{
+// 				message[count] = c; 
+// 				count+=1;
+// 			}*/
+// 			//printf(".");
+// 			//printf("\n");
 
 			
->>>>>>> drone_2_pc_comm
 		}
 			
 	}

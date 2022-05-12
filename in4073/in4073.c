@@ -35,7 +35,7 @@
 #include "state_machine.c"
 
 bool demo_done;
-
+bool debug_drone= false;
 
 /*------------------------------------------------------------------
  * main -- everything you need is here :)
@@ -62,7 +62,7 @@ int main(void)
 	while (!demo_done) {
 		// printf(".");
 		if (rx_queue.count) { // 12 -
-			process_message(dequeue(&rx_queue));
+			printf(" %x \n ", (dequeue(&rx_queue)));
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));
@@ -99,8 +99,12 @@ int main(void)
 			printf("%6d %6d %6d | ", sp, sq, sr);
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);*/
 			
-			// print_message_hex(m_log);
-			// printf("\n");
+			if(debug_drone){
+				print_message_hex(m_log);
+				printf("\n");
+
+			}
+
 
 			
 
