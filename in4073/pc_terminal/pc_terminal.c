@@ -166,9 +166,10 @@ int serial_port_buffer(char* buf,int  size_buf)
 {
 	int result;
 	do {
-		result = (int) write(fd_serial_port, &buf, size_buf);
+		result = (int) write(fd_serial_port, buf, size_buf);
 	} while (result ==0);
-	assert (result ==1);
+	// printf("Written (port: %d) bytes: %d -- ", fd_serial_port, result);
+	assert (result == size_buf);
 	return result;
 }
 
@@ -199,7 +200,6 @@ int main(int argc, char **argv)
 	struct message mlog;
 	js_data_type jsdata;
 	char current_mode = 49; 
-	char* buf;
 
 	term_initio();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
@@ -220,14 +220,13 @@ int main(int argc, char **argv)
 		mlog.stop = (uint8_t)'\n';
 		
 
-		print_message_hex(mlog);
+		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
 			mlog.mode = c;
-			buf = (char *)&mlog; 
-			for(long unsigned int i; i < sizeof(mlog); i++){
-				serial_port_putchar(*buf++);
-			}
+			term_putchar(mlog.mode);
+			char* buf = (char *)&mlog; 
+			serial_port_buffer(buf, sizeof(struct message));
 		}
 		c = serial_port_getchar();
 		if (c != '\0') {

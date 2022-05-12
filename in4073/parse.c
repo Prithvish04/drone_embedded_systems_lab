@@ -97,10 +97,18 @@ void process_key(uint8_t c)
 
 
 bool process_message(char c){
-	// drone_message dmsg;
-	// char* buf;
-	if(c == 0xAA){
-		printf("abc");
+	drone_message dmsg;
+	char* buf;
+	buf = (char *)&dmsg;
+	bool recieving = false;
+	if(c == (char)0xAA){
+		dmsg.start = c;
+		recieving = true;
+		buf++;
 	} 
+	if( recieving == true  ){
+		dmsg.mode = c;
+		buf++;
+	}
 	return false;
 }

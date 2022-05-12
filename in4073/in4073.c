@@ -56,7 +56,7 @@ int main(void)
 
 	while (!demo_done) {
 		// printf(".");
-		if (rx_queue.count) {
+		if (rx_queue.count) { // 12 -
 			process_message(dequeue(&rx_queue));
 		}
 		if (ble_rx_queue.count) {
