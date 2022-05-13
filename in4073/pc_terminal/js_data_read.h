@@ -19,4 +19,8 @@ typedef struct {
 void print_raw_js_data();
 js_data_type js_values_read();
 
+void js_init();
+
+void js_close();
+
 #endif

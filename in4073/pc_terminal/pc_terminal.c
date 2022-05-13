@@ -203,9 +203,10 @@ int main(int argc, char **argv)
 	char c;
 	struct message mlog;
 	js_data_type jsdata;
-	char current_mode = 49; 
+	char current_mode = '1'; 
 
 	term_initio();
+	js_init();
 	term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 	if(open_serial(argc, argv)==-1){
 		return -1;
@@ -233,21 +234,22 @@ int main(int argc, char **argv)
 		mlog.start = (uint8_t)0xAA;
 		mlog.roll = jsdata.roll; 
 		mlog.pitch =  jsdata.pitch;
-		mlog.yaw = jsdata.yaw;
+		mlog.yaw = jsdata.yaw + 100;
 		mlog.lift = jsdata.lift;
 		mlog.mode = current_mode;
 		mlog.stop = (uint8_t)'\n';
 		char* buf = (char *)&mlog; 
 
 		
-		if (0) {
 		// print_message_hex(mlog);
-		serial_port_buffer(buf, sizeof(struct message));
+		
 		if ((c = term_getchar_nb()) != -1) {
 			mlog.mode = c;
 			serial_port_buffer(buf, sizeof(struct message));
 		}
-	}
+		else{
+			serial_port_buffer(buf, sizeof(struct message));
+		}
 
 		c = serial_port_getchar();
 		if (c != '\0') {
@@ -291,6 +293,7 @@ int main(int argc, char **argv)
 
 	term_exitio();
 	serial_port_close();
+	js_close();
 	term_puts("\n<exit>\n");
 
 	return 0;

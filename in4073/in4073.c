@@ -64,14 +64,17 @@ int main(void)
 	wireless_mode = false;
 
 	while (!demo_done) {
-		printf("MSG: ");
+		// printf("MSG: \n");
 
-		if (rx_queue.count && 0) {
-			bool isDone = false;
-			isDone = process_message((dequeue(&rx_queue)), buf);
-			printf("%x \n", (uint8_t) (*buf));
-			if (!isDone)
-				continue;
+		if (rx_queue.count) {
+			// bool isDone = false;
+			// isDone =
+			while(! process_message((dequeue(&rx_queue)), buf++));
+			// printf("%x ", (uint8_t) (*buf));
+			// if (!isDone)
+			// 	continue;
+			
+			buf = (char *) &dmsg;
 		}
 
 		if (ble_rx_queue.count) {
@@ -102,11 +105,11 @@ int main(void)
 			m_log.pressure = pressure;
 			m_log.stop = '\n';
 
-			// printf("%c |", dmsg.mode);
-			// printf("%d |", dmsg.yaw);
-			// printf("%d |", dmsg.roll);
-			// printf("%d |", dmsg.pitch);
-			// printf("%d |\n", dmsg.lift);
+			printf("%d |", dmsg.mode);
+			printf("%d |", dmsg.yaw);
+			printf("%d |", dmsg.roll);
+			printf("%d |", dmsg.pitch);
+			printf("%d |\n", dmsg.lift);
 			// state_machine();
 
 
@@ -129,6 +132,8 @@ int main(void)
 			get_sensor_data();
 			run_filters_and_control();
 		}
+
+		// memset(&dmsg, 0, sizeof(struct drone_message));
 	}	
 
 	printf("\n\t Goodbye \n\n");

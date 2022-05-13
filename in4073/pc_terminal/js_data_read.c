@@ -12,20 +12,25 @@
  */
 int	axis[6];
 int	button[12];
+int fd;
 
 
-js_data_type js_values_read() {
-
-	int fd;
-	struct js_event js;
-	js_data_type js_data;
-
+void js_init() {
 	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
 		perror("Joystick");
 		exit(1);
 	}
 
 	fcntl(fd, F_SETFL, O_NONBLOCK);
+}
+
+void js_close() {
+		close(fd);
+}
+
+js_data_type js_values_read() {
+	struct js_event js;
+	js_data_type js_data;
 
 
 	while (read(fd, &js, sizeof(struct js_event)) == 
@@ -47,7 +52,7 @@ js_data_type js_values_read() {
     js_data.lift = axis[3];			// Slider/throttle
     js_data.panic = button[0];		// Fire button
 
-	close(fd);
+
 
 	return js_data;
 }
