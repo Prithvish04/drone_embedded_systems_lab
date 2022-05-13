@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include "message.h"
 #include "parse.h"
-#include "state_machine.c"
+#include "state_machine.h"
 
 bool demo_done;
 bool debug_drone= false;
@@ -41,8 +41,7 @@ bool debug_drone= false;
  * main -- everything you need is here :)
  *------------------------------------------------------------------
  */
-int main(void)
-{
+int main(void) {
 	uart_init();
 	gpio_init();
 	timers_init();
@@ -55,8 +54,8 @@ int main(void)
 
 	uint32_t counter = 0;
 	struct message m_log;
-	DroneMessage* msg;
-	bool isMsg;
+	DroneMessage msg;
+	bool isMsg = false;
 
 	
 	demo_done = false;
@@ -65,12 +64,12 @@ int main(void)
 	while (!demo_done) {
 
 		if (rx_queue.count) {
-			isMsg = process_message((dequeue(&rx_queue)), msg);
+			isMsg = process_message((dequeue(&rx_queue)), &msg);
 		}
-
-		if (ble_rx_queue.count) {
+		/*
+		if (ble_rx_queue.count) 
 			process_key(dequeue(&ble_rx_queue));
-		}
+		*/
 
 		if (check_timer_flag()) {
 			if (counter++%20 == 0) {
@@ -116,19 +115,20 @@ int main(void)
 			run_filters_and_control();
 		}
 
-		// memset(&dmsg, 0, sizeof(struct drone_message));
+		if(isMsg) {
+			printf("%d |", msg.mode);
+			printf("%d |", msg.yaw);
+			printf("%d |", msg.roll);
+			printf("%d |", msg.pitch);
+			printf("%d |\n", msg.lift);
+		}
 	}
-	if(isMsg) {
-		printf("%d |", msg->mode);
-		printf("%d |", msg->yaw);
-		printf("%d |", msg->roll);
-		printf("%d |", msg->pitch);
-		printf("%d |\n", msg->lift);
-	}
-
+	
+	/*
 	Events newEvent = read_event(struct *drone_message);
 	if(StateMachine[nextState][newEvent]!= NULL)
     	nextState = (*StateMachine[nextState][newEvent])();
+	*/
 
 	printf("\n\t Goodbye \n\n");
 	nrf_delay_ms(100);

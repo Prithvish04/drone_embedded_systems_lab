@@ -58,8 +58,10 @@ Modes heightModeHandler(void);
 Modes wirelessModeHandler(void);
 Modes exitHandler(void);
 
+/*
 static Modes nextState = Safe_Mode;
-static Events newEvent;
+static Events newEvent = Safe_Event;
+*/
 
 // Table to define valid states and event of finite state machine
 static EventHandler StateMachine = {
@@ -83,7 +85,7 @@ static EventHandler StateMachine = {
 };
 
 
-Modes read_event(struct *drone_message);
+//Modes read_event(struct *drone_message);
 
 #endif // MODES_H__
 

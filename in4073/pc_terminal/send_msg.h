@@ -7,10 +7,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define MSG_SIZE 12
-
-struct message
-{
+struct message {
 	uint8_t start;
 	uint8_t mode;
 	int16_t pitch;
@@ -20,8 +17,6 @@ struct message
 	uint8_t stop;	 
 };
 
-void toBinary(unsigned n, int len);
-void print_message(struct message m);
 void print_message_hex(struct message m);
 
 

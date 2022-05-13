@@ -14,7 +14,6 @@
 #include <inttypes.h>
 #include <math.h>
 #include <string.h>
-#include "parsing_drone.h"
 #include "send_msg.h"
 #include "js_data_read.h"
 
@@ -85,7 +84,6 @@ int	term_getchar()
 #include <stdio.h>
 #include <assert.h>
 #include <time.h>
-#include "parsing_drone.h"
 
 static int fd_serial_port;
 char current_mode;
@@ -198,8 +196,7 @@ int open_serial(int argc,char ** argv){
  * main -- execute terminal
  *----------------------------------------------------------------
  */
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	char c;
 	struct message mlog;
 	js_data_type jsdata;
@@ -212,18 +209,6 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	/* send & receive
-	 */
-	 
-	// int count = 0;
-	// int message[84];
-	// struct message m_rec;
-	// for (int i = 0; i<60;i++)
-	// {
-	// 	message[i] =0;
-	// }
-	//int timestamp_start_find[8];
-	//long long decimal = 0, base = 1;  
 	char start_find[2] = {0, 0};
 
 	for (;;) {
@@ -240,7 +225,6 @@ int main(int argc, char **argv)
 		mlog.stop = (uint8_t)'\n';
 		char* buf = (char *)&mlog; 
 
-		
 		// print_message_hex(mlog);
 		
 		if ((c = term_getchar_nb()) != -1) {
@@ -253,42 +237,9 @@ int main(int argc, char **argv)
 
 		c = serial_port_getchar();
 		if (c != '\0') {
-			term_putchar(c);
-
-// 		if ((c = serial_port_getchar()) != -1) 
-// 		{
-// 			message[count] = c;
-// 			//term_putchar(start_find[0]);
-// 			//term_putchar(c);
-// 			count = count+1;
-// 			//term_putchar((char)count);
-
-// 			//printf("%d\n",count);
-
-// 			//printf(" %d ", count);
-// 			if (count == 73)
-// 			{
-// 				//term_putchar('M');
-// 				m_rec.timestamp = message_block(message,0,7);
-		//		m_rec.mot0 = message_block(message,7,4);
-// 				m_rec.mot1 = message_block(message,11,4);
-// 				m_rec.mot2 = message_block(message,15,4);
-// 				m_rec.mot3 = message_block(message,19,4);
-
-// 				count = 0;
-// 			}
-// 			if ((int) start_find[0] == 65 && ((int) start_find[1]) == 65)
-// 			{
-// 				count = 0;
-// 			}
-// 		//	}
-
-// 			//term_putchar('a');
-			
-
-			
+			term_putchar(c);		
 		}
-			
+		
 	}
 
 	term_exitio();

@@ -5,10 +5,6 @@
 #include <stdlib.h>
 
 
-
-
-
-
 void print_message_hex(struct message m)
 {
 	printf("%2X ", m.start); //2
@@ -17,5 +13,5 @@ void print_message_hex(struct message m)
 	printf("%4X ", m.yaw); //4
 	printf("%4X ", m.lift); //4
 	printf("%2X ", m.mode); // 2
-	printf("%2X ", m.stop); //2
+	printf("%2X \n", m.stop); //2
 }
