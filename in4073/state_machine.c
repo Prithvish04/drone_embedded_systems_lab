@@ -32,13 +32,12 @@ static void panic_handler() {
     change_mode(Safe);
 }    
 
-static void safe_hand
 
-bool check_panic(struct drone_message){
-    if(drone_message.mode == 31 || drone_message.mode == 27 ){
-        return true
+bool check_panic(struct drone_message dmsg){
+    if(dmsg.mode == 31 || dmsg.mode == 27 ){
+        return true;
     }
-    return false
+    return false;
 }
 
 void change_mode(const enum Mode changed_mode)
@@ -47,15 +46,15 @@ void change_mode(const enum Mode changed_mode)
 } 
 
 
-void state_machine()
+void state_machine(struct drone_message dmsg)
 {
     // why do we need time here ?
     // uint32_t current_time = get_time_us();
     switch(current_state){
         case Safe:
             printf("In safe mode\n");
-            if(check_panic() == true){
-                change_mode(Panic)
+            if(check_panic(dmsg) == true){
+                change_mode(Panic);
             }
             break;
         

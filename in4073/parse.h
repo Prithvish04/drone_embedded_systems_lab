@@ -7,7 +7,10 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-typedef struct drone_message
+#define MSG_SIZE 12	
+
+
+struct drone_message
 {
 	uint8_t start;
 	uint8_t mode;
@@ -15,15 +18,15 @@ typedef struct drone_message
 	int16_t roll;
 	int16_t yaw;
     int16_t lift;
-	uint8_t stop;	
-} drone_message;
+	uint8_t stop;
+};
 
 
 
 long long to_dec(char hex[], int length); 
 void print_message_block(int message[],int start_index, int length);
 void process_key(uint8_t);
-bool process_message(char);
+bool process_message(char, char* );
 
 #endif /* PARSE_H_ */
 

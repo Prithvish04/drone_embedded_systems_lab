@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 bool demo_done;
+bool recieving = false;
 
 
 long long to_dec(char hex[], int length)
@@ -96,19 +97,21 @@ void process_key(uint8_t c)
 }
 
 
-bool process_message(char c){
-	drone_message dmsg;
-	char* buf;
-	buf = (char *)&dmsg;
-	bool recieving = false;
+
+bool process_message(char c, char* buf){
+
+	
 	if(c == (char)0xAA){
-		dmsg.start = c;
+		memcpy(buf,&c, sizeof(char));
 		recieving = true;
 		buf++;
 	} 
 	if( recieving == true  ){
-		dmsg.mode = c;
-		buf++;
+		memcpy(buf, &c, sizeof(char));
+		buf++; 
+		if(c == '\n'){
+			return true;
+		}
 	}
 	return false;
 }

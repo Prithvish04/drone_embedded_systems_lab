@@ -55,14 +55,18 @@ int main(void)
 
 	uint32_t counter = 0;
 	struct message m_log;
+	struct drone_message dmsg;
+	char* buf;
+	buf = (char *)&dmsg;
+
 	
 	demo_done = false;
 	wireless_mode = false;
 
 	while (!demo_done) {
 		// printf(".");
-		if (rx_queue.count) { // 12 -
-			printf(" %x \n ", (dequeue(&rx_queue)));
+		if (rx_queue.count) {
+			while(!process_message((dequeue(&rx_queue)), buf));
 		}
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));
@@ -91,7 +95,13 @@ int main(void)
 			m_log.battery = bat_volt;
 			m_log.pressure = pressure;
 			m_log.stop = '\n';
+
+
+			printf("%d", dmsg.roll);
+
 			
+			// state_machine();
+
 
 			//printf("%10ld | \n", get_time_us());
 			/*sprintf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);

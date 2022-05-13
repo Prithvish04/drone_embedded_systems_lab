@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
+#include "parse.h"
 
 enum Mode {
     Safe = 0,
@@ -20,7 +21,7 @@ enum Mode {
     Wireless = 8,
 };
 
-void state_machine();
+void state_machine(struct drone_message dmsg);
 void change_mode(const enum Mode changed_mode);
 
 
