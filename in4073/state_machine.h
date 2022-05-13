@@ -13,12 +13,11 @@
 #include "gpio.h"
 #include "parse.h"
 
-/**
-static const uint32_t us_1_2 = (500ULL*1000ULL);
-static const uint32_t us_1 = (2ULL * us_1_2);
-static const uint32_t us_2 = (2ULL * us_1);
-static const uint32_t critical_time = (1ULL * us_1_2);
-*//
+// static const uint32_t us_1_2 = (500ULL*1000ULL);
+// static const uint32_t us_1 = (2ULL * us_1_2);
+// static const uint32_t us_2 = (2ULL * us_1);
+// static const uint32_t critical_time = (1ULL * us_1_2);
+
 
 typedef enum {Safe_Mode,
               Panic_Mode,
@@ -63,7 +62,7 @@ static Modes nextState = Safe_Mode;
 static Events newEvent;
 
 // Table to define valid states and event of finite state machine
-static afEventHandler StateMachine = {
+static EventHandler StateMachine = {
     [Safe_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
