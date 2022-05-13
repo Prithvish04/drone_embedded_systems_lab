@@ -55,26 +55,17 @@ int main(void)
 
 	uint32_t counter = 0;
 	struct message m_log;
-	struct drone_message dmsg = {0};
-	char* buf;
-	buf = (char *)&dmsg;
+	DroneMessage* msg;
+	bool isMsg;
 
 	
 	demo_done = false;
 	wireless_mode = false;
 
 	while (!demo_done) {
-		// printf("MSG: \n");
 
 		if (rx_queue.count) {
-			// bool isDone = false;
-			// isDone =
-			while(! process_message((dequeue(&rx_queue)), buf++));
-			// printf("%x ", (uint8_t) (*buf));
-			// if (!isDone)
-			// 	continue;
-			
-			buf = (char *) &dmsg;
+			isMsg = process_message((dequeue(&rx_queue)), msg);
 		}
 
 		if (ble_rx_queue.count) {
@@ -104,15 +95,7 @@ int main(void)
 			m_log.battery = bat_volt;
 			m_log.pressure = pressure;
 			m_log.stop = '\n';
-
-			printf("%d |", dmsg.mode);
-			printf("%d |", dmsg.yaw);
-			printf("%d |", dmsg.roll);
-			printf("%d |", dmsg.pitch);
-			printf("%d |\n", dmsg.lift);
-			// state_machine();
-
-
+			
 			//printf("%10ld | \n", get_time_us());
 			/*sprintf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
 			printf("%6d %6d %6d | ", phi, theta, psi);
@@ -134,7 +117,18 @@ int main(void)
 		}
 
 		// memset(&dmsg, 0, sizeof(struct drone_message));
-	}	
+	}
+	if(isMsg) {
+		printf("%d |", msg->mode);
+		printf("%d |", msg->yaw);
+		printf("%d |", msg->roll);
+		printf("%d |", msg->pitch);
+		printf("%d |\n", msg->lift);
+	}
+
+	Events newEvent = read_event(struct *drone_message);
+	if(StateMachine[nextState][newEvent]!= NULL)
+    	nextState = (*StateMachine[nextState][newEvent])();
 
 	printf("\n\t Goodbye \n\n");
 	nrf_delay_ms(100);

@@ -17,8 +17,7 @@ struct message
 	int16_t roll;
 	int16_t yaw;
     int16_t lift;
-	uint8_t stop;	
-	uint8_t ptr_value[MSG_SIZE]; 
+	uint8_t stop;	 
 };
 
 void toBinary(unsigned n, int len);

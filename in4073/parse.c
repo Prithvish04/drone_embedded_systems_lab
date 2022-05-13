@@ -15,23 +15,18 @@ bool demo_done;
 bool recieving = false;
 
 
-long long to_dec(char hex[], int length)
-{
+long long to_dec(char hex[], int length) {
 	long long decimal = 0, base = 1;
-	for(int i = length--; i >= 0; i--)
-	{
-		if(hex[i] >= '0' && hex[i] <= '9')
-		{
+	for(int i = length--; i >= 0; i--) {
+		if(hex[i] >= '0' && hex[i] <= '9'){
 		    decimal += (hex[i] - 48) * base;
 		    base *= 16;
 		}
-		else if(hex[i] >= 'A' && hex[i] <= 'F')
-		{
+		else if(hex[i] >= 'A' && hex[i] <= 'F'){
 		    decimal += (hex[i] - 55) * base;
 		    base *= 16;
 		}
-		else if(hex[i] >= 'a' && hex[i] <= 'f')
-		{
+		else if(hex[i] >= 'a' && hex[i] <= 'f'){
 		    decimal += (hex[i] - 87) * base;
 		    base *= 16;
 		}
@@ -49,11 +44,6 @@ void print_message_block(int message[],int start_index, int length)
     buffer[length] = '\n';
     printf("%lld |",to_dec(buffer,length-1));
 }
-
-/*------------------------------------------------------------------
- * process_key -- process command keys
- *------------------------------------------------------------------
- */
 
 
 void process_key(uint8_t c)
@@ -97,26 +87,45 @@ void process_key(uint8_t c)
 }
 
 
-
-bool process_message(uint8_t c, char* buf)
-{	
-	if(c == 0xAA){
-		memcpy(buf, &c, sizeof(uint8_t));
-		// printf(" buffer: %x \n ", *buf);
-		// printf(" recieved: %x \n", c);
-		recieving = true;
-		return false;
+bool process_message(uint8_t c, DroneMessage* msg) {	
+	static bool isValid = false;
+	static uint8_t curIdx = MSG_SIZE;
+	if((c == START_BYTE) && !isValid){
+		isValid = true;
+		curIdx = MSG_SIZE;
 	}
-
-	if(recieving == true){
-		memcpy(buf, &c, sizeof(char));
-		// printf(" buffer: %x \n ", *buf);
-		// printf(" recieved: %x \n", c);
-		if(c == '\n'){
-			recieving = false;
+	else if (isValid) {
+		switch (curIdx) {
+		case MSG_SIZE:
+			msg->mode = c - 48;
+			break;
+		case MSG_SIZE-1:
+			msg->pitch = (c - 48) << 8;
+			break;
+		case MSG_SIZE-2:
+			msg->pitch += (c - 48);
+			break;
+		case MSG_SIZE-3:
+			msg->roll = (c - 48) << 8;
+			break;
+		case MSG_SIZE-4:
+			msg->roll += (c - 48);
+			break;
+		case MSG_SIZE-5:
+			msg->yaw = (c - 48) << 8;
+			break;
+		case MSG_SIZE-6:
+			msg->yaw += (c - 48);
+			break;
+		case MSG_SIZE-7:
+			msg->lift = (c - 48) << 8;
+			break;
+		case MSG_SIZE-8:
+			msg->lift += (c - 48);
+			isValid = false;
 			return true;
 		}
+		curIdx--;
 	}
-
 	return false;
 }
