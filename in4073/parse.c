@@ -98,20 +98,20 @@ void process_key(uint8_t c)
 
 
 
-bool process_message(char c, char* buf){
-
-	
+bool process_message(char c, char* buf)
+{	
 	if(c == (char)0xAA){
-		memcpy(buf,&c, sizeof(char));
+		memcpy(buf, &c, sizeof(char));
 		recieving = true;
 		buf++;
 	} 
 	if( recieving == true  ){
 		memcpy(buf, &c, sizeof(char));
-		buf++; 
+
 		if(c == '\n'){
 			return true;
 		}
+		buf++;
 	}
 	return false;
 }

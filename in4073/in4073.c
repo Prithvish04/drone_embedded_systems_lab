@@ -55,7 +55,7 @@ int main(void)
 
 	uint32_t counter = 0;
 	struct message m_log;
-	struct drone_message dmsg;
+	struct drone_message dmsg = {0};
 	char* buf;
 	buf = (char *)&dmsg;
 
@@ -64,10 +64,16 @@ int main(void)
 	wireless_mode = false;
 
 	while (!demo_done) {
-		// printf(".");
-		if (rx_queue.count) {
-			while(!process_message((dequeue(&rx_queue)), buf));
+		printf("MSG: ");
+
+		if (rx_queue.count && 0) {
+			bool isDone = false;
+			isDone = process_message((dequeue(&rx_queue)), buf);
+			printf("%x \n", (uint8_t) (*buf));
+			if (!isDone)
+				continue;
 		}
+
 		if (ble_rx_queue.count) {
 			process_key(dequeue(&ble_rx_queue));
 		}
@@ -96,10 +102,11 @@ int main(void)
 			m_log.pressure = pressure;
 			m_log.stop = '\n';
 
-
-			printf("%d", dmsg.roll);
-
-			
+			// printf("%c |", dmsg.mode);
+			// printf("%d |", dmsg.yaw);
+			// printf("%d |", dmsg.roll);
+			// printf("%d |", dmsg.pitch);
+			// printf("%d |\n", dmsg.lift);
 			// state_machine();
 
 
@@ -114,9 +121,6 @@ int main(void)
 				printf("\n");
 
 			}
-
-
-			
 
 			clear_timer_flag();
 		}

@@ -237,16 +237,18 @@ int main(int argc, char **argv)
 		mlog.lift = jsdata.lift;
 		mlog.mode = current_mode;
 		mlog.stop = (uint8_t)'\n';
-		
+		char* buf = (char *)&mlog; 
 
-		// print_message_hex(mlog);
 		
+		if (0) {
+		// print_message_hex(mlog);
+		serial_port_buffer(buf, sizeof(struct message));
 		if ((c = term_getchar_nb()) != -1) {
 			mlog.mode = c;
-			term_putchar(mlog.mode);
-			char* buf = (char *)&mlog; 
 			serial_port_buffer(buf, sizeof(struct message));
 		}
+	}
+
 		c = serial_port_getchar();
 		if (c != '\0') {
 			term_putchar(c);
@@ -266,7 +268,7 @@ int main(int argc, char **argv)
 // 			{
 // 				//term_putchar('M');
 // 				m_rec.timestamp = message_block(message,0,7);
-// 				m_rec.mot0 = message_block(message,7,4);
+		//		m_rec.mot0 = message_block(message,7,4);
 // 				m_rec.mot1 = message_block(message,11,4);
 // 				m_rec.mot2 = message_block(message,15,4);
 // 				m_rec.mot3 = message_block(message,19,4);
@@ -281,65 +283,6 @@ int main(int argc, char **argv)
 
 // 			//term_putchar('a');
 			
-// 			/*if (((int) start_find[0]) == 65 && ((int) start_find[1]) == 65)// && message[count-2] == 65 && message[count-3] == 48 && message[count-1] == 65)
-// 			{
-				
-				
-// 				if (count == 84)
-// 				{
-// 					printf("OK");
-// 					printf("%d ",count);
-// 					print_message_block(message,8, 4); 
-					
-
-// 					char buffer[5]; 
-// 					for (int i =12; i<16; i++)
-// 					{
-// 						buffer[i-12] = message[i];
-// 					} 
-// 					buffer[4] = '\n';
-// 					printf("%lld |",to_dec(buffer,3));
-
-// 					for (int i =16; i<20; i++)
-// 					{
-// 						buffer[i-16] = message[i];
-// 					} 
-// 					buffer[4] = '\n';
-// 					printf("%lld |",to_dec(buffer,3));
-				
-// 					for (int i =20; i<24; i++)
-// 					{
-// 						buffer[i-20] = message[i];
-// 					} 
-// 					buffer[4] = '\n';
-// 					printf("%lld |",to_dec(buffer,3));
-					
-// 					for (int i =24; i<28; i++)
-// 					{
-// 						buffer[i-24] = message[i];
-// 					} 
-// 					buffer[4] = '\n';
-// 					printf("%lld |\n",to_dec(buffer,3));
-// 					count = 0;
-// 					count = 0;
-// 				}
-// 			}
-
-				
-// 				for (int i = 0; i<60;i++)
-// 				{
-// 					message[i] =0;
-// 				}
-				
-// 			}*/
-// /*			
-// 			else
-// 			{
-// 				message[count] = c; 
-// 				count+=1;
-// 			}*/
-// 			//printf(".");
-// 			//printf("\n");
 
 			
 		}
