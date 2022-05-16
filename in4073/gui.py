@@ -2,6 +2,7 @@
 GUI for displaying the drone status. Requires pyserial, tkinter, numpy, matplotlib and Python3 
 make upload-run-gui
 """
+#/bin/python3
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk

@@ -17,7 +17,7 @@ Modes safeModeHandler(DroneMessage* cmd, Measurement* mes){
 }
 
 Modes panicModeHandler(DroneMessage* cmd, Measurement* mes){
-    static uint16_t land_duration_ms = 3000;
+    // static uint16_t land_duration_ms = 3000;
     nrf_gpio_pin_set(RED);
     
     /*

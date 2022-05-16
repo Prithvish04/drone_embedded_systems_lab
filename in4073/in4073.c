@@ -105,8 +105,15 @@ int main(void) {
 			//print_commands(msg);
 			print_GUI(curMode, msg, &m_log); 
 
-			if(isMsg && (StateMachine[curMode][msg->event]!= NULL))
-    			curMode = (*StateMachine[curMode][msg->event])(msg, &m_log);
+			if(isMsg) {
+				if (StateMachine[curMode][msg->event]!= NULL){
+					curMode = (*StateMachine[curMode][msg->event])(msg, &m_log);
+				}
+				else{
+					curMode = (*StateMachine[curMode][Null])(msg, &m_log);
+				}
+			}
+		
 
 			clear_timer_flag();
 		}
