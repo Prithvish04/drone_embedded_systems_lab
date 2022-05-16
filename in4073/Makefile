@@ -1,5 +1,6 @@
 PROJECT_NAME := in4073
 
+
 export OUTPUT_FILENAME
 MAKEFILE_NAME := $(MAKEFILE_LIST)
 MAKEFILE_DIR := $(dir $(MAKEFILE_NAME) ) 
@@ -39,7 +40,10 @@ C_SOURCE_FILES += \
 $(abspath ../components/toolchain/system_nrf51.c) \
 $(abspath ../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ./in4073.c) \
+$(abspath ./parse.c) \
 $(abspath ./control.c) \
+$(abspath ./state_machine.c) \
+$(abspath ./message.c) \
 $(abspath ./hal/gpio.c) \
 $(abspath ./hal/timers.c) \
 $(abspath ./hal/uart.c) \
@@ -231,6 +235,9 @@ pc-run:
 upload-run: default pc
 	dfu_serial/./serial_dfu.py  _build/in4073.bin
 	cd pc_terminal/; make run
+
+upload-run-gui: default pc
+	sudo python3 gui.py & sudo make upload-run
 
 ble:
 	cd pc_terminal/; make run-ble

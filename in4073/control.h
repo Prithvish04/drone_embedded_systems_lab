@@ -8,6 +8,9 @@ extern uint16_t motor[4];
 extern int16_t ae[4];
 extern bool wireless_mode;
 
+
 void run_filters_and_control();
+void update_motors();
+void shutdown_motors();
 
 #endif /* CONTROL_H_ */

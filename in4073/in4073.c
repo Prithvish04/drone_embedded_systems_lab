@@ -29,60 +29,17 @@
 #include "control.h"
 #include "mpu6050/mpu6050.h"
 #include "utils/quad_ble.h"
+#include <stdlib.h>
+#include "parse.h"
+#include "state_machine.h"
 
 bool demo_done;
-
-
-/*------------------------------------------------------------------
- * process_key -- process command keys
- *------------------------------------------------------------------
- */
-void process_key(uint8_t c)
-{
-	switch (c) {
-	case 'q':
-		ae[0] += 10;
-		break;
-	case 'a':
-		ae[0] -= 10;
-		if (ae[0] < 0) ae[0] = 0;
-		break;
-	case 'w':
-		ae[1] += 10;
-		break;
-	case 's':
-		ae[1] -= 10;
-		if (ae[1] < 0) ae[1] = 0;
-		break;
-	case 'e':
-		ae[2] += 10;
-		break;
-	case 'd':
-		ae[2] -= 10;
-		if (ae[2] < 0) ae[2] = 0;
-		break;
-	case 'r':
-		ae[3] += 10;
-		break;
-	case 'f':
-		ae[3] -= 10;
-		if (ae[3] < 0) ae[3] = 0;
-		break;
-	case 27:
-		demo_done = true;
-		break;
-	default:
-		nrf_gpio_pin_toggle(RED);
-	}
-}
-
 
 /*------------------------------------------------------------------
  * main -- everything you need is here :)
  *------------------------------------------------------------------
  */
-int main(void)
-{
+int main(void) {
 	uart_init();
 	gpio_init();
 	timers_init();
@@ -94,30 +51,62 @@ int main(void)
 	quad_ble_init();
 
 	uint32_t counter = 0;
+	Modes curMode = Safe_Mode;
+	Measurement m_log;
+	DroneMessage command_buf[2];
+	DroneMessage* msg = command_buf;
+	int16_t euler[] = {0, 0, 0};
+	int16_t imu[] = {0, 0, 0};
+	bool isMsg;
+
+	command_buf[0].event = Null;
+	command_buf[1].event = Null;
+	uint8_t write_idx = 0;
+	
 	demo_done = false;
 	wireless_mode = false;
+	isMsg = false;
 
 	while (!demo_done) {
+		// get the first available valid message sequence
 		if (rx_queue.count) {
-			printf("%c ",dequeue(&rx_queue));
-		}
-		if (ble_rx_queue.count) {
-			process_key(dequeue(&ble_rx_queue));
+			isMsg = process_message((dequeue(&rx_queue)), command_buf + write_idx);
+			if (isMsg) {
+				msg = command_buf + write_idx;
+				write_idx = (write_idx + 1) % 2;
+			}
 		}
 
+		/*
+		if (ble_rx_queue.count) 
+			process_key(dequeue(&ble_rx_queue));
+		*/
+
+		// current timer is at 50 ms, we can tune this later depending on code execution timing
+		// current if segment timing is around 2 ms (including gui printing)
+		// TODO exit/abort thingies (boring), could flush logging data before quitting
+		// TODO remove gyro readings from GUI (pfff)
+
 		if (check_timer_flag()) {
-			if (counter++%20 == 0) {
+			if (counter++%20 == 0) 
 				nrf_gpio_pin_toggle(BLUE);
-			}
 
 			adc_request_sample();
 			read_baro();
+			euler[0] = phi;
+			euler[1] = theta;
+			euler[2] = psi;
+			imu[0] = sp;
+			imu[1] = sq;
+			imu[2] = sr;
+			log_measurement(get_time_us(), ae, euler, imu, bat_volt, temperature, pressure, &m_log);
 
-			printf("%10ld | ", get_time_us());
-			printf("%3d %3d %3d %3d | ",ae[0], ae[1], ae[2], ae[3]);
-			printf("%6d %6d %6d | ", phi, theta, psi);
-			printf("%6d %6d %6d | ", sp, sq, sr);
-			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
+			//print_measurement(&m_log);
+			//print_commands(msg);
+			print_GUI(curMode, msg, &m_log); 
+
+			if(isMsg && (StateMachine[curMode][msg->event]!= NULL))
+    			curMode = (*StateMachine[curMode][msg->event])(msg, &m_log);
 
 			clear_timer_flag();
 		}
