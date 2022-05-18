@@ -236,7 +236,7 @@ upload-run: default pc
 	cd pc_terminal/; make run
 
 upload-run-gui: default pc
-	sudo python3 gui.py & sudo make upload-run
+	python gui.py & make upload-run
 
 ble:
 	cd pc_terminal/; make run-ble
