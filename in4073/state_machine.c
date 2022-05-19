@@ -204,6 +204,7 @@ Modes calibrationModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
 
 Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
+    
     return Yaw_Mode;
 }
 
