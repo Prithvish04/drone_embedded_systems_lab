@@ -22,7 +22,7 @@ timeout = 0.1
 
 positions = [(-5, -1, -1), (1, -1, -1), (-1, -5, -1), (-1, 1, -1), (-1, -1, -1)]
 sizes = [(4, 2, 2), (4, 2, 2), (2, 4, 2), (2, 4, 2), (2, 2, 2)]
-colors = ["crimson", "crimson", "crimson", "crimson", "limegreen"]
+colors = ["limegreen", "crimson", "crimson", "crimson", "black"]
 
 valid_keys = {'space':32, 'Escape':27, 'Left':43, 'Right':44, 'Up':41, 'Down':42,
               "a":'a', "z":'z', "q":'q', "w":'w', "j":'j', "u":'u', "k":'k', "i":'i', "l":'l', "o":'o',
@@ -125,16 +125,16 @@ class GuiApp:
         self.add_message(0.27, 0.55, 0.07, 0.05, 'mot3')
 
 
-        self.add_field(0.05, 0.7, 0.1, 0.05, 'js yaw')
+        self.add_field(0.05, 0.7, 0.1, 0.05, 'ctrl yaw')
         self.add_message(0.12, 0.7, 0.07, 0.05, 'js_yaw')
 
-        self.add_field(0.05, 0.8, 0.1, 0.05, 'js roll')
+        self.add_field(0.05, 0.8, 0.1, 0.05, 'ctrl roll')
         self.add_message(0.12, 0.8, 0.07, 0.05, 'js_roll')
 
-        self.add_field(0.2, 0.7, 0.1, 0.05, 'js pitch')
+        self.add_field(0.2, 0.7, 0.1, 0.05, 'ctrl pitch')
         self.add_message(0.27, 0.7, 0.07, 0.05, 'js_pitch')
 
-        self.add_field(0.2, 0.8, 0.1, 0.05, 'js lift')
+        self.add_field(0.2, 0.8, 0.1, 0.05, 'ctrl lift')
         self.add_message(0.27, 0.8, 0.07, 0.05, 'js_lift')
 
 

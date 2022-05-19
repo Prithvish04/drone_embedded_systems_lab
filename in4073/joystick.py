@@ -32,12 +32,13 @@ class Controller(object):
         return (-1 if j<0 else +1) * val
 
     def process_input(self):
-        yaw = self.getThrottle() * 32767
+        yaw = self.getYaw() * 32767
         roll = self.getRoll() * 32767
         pitch = self.getPitch() * 32767
-        lift = self.getYaw() * 32767
+        lift = self.getThrottle() * 32767
         aux = self._getAuxValue() 
-        return (f'{roll:.0f}', f'{pitch:.0f}', f'{yaw:.0f}', f'{lift:.0f}', str(aux))
+        cmd = f'{roll:.0f}', f'{pitch:.0f}', f'{yaw:.0f}', f'{lift:.0f}', str(aux)
+        return (cmd)
 
 
 class _GameController(Controller):
@@ -102,7 +103,7 @@ controllers = {
     'Wireless Controller'                                : _Playstation((-1,2,-3,0)),
     'MY-POWER CO.,LTD. 2In1 USB Joystick'                : _Playstation((-1,2,-3,0)),
     'Sony Interactive Entertainment Wireless Controller' : _Playstation((-1,3,-4,0)),
-    'Logitech Extreme 3D'                                : _GameController((-2,0,-1,3), 0),
+    'Logitech Extreme 3D'                                : _GameController((3,2,1,0), 0),
     'Logitech Logitech Extreme 3D'                       : _GameController((-3,0,-1,2), 0),
     'FrSky Taranis Joystick'                             : _RcTransmitter((0,1,2,5), 3),
     'FrSky FrSky Taranis Joystick'                       : _RcTransmitter((0,1,2,3), 5),
@@ -118,6 +119,7 @@ pygame.joystick.init()
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 controller_name = joystick.get_name()
+print(controller_name)
 if not controller_name in controllers.keys():
     print('Unrecognized controller: %s' % controller_name)
     exit(1)

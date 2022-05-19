@@ -38,6 +38,13 @@ typedef struct DroneMessage { Events event;
 							  int16_t roll;
 							  int16_t yaw;
 							  int16_t lift;
+							  
+							  // manual mode params
+							  int16_t lift_offset;
+							  int16_t roll_offset;
+							  int16_t yaw_offset;
+							  int16_t pitch_offset;
+
 							} DroneMessage;
 
 typedef struct Measurement { uint32_t timestamp;
@@ -49,6 +56,11 @@ typedef struct Measurement { uint32_t timestamp;
 							 int16_t phi;
 							 int16_t theta;
 							 int16_t psi;
+							 
+							 // calibration mode params
+							 int16_t phi_offset;
+							 int16_t theta_offset;
+							 int16_t psi_offset;
 							
 							 int16_t gyro0;
 							 int16_t gyro1;

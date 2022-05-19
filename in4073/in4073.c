@@ -33,6 +33,9 @@
 #include "parse.h"
 #include "state_machine.h"
 
+#define PANIK_CNT 10
+
+
 bool demo_done;
 
 /*------------------------------------------------------------------
@@ -58,14 +61,26 @@ int main(void) {
 	int16_t euler[] = {0, 0, 0};
 	int16_t imu[] = {0, 0, 0};
 	bool isMsg;
-
-	command_buf[0].event = Null;
-	command_buf[1].event = Null;
 	uint8_t write_idx = 0;
-	
+	uint8_t panik_cnt = 0;
+	bool rcvd = false;
+
 	demo_done = false;
 	wireless_mode = false;
+	sensor_mode = true;
 	isMsg = false;
+
+	for (uint8_t i = 0; i < 2; ++i) {
+		command_buf[i].event = Null;
+		command_buf[i].lift_offset = 0;
+		command_buf[i].roll_offset = 0;
+		command_buf[i].pitch_offset = 0;
+		command_buf[i].yaw_offset = 0;
+	}
+
+	m_log.phi_offset = 0;
+	m_log.psi_offset = 0;
+	m_log.theta_offset = 0;
 
 	while (!demo_done) {
 		// get the first available valid message sequence
@@ -75,6 +90,7 @@ int main(void) {
 				msg = command_buf + write_idx;
 				write_idx = (write_idx + 1) % 2;
 			}
+			rcvd = true;
 		}
 
 		/*
@@ -84,12 +100,18 @@ int main(void) {
 
 		// current timer is at 50 ms, we can tune this later depending on code execution timing
 		// current if segment timing is around 2 ms (including gui printing)
-		// TODO exit/abort thingies (boring), could flush logging data before quitting
-		// TODO remove gyro readings from GUI (pfff)
+
+		// TODO remove gyro readings from GUI (pfff), edit layout and displays, fix drone orientation
 
 		if (check_timer_flag()) {
 			if (counter++%20 == 0) 
 				nrf_gpio_pin_toggle(BLUE);
+
+			if (!rcvd) {
+				if (panik_cnt++ == PANIK_CNT)
+					msg->event = Panic_Event;
+			} else
+				panik_cnt = 0;
 
 			adc_request_sample();
 			read_baro();
@@ -99,29 +121,24 @@ int main(void) {
 			imu[0] = sp;
 			imu[1] = sq;
 			imu[2] = sr;
-			log_measurement(get_time_us(), ae, euler, imu, bat_volt, temperature, pressure, &m_log);
+			log_measurement(get_time_us(), motor, euler, imu, bat_volt, temperature, pressure, &m_log);
+			//add_euler_offset(&m_log);
 
-			//print_measurement(&m_log);
 			//print_commands(msg);
 			print_GUI(curMode, msg, &m_log); 
-
-			if(isMsg) {
-				if (StateMachine[curMode][msg->event]!= NULL){
-					curMode = (*StateMachine[curMode][msg->event])(msg, &m_log);
-				}
-				else{
-					curMode = (*StateMachine[curMode][Null])(msg, &m_log);
-				}
-			}
-		
+			//print_debug("example message");
 
 			clear_timer_flag();
+			rcvd = false;
 		}
 
 		if (check_sensor_int_flag()) {
 			get_sensor_data();
-			run_filters_and_control();
 		}
+
+		if(StateMachine[curMode][msg->event] == NULL)
+			msg->event = Null;
+    	curMode = (*StateMachine[curMode][msg->event])(curMode, msg, &m_log);
 	}	
 
 	printf("\n\t Goodbye \n\n");

@@ -34,24 +34,23 @@ void update_motors(void){
 	motor[0] = ae[0];
 	motor[1] = ae[1];
 	motor[2] = ae[2];
-	motor[3] = ae[3];
+	motor[3] = ae[3];                                                                                         
 }
 
-// dunno how necessary to keep this
-void run_filters_and_control(){
-
-	// fancy stuff here
-	// control loops and/or filters
-
-	// ae[0] = xxx, ae[1] = yyy etc etc
-	update_motors();
+void set_motors(int16_t m0, int16_t m1, int16_t m2, int16_t m3) {
+	ae[0] = (m0 < MAX_RPM) ? ((m0 < MIN_RPM) ? ((m0 <= 0) ? 0 : MIN_RPM): m0) : MAX_RPM;
+	ae[1] = (m1 < MAX_RPM) ? ((m1 < MIN_RPM) ? ((m1 <= 0) ? 0 : MIN_RPM): m1) : MAX_RPM;
+	ae[2] = (m2 < MAX_RPM) ? ((m2 < MIN_RPM) ? ((m2 <= 0) ? 0 : MIN_RPM): m2) : MAX_RPM;
+	ae[3] = (m3 < MAX_RPM) ? ((m3 < MIN_RPM) ? ((m3 <= 0) ? 0 : MIN_RPM): m3) : MAX_RPM;
 }
 
-void shutdown_motors() {
-	ae[0] = 0;
-	ae[1] = 0;
-	ae[2] = 0;
-	ae[3] = 0;
-	update_motors();
+int32_t map_limits(int32_t upper, int32_t lower, int32_t low_input, int32_t high_input, int32_t value) {
+	return (((value - low_input) * (upper-lower)) / (high_input-low_input)) + lower;
 }
 
+bool check_neutral(DroneMessage* msg) {
+	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift == 32766);
+}
+
+void add_euler_offset(Measurement* msg) {
+}

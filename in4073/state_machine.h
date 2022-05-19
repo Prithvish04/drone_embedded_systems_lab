@@ -13,37 +13,31 @@
 #include "gpio.h"
 #include "control.h"
 #include "structs.h"
-
-// static const uint32_t us_1_2 = (500ULL*1000ULL);
-// static const uint32_t us_1 = (2ULL * us_1_2);
-// static const uint32_t us_2 = (2ULL * us_1);
-// static const uint32_t critical_time = (1ULL * us_1_2);
-
+#include "timers.h"
+#include "parse.h"
 
 
 //typedef of 2d array
-typedef Modes (*const EventHandler[__last_Mode][__last_Event])(DroneMessage*, Measurement*);
+typedef Modes (*const EventHandler[__last_Mode][__last_Event])(Modes, DroneMessage*, Measurement*);
 typedef Modes (*pfEventHandler)(void);
 
 // FSM handlers, parameters not sure yet, but they should all be the same 
-Modes safeModeHandler(DroneMessage*, Measurement*);
-Modes panicModeHandler(DroneMessage*, Measurement*);
-Modes manualModeHandler(DroneMessage*, Measurement*);
-Modes calibrationModeHandler(DroneMessage*, Measurement*);
-Modes yawModeHandler(DroneMessage*, Measurement*);
-Modes fullModeHandler(DroneMessage*, Measurement*);
-Modes rawModeHandler(DroneMessage*, Measurement*);
-Modes heightModeHandler(DroneMessage*, Measurement*);
-Modes wirelessModeHandler(DroneMessage*, Measurement*);
+Modes safeModeHandler(Modes, DroneMessage*, Measurement*);
+Modes panicModeHandler(Modes, DroneMessage*, Measurement*);
+Modes manualModeHandler(Modes, DroneMessage*, Measurement*);
+Modes calibrationModeHandler(Modes, DroneMessage*, Measurement*);
+Modes yawModeHandler(Modes, DroneMessage*, Measurement*);
+Modes fullModeHandler(Modes, DroneMessage*, Measurement*);
+Modes rawModeHandler(Modes, DroneMessage*, Measurement*);
+Modes heightModeHandler(Modes, DroneMessage*, Measurement*);
+Modes wirelessModeHandler(Modes, DroneMessage*, Measurement*);
 
 // Table to define valid states and event of finite state machine
 // Null should always be there, handlers should only execute one cycle of their algorithm
 // remove unallowed actions while implementing corresponding modes
-// Implemented (or WIP) : Safe, Panic, Manual, Calibration (not sure about this one yet)
 
 static EventHandler StateMachine = {
     [Safe_Mode] = {
-                    [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
                     [Manual_Event] = manualModeHandler,
                     [Calibration_Event] = calibrationModeHandler,
@@ -55,7 +49,6 @@ static EventHandler StateMachine = {
                     [Null] = safeModeHandler},
 
     [Panic_Mode] = {
-                    [Panic_Event] = panicModeHandler,
                     [Null] = panicModeHandler},
 
     [Manual_Mode] = {
@@ -66,14 +59,17 @@ static EventHandler StateMachine = {
                     [Null] = manualModeHandler},
 
     [Calibration_Mode] = {
-                    [Safe_Event] = calibrationModeHandler,
+                    [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
-                    [Calibration_Event] = calibrationModeHandler,
+                    [Manual_Event] = manualModeHandler,
+                    [Yaw_Event] = yawModeHandler,
+                    [Full_Event] = fullModeHandler,
+                    [Raw_Event] = rawModeHandler, 
+                    [Height_Event] = heightModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
                     [Null] = calibrationModeHandler},
 
     // ===========================================================
-
 
     [Yaw_Mode] = {
                     [Safe_Event] = safeModeHandler,
@@ -84,7 +80,8 @@ static EventHandler StateMachine = {
                     [Full_Event] = fullModeHandler,
                     [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
-                    [Wireless_Event] = wirelessModeHandler},
+                    [Wireless_Event] = wirelessModeHandler,
+                    [Null] = yawModeHandler},
 
     [Full_Mode] = {
                     [Safe_Event] = safeModeHandler,
@@ -95,7 +92,8 @@ static EventHandler StateMachine = {
                     [Full_Event] = fullModeHandler,
                     [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
-                    [Wireless_Event] = wirelessModeHandler},
+                    [Wireless_Event] = wirelessModeHandler,
+                    [Null] = fullModeHandler},
 
     [Raw_Mode] = {
                     [Safe_Event] = safeModeHandler,
@@ -106,7 +104,9 @@ static EventHandler StateMachine = {
                     [Full_Event] = fullModeHandler,
                     [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
-                    [Wireless_Event] = wirelessModeHandler},
+                    [Wireless_Event] = wirelessModeHandler,
+                    [Null] = rawModeHandler},
+
     [Height_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
@@ -116,7 +116,8 @@ static EventHandler StateMachine = {
                     [Full_Event] = fullModeHandler,
                     [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
-                    [Wireless_Event] = wirelessModeHandler},
+                    [Wireless_Event] = wirelessModeHandler,
+                    [Null] = heightModeHandler},
                     
     [Wireless_Mode] = {
                     [Safe_Event] = safeModeHandler,
@@ -127,7 +128,8 @@ static EventHandler StateMachine = {
                     [Full_Event] = fullModeHandler,
                     [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
-                    [Wireless_Event] = wirelessModeHandler},
+                    [Wireless_Event] = wirelessModeHandler,
+                    [Null] = wirelessModeHandler},
 };
 
 #endif // MODES_H__
