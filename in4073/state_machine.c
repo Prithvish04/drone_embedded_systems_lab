@@ -146,7 +146,7 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     if (get_time_us() >= deadline){
         deadline = get_time_us() + period_us;
         if (cmd->lift < 32766)
-            set_motors(L-P-Y, L-R+Y, L+P-Y, L+R+Y);
+            set_motors(L-R-Y, L+P+Y, L+R-Y, L-P+Y);
         else
             set_motors(0, 0, 0, 0);
         update_motors();

@@ -6,7 +6,7 @@
 #include "structs.h"
 
 #define MAX_RPM 450
-#define MIN_RPM 150
+#define MIN_RPM 160
 
 
 extern uint16_t motor[4];
