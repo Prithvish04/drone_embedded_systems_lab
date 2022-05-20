@@ -59,7 +59,7 @@ int main(void) {
 	DroneMessage command_buf[2];
 	DroneMessage* msg = command_buf;
 	int16_t euler[] = {0, 0, 0};
-	int16_t imu[] = {0, 0, 0};
+	int16_t imu[] = {0, 0, 0, 0, 0, 0};
 	bool isMsg;
 	uint8_t write_idx = 0;
 	uint8_t panik_cnt = 0;
@@ -76,6 +76,9 @@ int main(void) {
 		command_buf[i].roll_offset = 0;
 		command_buf[i].pitch_offset = 0;
 		command_buf[i].yaw_offset = 0;
+		command_buf[i].P = 0;
+		command_buf[i].P1 = 0;
+		command_buf[i].P2 = 0;
 	}
 
 	m_log.phi_offset = 0;
@@ -115,18 +118,9 @@ int main(void) {
 
 			adc_request_sample();
 			read_baro();
-			euler[0] = phi;
-			euler[1] = theta;
-			euler[2] = psi;
-			imu[0] = sp;
-			imu[1] = sq;
-			imu[2] = sr;
-			log_measurement(get_time_us(), motor, euler, imu, bat_volt, temperature, pressure, &m_log);
-			//add_euler_offset(&m_log);
-
+	
 			//print_commands(msg);
 			print_GUI(curMode, msg, &m_log); 
-			//print_debug("example message");
 
 			clear_timer_flag();
 			rcvd = false;
@@ -134,6 +128,17 @@ int main(void) {
 
 		if (check_sensor_int_flag()) {
 			get_sensor_data();
+			euler[0] = phi;
+			euler[1] = theta;
+			euler[2] = psi;
+			imu[0] = sp;
+			imu[1] = sq;
+			imu[2] = sr;
+			imu[3] = sax;
+			imu[4] = say;
+			imu[5] = saz;
+			log_measurement(get_time_us(), motor, euler, imu, bat_volt, temperature, pressure, &m_log);
+			add_euler_offset(&m_log);
 		}
 
 		if(StateMachine[curMode][msg->event] == NULL)

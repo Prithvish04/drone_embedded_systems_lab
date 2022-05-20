@@ -45,6 +45,11 @@ typedef struct DroneMessage { Events event;
 							  int16_t yaw_offset;
 							  int16_t pitch_offset;
 
+							  // gains
+							  uint16_t P;
+							  uint16_t P1;
+							  uint16_t P2; 
+
 							} DroneMessage;
 
 typedef struct Measurement { uint32_t timestamp;
@@ -62,9 +67,13 @@ typedef struct Measurement { uint32_t timestamp;
 							 int16_t theta_offset;
 							 int16_t psi_offset;
 							
-							 int16_t gyro0;
-							 int16_t gyro1;
-							 int16_t gyro2;
+							 int16_t sp;
+							 int16_t sq;
+							 int16_t sr;
+
+							 int16_t sax;
+							 int16_t say;
+							 int16_t saz;
 							
 							 uint16_t battery;
 							 int32_t temperature;

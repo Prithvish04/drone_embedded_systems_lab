@@ -148,14 +148,14 @@ class GuiApp:
         self.add_message(0.53, 0.8, 0.07, 0.05, 'pitch')
 
 
-        self.add_field(0.72, 0.6, 0.1, 0.05, 'gyro x')
-        self.add_message(0.8, 0.6, 0.07, 0.05, 'gx')
+        self.add_field(0.72, 0.6, 0.1, 0.05, 'P')
+        self.add_message(0.8, 0.6, 0.07, 0.05, 'P')
 
-        self.add_field(0.72, 0.7, 0.1, 0.05, 'gyro y')
-        self.add_message(0.8, 0.7, 0.07, 0.05, 'gy')
+        self.add_field(0.72, 0.7, 0.1, 0.05, 'P1')
+        self.add_message(0.8, 0.7, 0.07, 0.05, 'P1')
 
-        self.add_field(0.72, 0.8, 0.1, 0.05, 'gyro z')
-        self.add_message(0.8, 0.8, 0.07, 0.05, 'gz')
+        self.add_field(0.72, 0.8, 0.1, 0.05, 'P2')
+        self.add_message(0.8, 0.8, 0.07, 0.05, 'P2')
 
         self.add_field(0.72, 0.9, 0.1, 0.05, 'mode')
         self.add_message(0.8, 0.9, 0.1, 0.05, 'mode')
@@ -252,12 +252,8 @@ class GuiApp:
         if self.started:
             self.send_data()
             try:
-                self.ser.reset_input_buffer()
+                #self.ser.reset_input_buffer()
                 l = self.ser.read_until()
-                data_len = len(l)
-                while data_len == 0:
-                    l = self.ser.read_until()
-                    data_len = len(l) 
                 data = [str(i)[2:-1] for i in l.split(b' ')]
                 if data[0] == 'gui':
                     roll, pitch, yaw = convert_euler(data[10:13])
@@ -278,9 +274,9 @@ class GuiApp:
                     self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
                     self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
 
-                    self.messages['gx'].config(text=str(data[13]))
-                    self.messages['gy'].config(text=str(data[14]))
-                    self.messages['gz'].config(text=str(data[15]))
+                    self.messages['P'].config(text=str(data[13]))
+                    self.messages['P1'].config(text=str(data[14]))
+                    self.messages['P2'].config(text=str(data[15]))
 
                     self.messages['battery'].config(text=str(data[16]))
                     self.messages['temperature'].config(text=str(data[17]))

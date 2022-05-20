@@ -53,4 +53,5 @@ bool check_neutral(DroneMessage* msg) {
 }
 
 void add_euler_offset(Measurement* msg) {
+		
 }

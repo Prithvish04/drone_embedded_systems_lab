@@ -10,7 +10,7 @@ void print_GUI(Modes mode, DroneMessage* command, Measurement* measure){
 	printf("%d ", command->lift_offset);
 	printf("%d %d %d %d ", measure->mot0, measure->mot1, measure->mot2, measure->mot3);
 	printf("%d %d %d ", measure->phi, measure->theta, measure->psi);
-	printf("%d %d %d ", measure->gyro0, measure->gyro1, measure->gyro2);
+	printf("%d %d %d ", command->P, command->P1, command->P2);
 	printf("%d %ld %ld \n", measure->battery, measure->temperature, measure->pressure);
 }
 
@@ -39,9 +39,12 @@ void log_measurement(uint32_t time, uint16_t* motor, int16_t* euler, int16_t* im
 	msg->phi = euler[0];
 	msg->theta = euler[1];
 	msg->psi = euler[2];
-	msg->gyro0 = imu[0];
-	msg->gyro1 = imu[1];
-	msg->gyro2 = imu[2];
+	msg->sp = imu[0];
+	msg->sq = imu[1];
+	msg->sr = imu[2];
+	msg->sax = imu[3];
+	msg->say = imu[4];
+	msg->saz = imu[5];
 	msg->battery = battery;
 	msg->temperature = temperature;
 	msg->pressure = pressure;

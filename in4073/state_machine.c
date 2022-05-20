@@ -137,14 +137,14 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     cmd->pitch_offset = P_offset;
     cmd->yaw_offset = Y_offset;
 
-    // map joystick inputs to rpms 
-    R = map_limits(max_offset, -max_offset, -32768, 32767, cmd->roll) + R_offset;
-    P = map_limits(max_offset, -max_offset, -32768, 32767, cmd->pitch) + P_offset; 
-    Y = map_limits(max_offset, -max_offset, -32768, 32767, cmd->yaw) + Y_offset;
-    L = map_limits(MAX_RPM, MIN_RPM, -32768, 32767, -cmd->lift) + L_offset;
     
     if (get_time_us() >= deadline){
         deadline = get_time_us() + period_us;
+        // map joystick inputs to rpms 
+        R = map_limits(max_offset, -max_offset, -32768, 32767, cmd->roll) + R_offset;
+        P = map_limits(max_offset, -max_offset, -32768, 32767, cmd->pitch) + P_offset; 
+        Y = map_limits(max_offset, -max_offset, -32768, 32767, cmd->yaw) + Y_offset;
+        L = map_limits(MAX_RPM, MIN_RPM, -32768, 32767, -cmd->lift) + L_offset;
         if (cmd->lift < 32766)
             set_motors(L-R-Y, L+P+Y, L+R-Y, L-P+Y);
         else
@@ -156,12 +156,11 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
 /**
  * @brief Calibration mode
- * Dunno how this is supposed to be implemented, but lets take the mean of the individual euler angles
- * during a certain periodic duration and update calibration offsets at the end of each period.
- * Currently assumed to be reachable only from the safe mode because it doesn't make sense to do otherwise.
+ * 5 secs for yaw pitch roll averaging and saving them as offsets
+ * goes back to safe mode at the end automatically
+ * you can interrupt this by going to a different mode manually
  * 
- * Note: the current implementation is not actually the mean, rather a weighted sum of past values where
- * their limit goes to zero as the influence of preceding values decay over time.
+ * raw mode calibration ¯\_(ツ)_/¯
  * 
  * @param mode 
  * @param cmd 
@@ -169,42 +168,155 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
  * @return Modes 
  */
 Modes calibrationModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
-    static const uint8_t save_cnt = 50;
-    static const uint32_t period_us = 20000;
+    static const uint16_t save_cnt = 5000;
+    static const uint32_t period_us = 1000;
     static uint32_t deadline = 0;
 
     static int32_t phi_mean = 0, theta_mean = 0, psi_mean = 0;
-    static uint8_t i = 0;
+    static int32_t sp_mean = 0, sq_mean = 0, sr_mean = 0;
+    static int32_t sax_mean = 0, say_mean = 0, saz_mean = 0;
+    static uint16_t i = 0;
 
     // first enterance from a different mode
-    if (mode != Calibration_Mode){
-        phi_mean = mes->phi, theta_mean = mes->theta, psi_mean = mes->psi;
+    if ((mode != Calibration_Mode) || (cmd->event != Null)){
+        phi_mean = 0, theta_mean = 0, psi_mean = 0;
+        sp_mean = 0, sq_mean = 0, sr_mean = 0;
+        sax_mean = 0, say_mean = 0, saz_mean = 0;
         i = 0;
     }
+    
     if (get_time_us() >= deadline){
         // calculate offsets
         deadline = get_time_us() + period_us;
         phi_mean += mes->phi; 
-        phi_mean /= 2;
         psi_mean += mes->psi;
-        psi_mean /= 2;
         theta_mean += mes->theta;
-        theta_mean /= 2;
+        sp_mean += mes->sp;
+        sq_mean += mes->sq;
+        sr_mean += mes->sr;
+        sax_mean += mes->sax;
+        say_mean += mes->say;
+        saz_mean += mes->saz;
         // save offsets
         if (i++ == save_cnt) {
-            mes->phi_offset = phi_mean;
-            mes->psi_offset = psi_mean;
-            mes->theta_offset = theta_mean;
-            phi_mean = mes->phi, theta_mean = mes->theta, psi_mean = mes->psi;
+            mes->phi_offset = phi_mean/i;
+            mes->psi_offset = psi_mean/i;
+            mes->theta_offset = theta_mean/i;
+            mes->sp = sp_mean/i;
+            mes->sq = sq_mean/i;
+            mes->sr = sr_mean/i;
+            mes->sax = sax_mean/i;
+            mes->say = say_mean/i;
+            mes->saz = saz_mean/i; 
+            phi_mean = 0, theta_mean = 0, psi_mean = 0;
+            sp_mean = 0, sq_mean = 0, sr_mean = 0;
+            sax_mean = 0, say_mean = 0, saz_mean = 0;
             i = 0;
+            return Safe_Mode;
         }
     }        
     return Calibration_Mode;
 }
 
-
+/**
+ * @brief Yaw Control (more like yaw rate control)
+ * max_r, initial K and Sc should be tuned 
+ * uncomment the print line while commenting out the GUI for debugging
+ * 
+ * @param mode 
+ * @param cmd 
+ * @param mes 
+ * @return Modes 
+ */
 Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
-    
+    static const uint32_t period_us = 2000;
+    static const uint8_t offset = 5, k_offset = 1;
+    static const int16_t max_offset = 50, max_r = 5000, Sc = 512;
+
+    static uint32_t deadline = 0;
+    static int32_t L = 0, R = 0, P = 0, Y = 0, N = 0, r = 0, error = 0;
+    static uint16_t K = 0;
+    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
+
+    // enter Yaw mode from a different mode
+    if (mode != Yaw_Mode){
+        L = 0; R = 0; P = 0; Y = 0; r = 0;
+        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
+        cmd->P = K;
+        if (!check_neutral(cmd))
+            return mode;
+    }
+    if(cmd->event == Safe_Event) 
+        return Panic_Mode;
+
+    // process keyboard inputs
+    switch (cmd->key){
+    case LIFT_UP_KEY:
+        L_offset = (L_offset + offset > max_offset) ? max_offset : L_offset + offset;
+        break;
+    case LIFT_DOWN_KEY:
+        L_offset = (L_offset - offset > -max_offset) ? L_offset - offset : -max_offset;
+        break;
+    case ROLL_UP_KEY:
+        R_offset = (R_offset + offset > max_offset) ? max_offset : R_offset + offset;
+        break;
+    case ROLL_DOWN_KEY:
+        R_offset = (R_offset - offset > -max_offset) ? R_offset - offset : -max_offset;
+        break;
+    case PITCH_UP_KEY:
+        P_offset = (P_offset + offset > max_offset) ? max_offset : P_offset + offset;
+        break;
+    case PITCH_DOWN_KEY:
+        P_offset = (P_offset - offset > -max_offset) ? P_offset - offset : -max_offset;
+        break;
+    case YAW_UP_KEY:
+        Y_offset = (Y_offset + offset > max_offset) ? max_offset : Y_offset + offset;
+        break;
+    case YAW_DOWN_KEY:
+        Y_offset = (Y_offset - offset > -max_offset) ? Y_offset - offset : -max_offset;
+        break;
+    case P_UP_KEY: 
+        K += k_offset; 
+        break;
+    case P_DOWN_KEY:
+        K = (K - k_offset < 0) ? 0 : K - k_offset;
+        break;
+    default:
+        break;
+    }
+    cmd->key = 0xFF;  
+    cmd->P = K;
+
+    //Same as Manual Mode
+    cmd->lift_offset = L_offset;
+    cmd->roll_offset = R_offset;
+    cmd->pitch_offset = P_offset;
+    cmd->yaw_offset = Y_offset;
+
+    if (get_time_us() >= deadline){
+        deadline = get_time_us() + period_us;
+        // map joystick inputs to rpms (Same as Manual Mode)
+        R = map_limits(max_offset, -max_offset, -32768, 32767, cmd->roll) + R_offset;
+        P = map_limits(max_offset, -max_offset, -32768, 32767, cmd->pitch) + P_offset; 
+        L = map_limits(MAX_RPM, MIN_RPM, -32768, 32767, -cmd->lift) + L_offset;
+        // map yaw axis to yaw rate ¯\_(ツ)_/¯
+        r = map_limits(max_r, -max_r, -32768, 32767, cmd->yaw); 
+        // cap the readings to the allowed values set by max_r
+        mes->sr = ((mes->sr < -max_r) ? -max_r : ((mes->sr > max_r) ? max_r : mes->sr));
+        // error wrt setpoint from the joystick 
+        error = K*(r - (int32_t) mes->sr);
+        r += error;
+        r /= Sc;
+        Y = r + Y_offset;
+
+        //printf("debug m0: %d m1: %d m2: %d m3: %d R: %ld P: %ld L: %ld N: %ld r: %d e: %ld \n", ae[0], ae[1], ae[2], ae[3], R, P, L, N, mes->sr, error);
+        if (cmd->lift < 32766)
+            set_motors(L-R-Y, L+P+Y, L+R-Y, L-P+Y);
+        else
+            set_motors(0, 0, 0, 0);
+        update_motors();
+    }        
+
     return Yaw_Mode;
 }
 
@@ -227,4 +339,3 @@ Modes heightModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 Modes wirelessModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     return Wireless_Mode;
 }
-
