@@ -126,7 +126,7 @@ int main(void) {
 			read_baro();
 	
 			//print_commands(msg);
-			print_GUI(curMode, msg, &m_log); 
+	        print_GUI(curMode, msg, &m_log); 
 
 			clear_timer_flag();
 			rcvd = false;
