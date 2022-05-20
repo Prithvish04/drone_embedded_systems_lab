@@ -61,12 +61,7 @@ typedef struct Measurement { uint32_t timestamp;
 							 int16_t phi;
 							 int16_t theta;
 							 int16_t psi;
-							 
-							 // calibration mode params
-							 int16_t phi_offset;
-							 int16_t theta_offset;
-							 int16_t psi_offset;
-							
+
 							 int16_t sp;
 							 int16_t sq;
 							 int16_t sr;
@@ -74,7 +69,20 @@ typedef struct Measurement { uint32_t timestamp;
 							 int16_t sax;
 							 int16_t say;
 							 int16_t saz;
+							 
+							 // calibration mode params
+							 int16_t phi_offset;
+							 int16_t theta_offset;
+							 int16_t psi_offset;
 							
+							 int16_t sp_offset;
+							 int16_t sq_offset;
+							 int16_t sr_offset;
+
+							 int16_t sax_offset;
+							 int16_t say_offset;
+							 int16_t saz_offset;
+
 							 uint16_t battery;
 							 int32_t temperature;
 							 int32_t pressure;

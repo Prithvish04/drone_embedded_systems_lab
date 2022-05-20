@@ -84,6 +84,12 @@ int main(void) {
 	m_log.phi_offset = 0;
 	m_log.psi_offset = 0;
 	m_log.theta_offset = 0;
+	m_log.sp_offset = 0;
+	m_log.sq_offset = 0;
+	m_log.sr_offset = 0;
+	m_log.sax_offset = 0;
+	m_log.say_offset = 0;
+	m_log.saz_offset = 0;
 
 	while (!demo_done) {
 		// get the first available valid message sequence
@@ -104,7 +110,7 @@ int main(void) {
 		// current timer is at 50 ms, we can tune this later depending on code execution timing
 		// current if segment timing is around 2 ms (including gui printing)
 
-		// TODO remove gyro readings from GUI (pfff), edit layout and displays, fix drone orientation
+		// TODO edit layout and displays, fix drone orientation
 
 		if (check_timer_flag()) {
 			if (counter++%20 == 0) 
@@ -138,7 +144,8 @@ int main(void) {
 			imu[4] = say;
 			imu[5] = saz;
 			log_measurement(get_time_us(), motor, euler, imu, bat_volt, temperature, pressure, &m_log);
-			add_euler_offset(&m_log);
+			if (curMode != Calibration_Mode)
+				add_imu_offset(&m_log);
 		}
 
 		if(StateMachine[curMode][msg->event] == NULL)

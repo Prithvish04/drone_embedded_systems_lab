@@ -52,6 +52,8 @@ bool check_neutral(DroneMessage* msg) {
 	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift == 32766);
 }
 
-void add_euler_offset(Measurement* msg) {
-		
+void add_imu_offset(Measurement* msg) {
+	msg->phi -= msg->phi_offset;  msg->psi -= msg->psi_offset;  msg->theta -= msg->theta_offset;
+	msg->sp -= msg->sp_offset;    msg->sq -= msg->sq_offset;    msg->sr -= msg->sr_offset;
+	msg->sax -= msg->sax_offset;  msg->say -= msg->say_offset;  msg->saz -= msg->saz_offset; 
 }

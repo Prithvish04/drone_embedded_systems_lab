@@ -18,6 +18,6 @@ void update_motors();
 void set_motors(int16_t, int16_t, int16_t, int16_t);
 int32_t map_limits(int32_t, int32_t, int32_t, int32_t, int32_t); 
 bool check_neutral(DroneMessage*);
-void add_euler_offset(Measurement*);
+void add_imu_offset(Measurement*);
 
 #endif /* CONTROL_H_ */

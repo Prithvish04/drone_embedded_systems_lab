@@ -180,37 +180,25 @@ Modes calibrationModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     // first enterance from a different mode
     if ((mode != Calibration_Mode) || (cmd->event != Null)){
         phi_mean = 0, theta_mean = 0, psi_mean = 0;
-        sp_mean = 0, sq_mean = 0, sr_mean = 0;
-        sax_mean = 0, say_mean = 0, saz_mean = 0;
+        sp_mean = 0,  sq_mean = 0,    sr_mean = 0;
+        sax_mean = 0, say_mean = 0,   saz_mean = 0;
         i = 0;
     }
     
     if (get_time_us() >= deadline){
         // calculate offsets
         deadline = get_time_us() + period_us;
-        phi_mean += mes->phi; 
-        psi_mean += mes->psi;
-        theta_mean += mes->theta;
-        sp_mean += mes->sp;
-        sq_mean += mes->sq;
-        sr_mean += mes->sr;
-        sax_mean += mes->sax;
-        say_mean += mes->say;
-        saz_mean += mes->saz;
+        phi_mean += mes->phi;  psi_mean += mes->psi; theta_mean += mes->theta;
+        sp_mean += mes->sp;    sq_mean += mes->sq;   sr_mean += mes->sr;
+        sax_mean += mes->sax;  say_mean += mes->say; saz_mean += mes->saz;
         // save offsets
         if (i++ == save_cnt) {
-            mes->phi_offset = phi_mean/i;
-            mes->psi_offset = psi_mean/i;
-            mes->theta_offset = theta_mean/i;
-            mes->sp = sp_mean/i;
-            mes->sq = sq_mean/i;
-            mes->sr = sr_mean/i;
-            mes->sax = sax_mean/i;
-            mes->say = say_mean/i;
-            mes->saz = saz_mean/i; 
+            mes->phi_offset = phi_mean/i; mes->psi_offset = psi_mean/i;  mes->theta_offset = theta_mean/i;
+            mes->sp_offset = sp_mean/i;   mes->sq_offset = sq_mean/i;    mes->sr_offset = sr_mean/i;
+            mes->sax_offset = sax_mean/i; mes->say_offset = say_mean/i;  mes->saz_offset = saz_mean/i; 
             phi_mean = 0, theta_mean = 0, psi_mean = 0;
-            sp_mean = 0, sq_mean = 0, sr_mean = 0;
-            sax_mean = 0, say_mean = 0, saz_mean = 0;
+            sp_mean = 0,  sq_mean = 0,    sr_mean = 0;
+            sax_mean = 0, say_mean = 0,   saz_mean = 0;
             i = 0;
             return Safe_Mode;
         }
@@ -234,7 +222,7 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const int16_t max_offset = 50, max_r = 5000, Sc = 512;
 
     static uint32_t deadline = 0;
-    static int32_t L = 0, R = 0, P = 0, Y = 0, N = 0, r = 0, error = 0;
+    static int32_t L = 0, R = 0, P = 0, Y = 0, r = 0, error = 0;
     static uint16_t K = 0;
     static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
 
@@ -316,7 +304,6 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
             set_motors(0, 0, 0, 0);
         update_motors();
     }        
-
     return Yaw_Mode;
 }
 

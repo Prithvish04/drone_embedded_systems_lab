@@ -252,7 +252,7 @@ class GuiApp:
         if self.started:
             self.send_data()
             try:
-                #self.ser.reset_input_buffer()
+                self.ser.reset_input_buffer()
                 l = self.ser.read_until()
                 data = [str(i)[2:-1] for i in l.split(b' ')]
                 if data[0] == 'gui':
