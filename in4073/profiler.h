@@ -9,7 +9,12 @@
 typedef struct time_struct{
     uint32_t starttime;
     uint32_t stoptime;
-    char name[10]; 
 } time_struct;
+
+void getstarttime(time_struct  mytimer);
+
+void getstoptime(time_struct mytimer);
+
+uint32_t timedoff(time_struct mytimer);
 
 #endif /* PROFILER_H_ */
