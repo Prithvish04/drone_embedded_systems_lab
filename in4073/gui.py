@@ -14,6 +14,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.figure import Figure
 import struct
+import time 
 
 
 usb = '/dev/ttyUSB1'
@@ -289,7 +290,33 @@ class GuiApp:
         
         self.mainwindow.after(1, self.update_clock) 
 
+class profiler:
+    def __init__(self,name ) -> None:
+        self.name = name
+        self.starttime = 0
+        self.stoptime = 0
 
+    def getStartTime(self):
+        self.startime = time.time()
+    
+    def getstopTIme(self):
+        self.stoptime = time.time()
+    
+    def printStartTime(self):
+        print(self.startime)
+
+    def printStopTime(self):
+        print(self.stoptime)
+
+    def timediff(self):
+        self.timediff = self.stoptime - self.starttime
+        return self.timediff
+
+    def printtimediff(self):
+        print(self.timediff())
+
+    def printstats(self):
+        print(f' {self.name} takes {self.timediff}')
 
 if __name__ == '__main__':
     tk.Tk().withdraw()
