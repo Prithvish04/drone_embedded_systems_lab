@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 import struct
 
 
-usb = '/dev/ttyUSB0'
+usb = '/dev/ttyUSB1'
 baud_rate = 115200
 timeout = 0.1
 

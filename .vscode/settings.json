@@ -20,6 +20,9 @@
         "control.h": "c",
         "mpu6050.h": "c",
         "inttypes.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "*.tcc": "c",
+        "random": "c",
+        "*.def": "c"
     }
 }

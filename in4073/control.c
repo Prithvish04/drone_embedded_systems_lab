@@ -49,7 +49,7 @@ int32_t map_limits(int32_t upper, int32_t lower, int32_t low_input, int32_t high
 }
 
 bool check_neutral(DroneMessage* msg) {
-	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift == 32766);
+	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift == 32767);
 }
 
 void add_imu_offset(Measurement* msg) {
