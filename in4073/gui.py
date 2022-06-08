@@ -17,7 +17,7 @@ import struct
 import time 
 
 
-usb = '/dev/ttyUSB1'
+usb = '/dev/ttyUSB0'
 baud_rate = 115200
 timeout = 0.1
 

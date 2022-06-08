@@ -226,21 +226,21 @@ Modes calibrationModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
  * @return Modes 
  */
 Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
-    static const uint8_t offset = 5, k_offset = 1, d = 100;
+    static const uint8_t offset = 5, d = 100, k_offset = 1;
     //static const int16_t keyboard_lim = 50, joystick_lim = 120, Sc = 512;
     static const int16_t keyboard_lim = 50, joystick_lim = 120;
-    static const int16_t lower_Z = 250, upper_Z = 2500, K_init = 5;
+    static const int16_t lower_Z = 250, upper_Z = 2500, K_init = 0;
 
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
-    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
+    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0;
     static uint32_t m0, m1, m2, m3;
 
 
     // enter Yaw mode from a different mode
     if (mode != Yaw_Mode){
-        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
-        cmd->P = K_init;
+        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0;
+        G_offset = K_init;
         // cmd->P1 = K_init;
         // cmd->P2 = K_init;
         if (!check_neutral(cmd))
@@ -276,10 +276,10 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         Y_offset = (Y_offset - offset > -keyboard_lim) ? Y_offset - offset : -keyboard_lim;
         break;
     case P_UP_KEY: 
-        cmd->P += k_offset; 
+        G_offset += k_offset; 
         break;
     case P_DOWN_KEY:
-        cmd->P = (cmd->P - k_offset < 0) ? 0 : cmd->P - k_offset;
+        G_offset = (G_offset - k_offset < 0) ? 0 : G_offset - k_offset;
         break;
     default:
         break;
@@ -291,6 +291,7 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     cmd->roll_offset = R_offset;
     cmd->pitch_offset = P_offset;
     cmd->yaw_offset = Y_offset;
+    cmd->P = G_offset;
 
     if (get_time_us() >= deadline){
          // map joystick inputs to rpms 
@@ -304,7 +305,7 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         // mes->phi = ((mes->phi < -joystick_lim) ? -joystick_lim : ((mes->phi > joystick_lim) ? joystick_lim : mes->phi));
         // mes->theta = ((mes->theta < -joystick_lim) ? -joystick_lim : ((mes->theta > joystick_lim) ? joystick_lim : mes->theta));
         // error wrt setpoint from the joystick 
-        N += cmd->P * (N - (int32_t) mes->sr);
+        N = G_offset * (N - (int32_t) mes->sr);
         // r += error;
         // r /= Sc;
         // Y = r + Y_offset;
@@ -312,10 +313,11 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         // M += cmd->P1 * (M - (int32_t) mes->phi);
         // L += cmd->P2 * (L - (int32_t) mes->theta); 
 
-        m0 = sqrt_32(d*(Z + 2*M - N));
-        m1 = sqrt_32(d*(Z - 2*L + N));
-        m2 = sqrt_32(d*(Z - 2*M - N));
-        m3 = sqrt_32(d*(Z + 2*L + N));
+        
+        m0 = sqrt_32(d*(Z + 2*M) - N);
+        m1 = sqrt_32(d*(Z - 2*L) + N);
+        m2 = sqrt_32(d*(Z - 2*M) - N);
+        m3 = sqrt_32(d*(Z + 2*L) + N);
         
         if (cmd->lift < 32766)
             set_motors(m0 - R_offset - Y_offset + L_offset, 
@@ -358,20 +360,20 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const uint8_t offset = 5, k_offset = 1, d = 100;
     //static const int16_t keyboard_lim = 50, joystick_lim = 120, Sc = 512;
     static const int16_t keyboard_lim = 50, joystick_lim = 120;
-    static const int16_t lower_Z = 250, upper_Z = 2500, K_init = 30;
+    static const int16_t lower_Z = 250, upper_Z = 2500, K_init = 0;
 
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
-    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
+    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0, G1_offset = 0, G2_offset = 0;
     static uint32_t m0, m1, m2, m3;
 
 
     // enter Yaw mode from a different mode
     if (mode != Full_Mode){
         L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
-        cmd->P = K_init;
-        cmd->P1 = K_init;
-        cmd->P2 = K_init;
+        G_offset = K_init;
+        G1_offset = K_init;
+        G2_offset = K_init;
         if (!check_neutral(cmd))
              return mode;
     }
@@ -405,22 +407,22 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         Y_offset = (Y_offset - offset > -keyboard_lim) ? Y_offset - offset : -keyboard_lim;
         break;
     case P_UP_KEY: 
-        cmd->P += k_offset; 
+        G_offset += k_offset; 
         break;
     case P_DOWN_KEY:
-        cmd->P = (cmd->P - k_offset < 0) ? 0 : cmd->P - k_offset;
+        G_offset = (G_offset - k_offset < 0) ? 0 : G_offset - k_offset;
         break;
     case P1_UP_KEY: 
-        cmd->P1 += k_offset; 
+        G1_offset += k_offset;  
         break;        
     case P1_DOWN_KEY:
-        cmd->P1 = (cmd->P1 - k_offset < 0) ? 0 : cmd->P1 - k_offset;
+        G1_offset = (G1_offset - k_offset < 0) ? 0 : G1_offset - k_offset;
         break;
     case P2_UP_KEY: 
-        cmd->P2 += k_offset; 
+        G2_offset += k_offset; 
         break;        
     case P2_DOWN_KEY:
-        cmd->P2 = (cmd->P2 - k_offset < 0) ? 0 : cmd->P2 - k_offset;
+        G2_offset = (G2_offset - k_offset < 0) ? 0 : G2_offset - k_offset;
         break;
     default:
         break;
@@ -432,6 +434,9 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     cmd->roll_offset = R_offset;
     cmd->pitch_offset = P_offset;
     cmd->yaw_offset = Y_offset;
+    cmd->P = G_offset;
+    cmd->P1 = G1_offset;
+    cmd->P2 = G2_offset;
 
     if (get_time_us() >= deadline){
          // map joystick inputs to rpms 
@@ -442,21 +447,26 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
         // cap the readings to the allowed values set by max_r
         mes->sr = ((mes->sr < -joystick_lim) ? -joystick_lim : ((mes->sr > joystick_lim) ? joystick_lim : mes->sr));
+        mes->sq = ((mes->sq < -joystick_lim) ? -joystick_lim : ((mes->sq > joystick_lim) ? joystick_lim : mes->sq));
+        mes->sp = ((mes->sp < -joystick_lim) ? -joystick_lim : ((mes->sp > joystick_lim) ? joystick_lim : mes->sp));
         mes->phi = ((mes->phi < -joystick_lim) ? -joystick_lim : ((mes->phi > joystick_lim) ? joystick_lim : mes->phi));
         mes->theta = ((mes->theta < -joystick_lim) ? -joystick_lim : ((mes->theta > joystick_lim) ? joystick_lim : mes->theta));
         // error wrt setpoint from the joystick 
-        N += cmd->P * (N - (int32_t) mes->sr);
+        N = G_offset * (N - (int32_t) mes->sr);
         // r += error;
         // r /= Sc;
         // Y = r + Y_offset;
     
-        M += cmd->P1 * (M - (int32_t) mes->phi);
-        L += cmd->P2 * (L - (int32_t) mes->theta); 
+        L = G1_offset * (L - (int32_t) mes->theta);
+        L = G2_offset * (L - (int32_t) mes->sq);
 
-        m0 = sqrt_32(d*(Z + 2*M - N));
-        m1 = sqrt_32(d*(Z - 2*L + N));
-        m2 = sqrt_32(d*(Z - 2*M - N));
-        m3 = sqrt_32(d*(Z + 2*L + N));
+        //L = G1_offset * (L - (int32_t) mes->phi);
+        //L = G2_offset * (L - (int32_t) mes->sp);
+
+        m0 = sqrt_32(d*(Z) + 2*M - N);
+        m1 = sqrt_32(d*(Z) - 2*L + N);
+        m2 = sqrt_32(d*(Z) - 2*M - N);
+        m3 = sqrt_32(d*(Z) + 2*L + N);
         
         if (cmd->lift < 32766)
             set_motors(m0 - R_offset - Y_offset + L_offset, 
@@ -469,28 +479,28 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
 
 
-    //     // deadline = get_time_us() + period_us;
-    //     // // map joystick inputs to rpms (Same as Manual Mode)
-    //     // R = map_limits(max_offset, -max_offset, -32768, 32767, cmd->roll) + R_offset;
-    //     // P = map_limits(max_offset, -max_offset, -32768, 32767, cmd->pitch) + P_offset; 
-    //     // L = map_limits(MAX_RPM, MIN_RPM, -32768, 32767, -cmd->lift) + L_offset;
-    //     // // map yaw axis to yaw rate ¯\_(ツ)_/¯
-    //     // r = map_limits(max_r, -max_r, -32768, 32767, cmd->yaw); 
-    //     // // cap the readings to the allowed values set by max_r
-    //     // mes->sr = ((mes->sr < -max_r) ? -max_r : ((mes->sr > max_r) ? max_r : mes->sr));
-    //     // // error wrt setpoint from the joystick 
-    //     // error = K*(r - (int32_t) mes->sr);
-    //     // r += error;
-    //     // r /= Sc;
-    //     // Y = r + Y_offset;
+        // deadline = get_time_us() + period_us;
+        // // map joystick inputs to rpms (Same as Manual Mode)
+        // R = map_limits(max_offset, -max_offset, -32768, 32767, cmd->roll) + R_offset;
+        // P = map_limits(max_offset, -max_offset, -32768, 32767, cmd->pitch) + P_offset; 
+        // L = map_limits(MAX_RPM, MIN_RPM, -32768, 32767, -cmd->lift) + L_offset;
+        // // map yaw axis to yaw rate ¯\_(ツ)_/¯
+        // r = map_limits(max_r, -max_r, -32768, 32767, cmd->yaw); 
+        // // cap the readings to the allowed values set by max_r
+        // mes->sr = ((mes->sr < -max_r) ? -max_r : ((mes->sr > max_r) ? max_r : mes->sr));
+        // // error wrt setpoint from the joystick 
+        // error = K*(r - (int32_t) mes->sr);
+        // r += error;
+        // r /= Sc;
+        // Y = r + Y_offset;
 
-    //     // //printf("debug m0: %d m1: %d m2: %d m3: %d R: %ld P: %ld L: %ld N: %ld r: %d e: %ld \n", ae[0], ae[1], ae[2], ae[3], R, P, L, N, mes->sr, error);
-    //     // if (cmd->lift < 32766)
-    //     //     set_motors(L-R-Y, L+P+Y, L+R-Y, L-P+Y);
-    //     // else
-    //     //     set_motors(0, 0, 0, 0);
-    //     // update_motors();
-    // }        
+        // //printf("debug m0: %d m1: %d m2: %d m3: %d R: %ld P: %ld L: %ld N: %ld r: %d e: %ld \n", ae[0], ae[1], ae[2], ae[3], R, P, L, N, mes->sr, error);
+        // if (cmd->lift < 32766)
+        //     set_motors(L-R-Y, L+P+Y, L+R-Y, L-P+Y);
+        // else
+        //     set_motors(0, 0, 0, 0);
+        // update_motors();
+    }        
     return Full_Mode;
 }
 
