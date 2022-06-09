@@ -15,6 +15,6 @@ void getstarttime(time_struct  mytimer);
 
 void getstoptime(time_struct mytimer);
 
-uint32_t timedoff(time_struct mytimer);
+uint32_t timediff(time_struct mytimer);
 
 #endif /* PROFILER_H_ */

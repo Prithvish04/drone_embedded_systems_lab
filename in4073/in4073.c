@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include "parse.h"
 #include "state_machine.h"
+#include "profiler.h"
 
 #define PANIK_CNT 10
 
@@ -52,6 +53,9 @@ int main(void) {
 	baro_init();
 	spi_flash_init();
 	quad_ble_init();
+
+	// Profilers initiation
+	time_struct msgRecieve;
 
 	uint32_t counter = 0;
 	Modes curMode = Safe_Mode;
@@ -94,12 +98,14 @@ int main(void) {
 	while (!demo_done) {
 		// get the first available valid message sequence
 		if (rx_queue.count) {
+			getstarttime(msgRecieve);
 			isMsg = process_message((dequeue(&rx_queue)), command_buf + write_idx);
 			if (isMsg) {
 				msg = command_buf + write_idx;
 				write_idx = (write_idx + 1) % 2;
 			}
 			rcvd = true;
+			getstoptime(msgRecieve);
 		}
 
 		/*
@@ -127,6 +133,7 @@ int main(void) {
 	
 			//print_commands(msg);
 	       print_GUI(curMode, msg, &m_log); 
+		   //printf("debug msg Recieve: %ld",timediff(msgRecieve) );
 
 			clear_timer_flag();
 			rcvd = false;
