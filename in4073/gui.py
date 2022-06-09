@@ -271,9 +271,12 @@ class GuiApp:
                     self.messages['mot2'].config(text=str(data[8]))
                     self.messages['mot3'].config(text=str(data[9]))
 
-                    self.messages['roll'].config(text=str(np.rad2deg(roll)))
-                    self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
-                    self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
+                    # self.messages['roll'].config(text=str(np.rad2deg(roll)))
+                    # self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
+                    # self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
+                    self.messages['roll'].config(text=str(data[10]))
+                    self.messages['pitch'].config(text=str(data[11]))
+                    self.messages['yaw'].config(text=str(data[12]))
 
                     self.messages['P'].config(text=str(data[13]))
                     self.messages['P1'].config(text=str(data[14]))
