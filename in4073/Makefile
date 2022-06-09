@@ -43,6 +43,7 @@ $(abspath ./in4073.c) \
 $(abspath ./parse.c) \
 $(abspath ./control.c) \
 $(abspath ./state_machine.c) \
+$(abspath ./profiler.c) \
 $(abspath ./hal/gpio.c) \
 $(abspath ./hal/timers.c) \
 $(abspath ./hal/uart.c) \

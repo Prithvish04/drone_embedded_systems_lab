@@ -38,7 +38,7 @@ class Controller(object):
         lift = self.getThrottle() * 32767
         aux = self._getAuxValue() 
         cmd = f'{roll:.0f}', f'{-pitch:.0f}', f'{yaw:.0f}', f'{-lift:.0f}', str(aux)
-        print(cmd)
+        #print(cmd)
         return (cmd)
 
 

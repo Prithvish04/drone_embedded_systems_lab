@@ -29,6 +29,35 @@ valid_keys = {'space':32, 'Escape':27, 'Left':43, 'Right':44, 'Up':41, 'Down':42
               "a":'a', "z":'z', "q":'q', "w":'w', "j":'j', "u":'u', "k":'k', "i":'i', "l":'l', "o":'o',
               "1":'1', "2":'2', "3":'3', "4":'4', "5":'5', "6":'6', "7":'7', "8":'8', "9":'9', "0":'0'}
 
+class profiler:
+    def __init__(self,name ) -> None:
+        self.name = name
+        self.starttime = 0
+        self.stoptime = 0
+
+    def getStartTime(self):
+        self.starttime = time.monotonic_ns()
+    
+    def getstopTime(self):
+        self.stoptime = time.monotonic_ns()
+    
+    def printStartTime(self):
+        print(self.starttime)
+
+    def printStopTime(self):
+        print(self.stoptime)
+
+    def timediff(self):
+        self.timediff = self.stoptime - self.starttime
+        return self.timediff
+
+    def printtimediff(self):
+        print(self.timediff())
+
+    def printstats(self):
+        print(f' {self.name} takes {self.timediff}')
+
+updateClockProfiler = profiler("update_clock")
 
 
 def Rx(theta):
@@ -251,72 +280,60 @@ class GuiApp:
 
     def update_clock(self):
         if self.started:
+            print((time.monotonic_ns() - updateClockProfiler.starttime)/1000000)
+            updateClockProfiler.getStartTime()
             self.send_data()
             try:
-                self.ser.reset_input_buffer()
-                l = self.ser.read_until()
-                data = [str(i)[2:-1] for i in l.split(b' ')]
-                if data[0] == 'gui':
-                    roll, pitch, yaw = convert_euler(data[10:13])
+                buff = self.ser.read(self.ser.in_waiting)
+                buff = buff.split(b'\n')
+                if len(buff) > 1:
+                    datas = {'gui': [], 'debug': []}
+                    for line in buff:
+                        try:
+                            data = [str(i)[2:-1] for i in line.split(b' ')]
+                            if data[0] == 'gui' and len(data) >= 18:
+                                datas['gui'] = data
+                            elif data[0] == 'debug':
+                                datas['debug'].append(data)
+                        except:
+                            print(':(')
+
+                    roll, pitch, yaw = convert_euler(datas['gui'][10:13])
                     self.plot_drone(roll, pitch, yaw)
 
-                    self.messages['mode'].config(text=str(data[1]))
-                    self.messages['js_yaw'].config(text=str(data[2]))
-                    self.messages['js_roll'].config(text=str(data[3]))
-                    self.messages['js_pitch'].config(text=str(data[4]))
-                    self.messages['js_lift'].config(text=str(data[5]))
+                    self.messages['mode'].config(text=str(datas['gui'][1]))
+                    self.messages['js_yaw'].config(text=str(datas['gui'][2]))
+                    self.messages['js_roll'].config(text=str(datas['gui'][3]))
+                    self.messages['js_pitch'].config(text=str(datas['gui'][4]))
+                    self.messages['js_lift'].config(text=str(datas['gui'][5]))
 
-                    self.messages['mot0'].config(text=str(data[6]))
-                    self.messages['mot1'].config(text=str(data[7]))
-                    self.messages['mot2'].config(text=str(data[8]))
-                    self.messages['mot3'].config(text=str(data[9]))
+                    self.messages['mot0'].config(text=str(datas['gui'][6]))
+                    self.messages['mot1'].config(text=str(datas['gui'][7]))
+                    self.messages['mot2'].config(text=str(datas['gui'][8]))
+                    self.messages['mot3'].config(text=str(datas['gui'][9]))
 
                     self.messages['roll'].config(text=str(np.rad2deg(roll)))
                     self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
                     self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
 
-                    self.messages['P'].config(text=str(data[13]))
-                    self.messages['P1'].config(text=str(data[14]))
-                    self.messages['P2'].config(text=str(data[15]))
+                    self.messages['P'].config(text=str(datas['gui'][13]))
+                    self.messages['P1'].config(text=str(datas['gui'][14]))
+                    self.messages['P2'].config(text=str(datas['gui'][15]))
 
-                    self.messages['battery'].config(text=str(data[16]))
-                    self.messages['temperature'].config(text=str(data[17]))
-                    self.messages['pressure'].config(text=str(data[18]))
+                    self.messages['battery'].config(text=str(datas['gui'][16]))
+                    self.messages['temperature'].config(text=str(datas['gui'][17]))
+                    self.messages['pressure'].config(text=str(datas['gui'][18]))
 
-                elif data[0] == 'debug':
-                    print(' '.join(data[1:-1]))
+                    for data in datas['debug']:
+                        print(' '.join(data[1:-1]))
 
-            except Exception as e: print(e)
+            except Exception as e: 
+                print(e)
+
+        self.mainwindow.after(16, self.update_clock) 
+
         
-        self.mainwindow.after(1, self.update_clock) 
 
-class profiler:
-    def __init__(self,name ) -> None:
-        self.name = name
-        self.starttime = 0
-        self.stoptime = 0
-
-    def getStartTime(self):
-        self.startime = time.time()
-    
-    def getstopTIme(self):
-        self.stoptime = time.time()
-    
-    def printStartTime(self):
-        print(self.startime)
-
-    def printStopTime(self):
-        print(self.stoptime)
-
-    def timediff(self):
-        self.timediff = self.stoptime - self.starttime
-        return self.timediff
-
-    def printtimediff(self):
-        print(self.timediff())
-
-    def printstats(self):
-        print(f' {self.name} takes {self.timediff}')
 
 if __name__ == '__main__':
     tk.Tk().withdraw()
