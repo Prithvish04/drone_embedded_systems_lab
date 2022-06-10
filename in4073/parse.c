@@ -9,7 +9,7 @@ void print_GUI(Modes mode, DroneMessage* command, Measurement* measure){
 	printf("%d ", command->pitch_offset);
 	printf("%d ", command->lift_offset);
 	printf("%d %d %d %d ", measure->mot0, measure->mot1, measure->mot2, measure->mot3);
-	printf("%d %d %d ", measure->phi, measure->theta, measure->psi);
+	printf("%d %d %d ", measure->phi, measure->theta, measure->sr);
 	printf("%d %d %d ", command->P, command->P1, command->P2);
 	printf("%d %ld %ld \n", measure->battery, measure->temperature, measure->pressure);
 }

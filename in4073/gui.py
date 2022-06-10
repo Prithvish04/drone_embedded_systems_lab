@@ -17,7 +17,7 @@ import struct
 import time 
 
 
-usb = '/dev/ttyUSB0'
+usb = '/dev/ttyUSB1'
 baud_rate = 115200
 timeout = 0.1
 
@@ -280,7 +280,7 @@ class GuiApp:
 
     def update_clock(self):
         if self.started:
-            print((time.monotonic_ns() - updateClockProfiler.starttime)/1000000)
+            #print((time.monotonic_ns() - updateClockProfiler.starttime)/1000000)
             updateClockProfiler.getStartTime()
             self.send_data()
             try:
@@ -315,9 +315,9 @@ class GuiApp:
                     # self.messages['roll'].config(text=str(np.rad2deg(roll)))
                     # self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
                     # self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
-                    self.messages['roll'].config(text=str(data[10]))
-                    self.messages['pitch'].config(text=str(data[11]))
-                    self.messages['yaw'].config(text=str(data[12]))
+                    self.messages['roll'].config(text=str(datas['gui'][10]))
+                    self.messages['pitch'].config(text=str(datas['gui'][11]))
+                    self.messages['yaw'].config(text=str(datas['gui'][12]))
 
                     self.messages['P'].config(text=str(datas['gui'][13]))
                     self.messages['P1'].config(text=str(datas['gui'][14]))
@@ -331,7 +331,9 @@ class GuiApp:
                         print(' '.join(data[1:-1]))
 
             except Exception as e: 
-                print(e)
+               # print(e)
+               # print(buff)
+               pass
 
         self.mainwindow.after(16, self.update_clock) 
 
