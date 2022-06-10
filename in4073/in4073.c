@@ -54,8 +54,6 @@ int main(void) {
 	spi_flash_init();
 	quad_ble_init();
 
-	// Profilers initiation
-	time_struct msgRecieve;
 
 	uint32_t counter = 0;
 	Modes curMode = Safe_Mode;
@@ -96,32 +94,25 @@ int main(void) {
 	m_log.saz_offset = 0;
 
 	while (!demo_done) {
+		static uint32_t profile;
 		// get the first available valid message sequence
-		if (rx_queue.count) {
-			getstarttime(msgRecieve);
+		static uint16_t rx_count;
+		rx_count = rx_queue.count;
+		while (rx_count) {
 			isMsg = process_message((dequeue(&rx_queue)), command_buf + write_idx);
 			if (isMsg) {
 				msg = command_buf + write_idx;
 				write_idx = (write_idx + 1) % 2;
+				//printf("debug time %ld \n", get_time_us() - profile);
+				profile = get_time_us();
 			}
 			rcvd = true;
-			getstoptime(msgRecieve);
+			rx_count--;
 		}
-
-		/*
-		if (ble_rx_queue.count) 
-			process_key(dequeue(&ble_rx_queue));
-		*/
-
-		// current timer is at 50 ms, we can tune this later depending on code execution timing
-		// current if segment timing is around 2 ms (including gui printing)
-
-		// TODO edit layout and displays, fix drone orientation
 
 		if (check_timer_flag()) {
 			if (counter++%20 == 0) 
 				nrf_gpio_pin_toggle(BLUE);
-
 			if (!rcvd) {
 				if (panik_cnt++ == PANIK_CNT)
 					msg->event = Panic_Event;
@@ -130,10 +121,10 @@ int main(void) {
 
 			adc_request_sample();
 			read_baro();
-	
-			//print_commands(msg);
-	       print_GUI(curMode, msg, &m_log); 
-		   //printf("debug msg Recieve: %ld",timediff(msgRecieve) );
+
+			//profile = get_time_us();
+	        print_GUI(curMode, msg, &m_log);
+			//printf("debug gui time %ld \n", get_time_us() - profile);
 
 			clear_timer_flag();
 			rcvd = false;
@@ -154,10 +145,11 @@ int main(void) {
 			if (curMode != Calibration_Mode)
 				add_imu_offset(&m_log);
 		}
-
+		
 		if(StateMachine[curMode][msg->event] == NULL)
 			msg->event = Null;
     	curMode = (*StateMachine[curMode][msg->event])(curMode, msg, &m_log);
+		
 	}	
 
 	printf("\n\t Goodbye \n\n");
