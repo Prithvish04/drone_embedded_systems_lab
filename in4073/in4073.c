@@ -94,7 +94,7 @@ int main(void) {
 	m_log.saz_offset = 0;
 
 	while (!demo_done) {
-		static uint32_t profile;
+		//static uint32_t profile;
 		// get the first available valid message sequence
 		static uint16_t rx_count;
 		rx_count = rx_queue.count;
@@ -104,7 +104,7 @@ int main(void) {
 				msg = command_buf + write_idx;
 				write_idx = (write_idx + 1) % 2;
 				//printf("debug time %ld \n", get_time_us() - profile);
-				profile = get_time_us();
+				//profile = get_time_us();
 			}
 			rcvd = true;
 			rx_count--;

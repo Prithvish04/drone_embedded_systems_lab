@@ -37,11 +37,11 @@ void update_motors(void){
 	motor[3] = ae[3];                                                                                         
 }
 
-void set_motors(int16_t m0, int16_t m1, int16_t m2, int16_t m3) {
-	ae[0] = (m0 < MAX_RPM) ? ((m0 < MIN_RPM) ? ((m0 <= 0) ? 0 : MIN_RPM): m0) : MAX_RPM;
-	ae[1] = (m1 < MAX_RPM) ? ((m1 < MIN_RPM) ? ((m1 <= 0) ? 0 : MIN_RPM): m1) : MAX_RPM;
-	ae[2] = (m2 < MAX_RPM) ? ((m2 < MIN_RPM) ? ((m2 <= 0) ? 0 : MIN_RPM): m2) : MAX_RPM;
-	ae[3] = (m3 < MAX_RPM) ? ((m3 < MIN_RPM) ? ((m3 <= 0) ? 0 : MIN_RPM): m3) : MAX_RPM;
+void set_motors(int16_t m0, int16_t m1, int16_t m2, int16_t m3, int16_t max, int16_t min) {
+	ae[0] = (m0 < max) ? ((m0 < min) ? ((m0 == 0) ? 0 : min): m0) : max;
+	ae[1] = (m1 < max) ? ((m1 < min) ? ((m1 == 0) ? 0 : min): m1) : max;
+	ae[2] = (m2 < max) ? ((m2 < min) ? ((m2 == 0) ? 0 : min): m2) : max;
+	ae[3] = (m3 < max) ? ((m3 < min) ? ((m3 == 0) ? 0 : min): m3) : max;
 }
 
 int32_t map_limits(int32_t upper, int32_t lower, int32_t low_input, int32_t high_input, int32_t value) {

@@ -20,7 +20,7 @@
  * @return Modes 
  */
 Modes safeModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
-    set_motors(0, 0, 0, 0);
+    set_motors(0, 0, 0, 0, MAX_RPM, MIN_RPM);
     update_motors();
     return Safe_Mode;
 }
@@ -50,9 +50,9 @@ Modes panicModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
             }
             if ((motor[0] <= slowdown_rpm + MIN_RPM) || (motor[1] <= slowdown_rpm + MIN_RPM) ||
                 (motor[2] <= slowdown_rpm + MIN_RPM) || (motor[3] <= slowdown_rpm + MIN_RPM)) 
-                set_motors(0, 0, 0, 0);
+                set_motors(0, 0, 0, 0, MAX_RPM, MIN_RPM);
             else
-                set_motors(ae[0]-slowdown_rpm, ae[1]-slowdown_rpm, ae[2]-slowdown_rpm, ae[3]-slowdown_rpm);
+                set_motors(ae[0]-slowdown_rpm, ae[1]-slowdown_rpm, ae[2]-slowdown_rpm, ae[3]-slowdown_rpm, FULL_MAX_RPM, MIN_RPM);
         }
         else{
             nrf_gpio_pin_clear(RED);
@@ -62,9 +62,9 @@ Modes panicModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
                     max = motor[i];
             }
             if (max > MAX_RPM)
-                set_motors(MAX_RPM, MAX_RPM, MAX_RPM, MAX_RPM);
+                set_motors(MAX_RPM, MAX_RPM, MAX_RPM, MAX_RPM, FULL_MAX_RPM, MIN_RPM);
             else
-                set_motors(max, max, max, max);
+                set_motors(max, max, max, max, FULL_MAX_RPM, MIN_RPM);
         }
         update_motors();
     }        
@@ -146,6 +146,8 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         L = map_limits(joystick_lim, -joystick_lim, -32768, 32767, cmd->pitch); 
         N = map_limits(2*joystick_lim, -2*joystick_lim, -32768, 32767, cmd->yaw);
         Z = map_limits(upper_Z, lower_Z, -32768, 32767, -cmd->lift);
+
+        printf("debug %ld \n", M);
         m0 = sqrt_32(d*(Z + 2*M - N));
         m1 = sqrt_32(d*(Z - 2*L + N));
         m2 = sqrt_32(d*(Z - 2*M - N));
@@ -155,9 +157,9 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
             set_motors(m0 - R_offset - Y_offset + L_offset, 
                        m1 + P_offset + Y_offset + L_offset,
                        m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset);
+                       m3 - P_offset + Y_offset + L_offset, MAX_RPM, MIN_RPM);
         else
-            set_motors(0, 0, 0, 0);
+            set_motors(0, 0, 0, 0, MAX_RPM, MIN_RPM);
         update_motors();
     }        
     return Manual_Mode;
@@ -328,9 +330,9 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
             set_motors(m0 - R_offset - Y_offset + L_offset, 
                        m1 + P_offset + Y_offset + L_offset,
                        m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset);
+                       m3 - P_offset + Y_offset + L_offset, MAX_RPM, MIN_RPM);
         else
-            set_motors(0, 0, 0, 0);
+            set_motors(0, 0, 0, 0, MAX_RPM, MIN_RPM);
         update_motors();
 
     }        
@@ -343,13 +345,13 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const uint8_t offset = 5, k_offset = 1, d1 = 100, d = 16;
     //static const int16_t keyboard_lim = 50, joystick_lim = 120, Sc = 512;
     static const int16_t keyboard_lim = 50, joystick_lim = 500;
-    static const int16_t lower_Z = 250, upper_Z = 2500, K_init = 0;
+    static const int16_t lower_Z = 250, upper_Z = 4500, K_init = 0;
 
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
     static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0, G1_offset = 0, G2_offset = 0;
     static uint32_t m0, m1, m2, m3;
-    static int16_t error_m = 0, error_l = 0;
+    static int32_t error_m = 0, error_l = 0;
 
 
     // enter Yaw mode from a different mode
@@ -443,19 +445,16 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         // r /= Sc;
         // Y = r + Y_offset;
 
-        error_m = (G1_offset * (M - (int32_t) mes->theta));
+        error_m = (G1_offset * (M + (int32_t) mes->theta));
 
-        if ((error_m < 3000) && (error_m > -3000))
-        {
+        if ((error_m < 1000) && (error_m > -1000))
             error_m = 0;
-        }
 
         error_l = (G1_offset * (L - (int32_t) mes->phi));
 
         if ((error_l < 3000) && (error_l > -3000))
-        {
             error_l = 0;
-        }
+
     
         M += (G2_offset * (error_m - (int32_t) mes->sq));
         //L = G2_offset * (L - (int32_t) mes->sq);
@@ -470,9 +469,9 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         //L = G1_offset * (L - (int32_t) mes->phi);
         //L = G2_offset * (L - (int32_t) mes->sp);
 
-        m0 = sqrt_32(d1*(Z) - (2*M)/d - N);
+        m0 = sqrt_32(d1*(Z) + (2*M)/d - N);
         m1 = sqrt_32(d1*(Z) - (2*L)/d + N);
-        m2 = sqrt_32(d1*(Z) + (2*M)/d - N);
+        m2 = sqrt_32(d1*(Z) - (2*M)/d - N);
         m3 = sqrt_32(d1*(Z) + (2*L)/d + N);
 
 
@@ -481,9 +480,9 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
             set_motors(m0 - R_offset - Y_offset + L_offset, 
                        m1 + P_offset + Y_offset + L_offset,
                        m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset);
+                       m3 - P_offset + Y_offset + L_offset, FULL_MAX_RPM, MIN_RPM);
         else
-            set_motors(0, 0, 0, 0);
+            set_motors(0, 0, 0, 0, FULL_MAX_RPM, MIN_RPM);
         update_motors();
 
 
