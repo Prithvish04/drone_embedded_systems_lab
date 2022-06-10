@@ -15,6 +15,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 from matplotlib.figure import Figure
 import struct
 import time 
+import threading
 
 
 usb = '/dev/ttyUSB0'
@@ -228,32 +229,12 @@ class GuiApp:
     def toggle(self):
         if self.button.config('relief')[-1] == 'raised':
             self.button.config(relief="sunken", text='STOP', bg='red', fg='white')
-            self.started = True
             self.ser = serial.Serial(usb, baud_rate, timeout=timeout)
+            self.started = True
         else:
             self.button.config(relief="raised", text='START', bg='green', fg='white')
             self.started = False
             self.ser.close()
-
-    def send_data(self):
-        js.update()
-        js_data = js.process_input()
-        key = 255
-        if self.key in valid_keys.keys():
-            key = valid_keys[self.key]
-            self.key = 255
-        js_bytes = [struct.pack('>h', int(b)) for b in js_data[0:4]]
-        data_pkg = [b'\xAA']
-        if js_data[-1] == '1':
-            key = '1'
-        if isinstance(key, int):
-            data_pkg.append(struct.pack('>B', key))
-        else: 
-            data_pkg.append(struct.pack('>B', ord(key)))
-        data_pkg.extend(js_bytes)
-        data_pkg.append(b'\xA0')
-        data_pkg = b''.join(data_pkg)
-        self.ser.write(bytes(data_pkg))
 
     def onKeyPress(self, event):
         self.key = event.keysym
@@ -276,13 +257,35 @@ class GuiApp:
         self.ax.set_zlim([-7, 7])
         self.ax.grid(False)
         self.canvas.draw()
-        
+
+
+    def send_data(self):
+        if self.started:
+            js.update()
+            js_data = js.process_input()
+            key = 255
+            if self.key in valid_keys.keys():
+                key = valid_keys[self.key]
+                self.key = 255
+            js_bytes = [struct.pack('>h', int(b)) for b in js_data[0:4]]
+            data_pkg = [b'\xAA']
+            if js_data[-1] == '1':
+                key = '1'
+            if isinstance(key, int):
+                data_pkg.append(struct.pack('>B', key))
+            else: 
+                data_pkg.append(struct.pack('>B', ord(key)))
+            data_pkg.extend(js_bytes)
+            data_pkg.append(b'\xA0')
+            data_pkg = b''.join(data_pkg)
+            self.ser.write(bytes(data_pkg))
+        threading.Timer(0.01, self.send_data).start()
+
 
     def update_clock(self):
         if self.started:
             #print((time.monotonic_ns() - updateClockProfiler.starttime)/1000000)
             updateClockProfiler.getStartTime()
-            self.send_data()
             try:
                 buff = self.ser.read(self.ser.in_waiting)
                 buff = buff.split(b'\n')
@@ -298,50 +301,47 @@ class GuiApp:
                         except:
                             print(':(')
 
-                    roll, pitch, yaw = convert_euler(datas['gui'][10:13])
-                    self.plot_drone(roll, pitch, yaw)
+                    if datas['gui'] != []:
+                        roll, pitch, yaw = convert_euler(datas['gui'][10:13])
+                        self.plot_drone(roll, pitch, yaw)
 
-                    self.messages['mode'].config(text=str(datas['gui'][1]))
-                    self.messages['js_yaw'].config(text=str(datas['gui'][2]))
-                    self.messages['js_roll'].config(text=str(datas['gui'][3]))
-                    self.messages['js_pitch'].config(text=str(datas['gui'][4]))
-                    self.messages['js_lift'].config(text=str(datas['gui'][5]))
+                        self.messages['mode'].config(text=str(datas['gui'][1]))
+                        self.messages['js_yaw'].config(text=str(datas['gui'][2]))
+                        self.messages['js_roll'].config(text=str(datas['gui'][3]))
+                        self.messages['js_pitch'].config(text=str(datas['gui'][4]))
+                        self.messages['js_lift'].config(text=str(datas['gui'][5]))
 
-                    self.messages['mot0'].config(text=str(datas['gui'][6]))
-                    self.messages['mot1'].config(text=str(datas['gui'][7]))
-                    self.messages['mot2'].config(text=str(datas['gui'][8]))
-                    self.messages['mot3'].config(text=str(datas['gui'][9]))
+                        self.messages['mot0'].config(text=str(datas['gui'][6]))
+                        self.messages['mot1'].config(text=str(datas['gui'][7]))
+                        self.messages['mot2'].config(text=str(datas['gui'][8]))
+                        self.messages['mot3'].config(text=str(datas['gui'][9]))
 
-                    # self.messages['roll'].config(text=str(np.rad2deg(roll)))
-                    # self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
-                    # self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
-                    self.messages['roll'].config(text=str(datas['gui'][10]))
-                    self.messages['pitch'].config(text=str(datas['gui'][11]))
-                    self.messages['yaw'].config(text=str(datas['gui'][12]))
+                        # self.messages['roll'].config(text=str(np.rad2deg(roll)))
+                        # self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
+                        # self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
+                        self.messages['roll'].config(text=str(datas['gui'][10]))
+                        self.messages['pitch'].config(text=str(datas['gui'][11]))
+                        self.messages['yaw'].config(text=str(datas['gui'][12]))
 
-                    self.messages['P'].config(text=str(datas['gui'][13]))
-                    self.messages['P1'].config(text=str(datas['gui'][14]))
-                    self.messages['P2'].config(text=str(datas['gui'][15]))
+                        self.messages['P'].config(text=str(datas['gui'][13]))
+                        self.messages['P1'].config(text=str(datas['gui'][14]))
+                        self.messages['P2'].config(text=str(datas['gui'][15]))
 
-                    self.messages['battery'].config(text=str(datas['gui'][16]))
-                    self.messages['temperature'].config(text=str(datas['gui'][17]))
-                    self.messages['pressure'].config(text=str(datas['gui'][18]))
+                        self.messages['battery'].config(text=str(datas['gui'][16]))
+                        self.messages['temperature'].config(text=str(datas['gui'][17]))
+                        self.messages['pressure'].config(text=str(datas['gui'][18]))
 
                     for data in datas['debug']:
                         print(' '.join(data[1:-1]))
 
             except Exception as e: 
-               # print(e)
-               # print(buff)
                pass
-
         self.mainwindow.after(16, self.update_clock) 
-
-        
 
 
 if __name__ == '__main__':
     tk.Tk().withdraw()
     app = GuiApp()
+    app.send_data()
     app.run() 
 
