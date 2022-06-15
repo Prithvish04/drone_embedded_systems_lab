@@ -52,10 +52,9 @@ static EventHandler StateMachine = {
                     [Null] = panicModeHandler},
 
     [Manual_Mode] = {
-                    [Safe_Event] = manualModeHandler,
+                    [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
                     [Manual_Event] = manualModeHandler,
-                    [Height_Event] = heightModeHandler,
                     [Null] = manualModeHandler},
 
     [Calibration_Mode] = {
@@ -72,23 +71,17 @@ static EventHandler StateMachine = {
     [Yaw_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
-                    [Height_Event] = heightModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
                     [Null] = yawModeHandler},
 
-// ===========================================================
 
     [Full_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
-                    [Manual_Event] = manualModeHandler,
-                    [Calibration_Event] = calibrationModeHandler,
-                    [Yaw_Event] = yawModeHandler,
-                    [Full_Event] = fullModeHandler,
-                    [Raw_Event] = rawModeHandler, 
-                    [Height_Event] = heightModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
                     [Null] = fullModeHandler},
+
+// ===========================================================
 
     [Raw_Mode] = {
                     [Safe_Event] = safeModeHandler,

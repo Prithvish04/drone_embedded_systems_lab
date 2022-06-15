@@ -336,7 +336,7 @@ class GuiApp:
 
             except Exception as e: 
                pass
-        self.mainwindow.after(16, self.update_clock) 
+        self.mainwindow.after(0, self.update_clock) 
 
 
 if __name__ == '__main__':

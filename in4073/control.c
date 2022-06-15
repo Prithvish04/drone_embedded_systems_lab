@@ -10,6 +10,8 @@
  *------------------------------------------------------------------
  */
 
+//Author: Berkay, Ritik, Ghanishtha, Pritvish
+
 #include "control.h"
 #include <inttypes.h>
 #include <stdbool.h>
@@ -30,6 +32,8 @@ bool wireless_mode;
 
 // gotta use this one for control algorithms
 // seems like motor values are truncated between 0 and 1000 within the timers.c code
+
+//Author: Ghanishtha Bhatti
 void update_motors(void){
 	motor[0] = ae[0];
 	motor[1] = ae[1];
@@ -37,19 +41,30 @@ void update_motors(void){
 	motor[3] = ae[3];                                                                                         
 }
 
-void set_motors(int16_t m0, int16_t m1, int16_t m2, int16_t m3, int16_t max, int16_t min) {
-	ae[0] = (m0 < max) ? ((m0 < min) ? ((m0 == 0) ? 0 : min): m0) : max;
-	ae[1] = (m1 < max) ? ((m1 < min) ? ((m1 == 0) ? 0 : min): m1) : max;
-	ae[2] = (m2 < max) ? ((m2 < min) ? ((m2 == 0) ? 0 : min): m2) : max;
-	ae[3] = (m3 < max) ? ((m3 < min) ? ((m3 == 0) ? 0 : min): m3) : max;
+//Author: Ghanishtha Bhatti
+void reset_motors() {
+    ae[0] = 0;
+	ae[1] = 0;
+	ae[2] = 0;
+	ae[3] = 0;
 }
 
+//Author: Ritik Agarwal
+void set_motors(int16_t m0, int16_t m1, int16_t m2, int16_t m3, int16_t max, int16_t min) {
+	ae[0] = (m0 < max) ? ((m0 < min) ? min : m0) : max;
+	ae[1] = (m1 < max) ? ((m1 < min) ? min : m1) : max;
+	ae[2] = (m2 < max) ? ((m2 < min) ? min : m2) : max;
+	ae[3] = (m3 < max) ? ((m3 < min) ? min : m3) : max;
+}
+
+//Author: Berkay
 int32_t map_limits(int32_t upper, int32_t lower, int32_t low_input, int32_t high_input, int32_t value) {
 	return (((value - low_input) * (upper-lower)) / (high_input-low_input)) + lower;
 }
 
+//Author: Ghanishtha Bhatti
 bool check_neutral(DroneMessage* msg) {
-	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift == 32766);
+	return (msg->yaw == 0) & (msg->pitch == 0) & (msg->roll == 0) & (msg->lift >= 32766);
 }
 
 void add_imu_offset(Measurement* msg) {
