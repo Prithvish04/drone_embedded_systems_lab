@@ -301,30 +301,17 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         L = map_limits(joystick_lim, -joystick_lim, -32768, 32767, cmd->pitch); 
         N = map_limits(2*joystick_lim, -2*joystick_lim, -32768, 32767, cmd->yaw);
         Z = map_limits(upper_Z, lower_Z, -32768, 32767, -cmd->lift);
-        d = map_limits(140, 70, -32768, 32767, -cmd->lift);
-
-
-
-        // m0 = sqrt_32(d*(Z + 2*M - N));
-        // m1 = sqrt_32(d*(Z - 2*L + N));
-        // m2 = sqrt_32(d*(Z - 2*M - N));
-        // m3 = sqrt_32(d*(Z + 2*L + N));   
+        d = map_limits(140, 70, -32768, 32767, -cmd->lift); 
 
         // cap the readings to the allowed values set by max_r
         mes->sr = ((mes->sr < -1000) ? -1000 : ((mes->sr > 1000) ? 1000 : mes->sr));
 
         N += cmd->P * (N - (int32_t) mes->sr);
 
-
         m0 = sqrt_32(d1*Z + d*(2*M) - N);
         m1 = sqrt_32(d1*Z - d*(2*L) + N);
         m2 = sqrt_32(d1*Z - d*(2*M) - N);
         m3 = sqrt_32(d1*Z + d*(2*L) + N);
-
-        // m0 = sqrt_32(Z);// + 2*M - N);
-        // m1 = sqrt_32(Z);// - 2*L + N);
-        // m2 = sqrt_32(Z);// - 2*M - N);
-        // m3 = sqrt_32(Z);// + 2*L + N);
         
         if (cmd->lift < 32766)
             set_motors(m0 - R_offset - Y_offset + L_offset, 
