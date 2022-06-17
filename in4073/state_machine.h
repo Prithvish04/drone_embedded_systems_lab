@@ -55,6 +55,7 @@ static EventHandler StateMachine = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
                     [Manual_Event] = manualModeHandler,
+                    [Height_Event] = heightModeHandler,
                     [Null] = manualModeHandler},
 
     [Calibration_Mode] = {
@@ -72,6 +73,7 @@ static EventHandler StateMachine = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
+                    [Height_Event] = heightModeHandler,
                     [Null] = yawModeHandler},
 
 
@@ -79,18 +81,13 @@ static EventHandler StateMachine = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
+                    [Height_Event] = heightModeHandler,
                     [Null] = fullModeHandler},
-
-// ===========================================================
 
     [Raw_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
-                    [Manual_Event] = manualModeHandler,
                     [Calibration_Event] = calibrationModeHandler,
-                    [Yaw_Event] = yawModeHandler,
-                    [Full_Event] = fullModeHandler,
-                    [Raw_Event] = rawModeHandler, 
                     [Height_Event] = heightModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
                     [Null] = rawModeHandler},
@@ -98,13 +95,8 @@ static EventHandler StateMachine = {
     [Height_Mode] = {
                     [Safe_Event] = safeModeHandler,
                     [Panic_Event] = panicModeHandler,
-                    [Manual_Event] = manualModeHandler,
-                    [Calibration_Event] = calibrationModeHandler,
-                    [Yaw_Event] = yawModeHandler,
-                    [Full_Event] = fullModeHandler,
-                    [Raw_Event] = rawModeHandler, 
-                    [Height_Event] = heightModeHandler,
                     [Wireless_Event] = wirelessModeHandler,
+                    [Height_Event] = heightModeHandler,
                     [Null] = heightModeHandler},
                     
     [Wireless_Mode] = {

@@ -82,60 +82,21 @@ Modes panicModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
  */
 Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const uint32_t period_us = 1000;
-    static const uint8_t offset = 5, d = 100;
-    static const int16_t keyboard_lim = 50, joystick_lim = 120;
-    static const int16_t lower_Z = 250, upper_Z = 2500;
+    static const int16_t d = 100, joystick_lim = 120, lower_Z = 250, upper_Z = 2500;
 
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
-    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
     static uint32_t m0, m1, m2, m3;
 
     // enter manual mode from a different mode
     if (mode != Manual_Mode){
-        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
+        cmd->lift_offset = 0, cmd->roll_offset = 0, cmd->pitch_offset = 0, cmd->yaw_offset = 0;
         if (!check_neutral(cmd))
              return mode;
     }
     if(cmd->event == Safe_Event) 
         return Panic_Mode;
 
-    // process keyboard inputs
-    switch (cmd->key){
-    case LIFT_UP_KEY:
-        L_offset = (L_offset + offset > keyboard_lim) ? keyboard_lim : L_offset + offset;
-        break;
-    case LIFT_DOWN_KEY:
-        L_offset = (L_offset - offset > -keyboard_lim) ? L_offset - offset : -keyboard_lim;
-        break;
-    case ROLL_UP_KEY:
-        R_offset = (R_offset + offset > keyboard_lim) ? keyboard_lim : R_offset + offset;
-        break;
-    case ROLL_DOWN_KEY:
-        R_offset = (R_offset - offset > -keyboard_lim) ? R_offset - offset : -keyboard_lim;
-        break;
-    case PITCH_UP_KEY:
-        P_offset = (P_offset + offset > keyboard_lim) ? keyboard_lim : P_offset + offset;
-        break;
-    case PITCH_DOWN_KEY:
-        P_offset = (P_offset - offset > -keyboard_lim) ? P_offset - offset : -keyboard_lim;
-        break;
-    case YAW_UP_KEY:
-        Y_offset = (Y_offset + offset > keyboard_lim) ? keyboard_lim : Y_offset + offset;
-        break;
-    case YAW_DOWN_KEY:
-        Y_offset = (Y_offset - offset > -keyboard_lim) ? Y_offset - offset : -keyboard_lim;
-        break;
-    default:
-        break;
-    }
-    cmd->key = 0xFF;  
-    cmd->lift_offset = L_offset;
-    cmd->roll_offset = R_offset;
-    cmd->pitch_offset = P_offset;
-    cmd->yaw_offset = Y_offset;
-
-    
     if (get_time_us() >= deadline){
         deadline = get_time_us() + period_us;
         // map joystick inputs to rpms 
@@ -144,17 +105,16 @@ Modes manualModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         N = map_limits(2*joystick_lim, -2*joystick_lim, -32768, 32767, cmd->yaw);
         Z = map_limits(upper_Z, lower_Z, -32768, 32767, -cmd->lift);
 
-        printf("debug %ld \n", M);
         m0 = sqrt_32(d*(Z + 2*M - N));
         m1 = sqrt_32(d*(Z - 2*L + N));
         m2 = sqrt_32(d*(Z - 2*M - N));
         m3 = sqrt_32(d*(Z + 2*L + N));
         
         if (cmd->lift < 32766)
-            set_motors(m0 - R_offset - Y_offset + L_offset, 
-                       m1 + P_offset + Y_offset + L_offset,
-                       m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset, MAX_RPM, MIN_RPM);
+            set_motors(m0 - cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset , 
+                       m1 + cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset ,
+                       m2 + cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset ,
+                       m3 - cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset , MAX_RPM, MIN_RPM);
         else
             reset_motors();
         update_motors();
@@ -226,70 +186,22 @@ Modes calibrationModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
  */
 Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const uint32_t period_us = 1000;
-    static const uint8_t offset = 5, k_offset = 1, K_init = 15;
-    static const int16_t keyboard_lim = 50, joystick_lim = 120;
-    static const int16_t lower_Z = 250, upper_Z = 2500;
-    static uint8_t d = 0, d1 = 100;
+    static const int16_t K_init = 15, joystick_lim = 120, lower_Z = 250, upper_Z = 2500;
 
+    static uint8_t d = 0, d1 = 100;
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
-    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0;
     static uint32_t m0, m1, m2, m3;
 
 
-    // enter Yaw mode from a different mode
     if (mode != Yaw_Mode){
-        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0;
-        G_offset = K_init;
+        cmd->lift_offset = 0, cmd->roll_offset = 0, cmd->pitch_offset = 0, cmd->yaw_offset = 0;
+        cmd->P = K_init;
         if (!check_neutral(cmd))
              return mode;
     }
     if(cmd->event == Safe_Event) 
         return Panic_Mode;
-
-    // process keyboard inputs
-    switch (cmd->key){
-    case LIFT_UP_KEY:
-        L_offset = (L_offset + offset > keyboard_lim) ? keyboard_lim : L_offset + offset;
-        break;
-    case LIFT_DOWN_KEY:
-        L_offset = (L_offset - offset > -keyboard_lim) ? L_offset - offset : -keyboard_lim;
-        break;
-    case ROLL_UP_KEY:
-        R_offset = (R_offset + offset > keyboard_lim) ? keyboard_lim : R_offset + offset;
-        break;
-    case ROLL_DOWN_KEY:
-        R_offset = (R_offset - offset > -keyboard_lim) ? R_offset - offset : -keyboard_lim;
-        break;
-    case PITCH_UP_KEY:
-        P_offset = (P_offset + offset > keyboard_lim) ? keyboard_lim : P_offset + offset;
-        break;
-    case PITCH_DOWN_KEY:
-        P_offset = (P_offset - offset > -keyboard_lim) ? P_offset - offset : -keyboard_lim;
-        break;
-    case YAW_UP_KEY:
-        Y_offset = (Y_offset + offset > keyboard_lim) ? keyboard_lim : Y_offset + offset;
-        break;
-    case YAW_DOWN_KEY:
-        Y_offset = (Y_offset - offset > -keyboard_lim) ? Y_offset - offset : -keyboard_lim;
-        break;
-    case P_UP_KEY: 
-        G_offset += k_offset; 
-        break;
-    case P_DOWN_KEY:
-        G_offset = (G_offset - k_offset < 0) ? 0 : G_offset - k_offset;
-        break;
-    default:
-        break;
-    }
-    cmd->key = 0xFF;  
-
-    //Same as Manual Mode
-    cmd->lift_offset = L_offset;
-    cmd->roll_offset = R_offset;
-    cmd->pitch_offset = P_offset;
-    cmd->yaw_offset = Y_offset;
-    cmd->P = G_offset;
 
     if (get_time_us() >= deadline){
         deadline = get_time_us() + period_us;
@@ -304,21 +216,20 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         mes->sr = ((mes->sr < -1000) ? -1000 : ((mes->sr > 1000) ? 1000 : mes->sr));
 
         N += cmd->P * (N - (int32_t) mes->sr);
-
+        
         m0 = sqrt_32(d1*Z + d*(2*M) - N);
         m1 = sqrt_32(d1*Z - d*(2*L) + N);
         m2 = sqrt_32(d1*Z - d*(2*M) - N);
         m3 = sqrt_32(d1*Z + d*(2*L) + N);
         
         if (cmd->lift < 32766)
-            set_motors(m0 - R_offset - Y_offset + L_offset, 
-                       m1 + P_offset + Y_offset + L_offset,
-                       m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset, MAX_RPM, MIN_RPM);
+            set_motors(m0 - cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset , 
+                       m1 + cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset ,
+                       m2 + cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset ,
+                       m3 - cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset , MAX_RPM, MIN_RPM);
         else
             reset_motors();
         update_motors();
-
     }        
     return Yaw_Mode;
 }
@@ -326,86 +237,24 @@ Modes yawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
 Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
     static const uint32_t period_us = 1000;
-    static const uint8_t offset = 5, k_offset = 1, d1 = 100, d = 16;
-    static const int16_t keyboard_lim = 50, joystick_lim = 500;
-    static const int16_t lower_Z = 250, upper_Z = 4500, K_init_P = 5, K_init_P1 = 3, K_init_P2 = 20;
+    static const uint8_t d1 = 100, d = 16, K_init_P = 5, K_init_P1 = 3, K_init_P2 = 20;
+    static const int16_t lower_Z = 250, upper_Z = 4500, joystick_lim = 500;
 
     static uint32_t deadline = 0;
     static int32_t L = 0, M = 0, N = 0, Z = 0;
-    static int16_t L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0, G_offset = 0, G1_offset = 0, G2_offset = 0;
     static uint32_t m0, m1, m2, m3;
     static int32_t error_m = 0, error_l = 0;
 
-
-    // enter Yaw mode from a different mode
     if (mode != Full_Mode){
-        L_offset = 0, R_offset = 0, P_offset = 0, Y_offset = 0;
-        G_offset = K_init_P;
-        G1_offset = K_init_P1;
-        G2_offset = K_init_P2;
+        cmd->lift_offset = 0, cmd->roll_offset = 0, cmd->pitch_offset = 0, cmd->yaw_offset = 0;
+        cmd->P = K_init_P;
+        cmd->P1 = K_init_P1;
+        cmd->P2 = K_init_P2;
         if (!check_neutral(cmd))
              return mode;
     }
     if(cmd->event == Safe_Event) 
         return Panic_Mode;
-
-    // process keyboard inputs
-    switch (cmd->key){
-    case LIFT_UP_KEY:
-        L_offset = (L_offset + offset > keyboard_lim) ? keyboard_lim : L_offset + offset;
-        break;
-    case LIFT_DOWN_KEY:
-        L_offset = (L_offset - offset > -keyboard_lim) ? L_offset - offset : -keyboard_lim;
-        break;
-    case ROLL_UP_KEY:
-        R_offset = (R_offset + offset > keyboard_lim) ? keyboard_lim : R_offset + offset;
-        break;
-    case ROLL_DOWN_KEY:
-        R_offset = (R_offset - offset > -keyboard_lim) ? R_offset - offset : -keyboard_lim;
-        break;
-    case PITCH_UP_KEY:
-        P_offset = (P_offset + offset > keyboard_lim) ? keyboard_lim : P_offset + offset;
-        break;
-    case PITCH_DOWN_KEY:
-        P_offset = (P_offset - offset > -keyboard_lim) ? P_offset - offset : -keyboard_lim;
-        break;
-    case YAW_UP_KEY:
-        Y_offset = (Y_offset + offset > keyboard_lim) ? keyboard_lim : Y_offset + offset;
-        break;
-    case YAW_DOWN_KEY:
-        Y_offset = (Y_offset - offset > -keyboard_lim) ? Y_offset - offset : -keyboard_lim;
-        break;
-    case P_UP_KEY: 
-        G_offset += k_offset; 
-        break;
-    case P_DOWN_KEY:
-        G_offset = (G_offset - k_offset < 0) ? 0 : G_offset - k_offset;
-        break;
-    case P1_UP_KEY: 
-        G1_offset += k_offset;  
-        break;        
-    case P1_DOWN_KEY:
-        G1_offset = (G1_offset - k_offset < 0) ? 0 : G1_offset - k_offset;
-        break;
-    case P2_UP_KEY: 
-        G2_offset += k_offset; 
-        break;        
-    case P2_DOWN_KEY:
-        G2_offset = (G2_offset - k_offset < 0) ? 0 : G2_offset - k_offset;
-        break;
-    default:
-        break;
-    }
-    cmd->key = 0xFF;  
-
-    //Same as Manual Mode
-    cmd->lift_offset = L_offset;
-    cmd->roll_offset = R_offset;
-    cmd->pitch_offset = P_offset;
-    cmd->yaw_offset = Y_offset;
-    cmd->P = G_offset;
-    cmd->P1 = G1_offset;
-    cmd->P2 = G2_offset;
 
     if (get_time_us() >= deadline){
         deadline = get_time_us() + period_us;
@@ -418,22 +267,22 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         // cap the readings to the allowed values set by max_r
         mes->sr = ((mes->sr < -(5000)) ? -(5000) : ((mes->sr > (5000)) ? (5000) : mes->sr));
         // error wrt setpoint from the joystick 
-        N += (G_offset * (N - (int32_t) mes->sr));
+        N += (cmd->P * (N - (int32_t) mes->sr));
 
-        error_m = (G1_offset * (M + (int32_t) mes->theta));
+        error_m = (cmd->P1 * (M + (int32_t) mes->theta));
 
         if ((error_m < 1000) && (error_m > -1000))
             error_m = 0;
 
-        error_l = (G1_offset * (L - (int32_t) mes->phi));
+        error_l = (cmd->P1 * (L - (int32_t) mes->phi));
 
         if ((error_l < 3000) && (error_l > -3000))
             error_l = 0;
 
         //  ¯\_(ツ)_/¯
     
-        M += (G2_offset * (error_m - (int32_t) mes->sq));
-        L += 2*(G2_offset * (error_l - (int32_t) mes->sp));
+        M += (cmd->P2 * (error_m - (int32_t) mes->sq));
+        L += 2*(cmd->P2 * (error_l - (int32_t) mes->sp));
 
         m0 = sqrt_32(d1*(Z) + (2*M)/d - N);
         m1 = sqrt_32(d1*(Z) - (2*L)/d + N);
@@ -441,10 +290,10 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
         m3 = sqrt_32(d1*(Z) + (2*L)/d + N);
         
         if (cmd->lift < 32766)
-            set_motors(m0 - R_offset - Y_offset + L_offset, 
-                       m1 + P_offset + Y_offset + L_offset,
-                       m2 + R_offset - Y_offset + L_offset,
-                       m3 - P_offset + Y_offset + L_offset, FULL_MAX_RPM, MIN_RPM);
+            set_motors(m0 - cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset , 
+                       m1 + cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset ,
+                       m2 + cmd->roll_offset - cmd->yaw_offset + cmd->lift_offset ,
+                       m3 - cmd->pitch_offset + cmd->yaw_offset + cmd->lift_offset , FULL_MAX_RPM, MIN_RPM);
         else
             reset_motors();
         update_motors();
@@ -454,11 +303,33 @@ Modes fullModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
 
 
 Modes rawModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
-    return Raw_Mode;
+    mes->isRaw = !mes->isRaw;
+    return Calibration_Mode;
 }
 
 
+// we can try to schedule control calculation and apply moving average filter until the deadline
 Modes heightModeHandler(Modes mode, DroneMessage* cmd, Measurement* mes){
+    static Modes prev_mode;
+    static uint32_t reference, throttle;
+    static uint8_t P = 2;
+
+    if (mode != Height_Mode){
+        cmd->lift_offset = 0;
+        prev_mode = mode;
+        reference = mes->pressure;
+        throttle = cmd->lift;
+    }
+    if(cmd->event == Safe_Event) 
+        return Panic_Mode;
+
+    cmd->lift_offset = P * (mes->pressure - reference);
+
+    if (cmd->lift != throttle) {
+        cmd->lift_offset = 0;
+        return prev_mode;
+    }
+    (*StateMachine[prev_mode][Null])(prev_mode, cmd, mes);
     return Height_Mode;
 }
 

@@ -9,7 +9,7 @@ void print_GUI(Modes mode, DroneMessage* command, Measurement* measure){
 	printf("%d ", command->pitch_offset);
 	printf("%d ", command->lift_offset);
 	printf("%d %d %d %d ", measure->mot0, measure->mot1, measure->mot2, measure->mot3);
-	printf("%d %d %d ", measure->phi, measure->theta, measure->sr);
+	printf("%d %d %d ", measure->phi, measure->theta, measure->psi);
 	printf("%d %d %d ", command->P, command->P1, command->P2);
 	printf("%d %ld %ld \n", measure->battery, measure->temperature, measure->pressure);
 }
@@ -53,6 +53,8 @@ void log_measurement(uint32_t time, uint16_t* motor, int16_t* euler, int16_t* im
 
 
 void process_key(uint8_t c, DroneMessage* msg){
+	static const uint8_t offset = 5, k_offset = 1, keyboard_lim = 50;
+
 	if ((c == ' ') || (c == 27))
 		msg->event = Panic_Event;
 	else if ((c >= '0') && (c <= '8'))
@@ -60,6 +62,53 @@ void process_key(uint8_t c, DroneMessage* msg){
 	else {
 		msg->event = Null;
 	}
+	switch (msg->key){
+    case LIFT_UP_KEY:
+        msg->lift_offset = (msg->lift_offset + offset > keyboard_lim) ? keyboard_lim : msg->lift_offset + offset;
+        break;
+    case LIFT_DOWN_KEY:
+        msg->lift_offset = (msg->lift_offset - offset > -keyboard_lim) ? msg->lift_offset - offset : -keyboard_lim;
+        break;
+    case ROLL_UP_KEY:
+        msg->roll_offset = (msg->roll_offset + offset > keyboard_lim) ? keyboard_lim : msg->roll_offset + offset;
+        break;
+    case ROLL_DOWN_KEY:
+        msg->roll_offset = (msg->roll_offset - offset > -keyboard_lim) ? msg->roll_offset - offset : -keyboard_lim;
+        break;
+    case PITCH_UP_KEY:
+        msg->pitch_offset = (msg->pitch_offset + offset > keyboard_lim) ? keyboard_lim : msg->pitch_offset + offset;
+        break;
+    case PITCH_DOWN_KEY:
+        msg->pitch_offset = (msg->pitch_offset - offset > -keyboard_lim) ? msg->pitch_offset - offset : -keyboard_lim;
+        break;
+    case YAW_UP_KEY:
+        msg->yaw_offset = (msg->yaw_offset + offset > keyboard_lim) ? keyboard_lim : msg->yaw_offset + offset;
+        break;
+    case YAW_DOWN_KEY:
+        msg->yaw_offset = (msg->yaw_offset - offset > -keyboard_lim) ? msg->yaw_offset - offset : -keyboard_lim;
+        break;
+    case P_UP_KEY: 
+        msg->P += k_offset; 
+        break;
+    case P_DOWN_KEY:
+        msg->P = (msg->P - k_offset < 0) ? 0 : msg->P - k_offset;
+        break;
+    case P1_UP_KEY: 
+        msg->P1 += k_offset;  
+        break;        
+    case P1_DOWN_KEY:
+        msg->P1 = (msg->P1 - k_offset < 0) ? 0 : msg->P1 - k_offset;
+        break;
+    case P2_UP_KEY: 
+        msg->P2 += k_offset; 
+        break;        
+    case P2_DOWN_KEY:
+        msg->P2 = (msg->P2 - k_offset < 0) ? 0 : msg->P2 - k_offset;
+        break;
+    default:
+        break;
+    }
+    msg->key = 0xFF;  
 }
 
 

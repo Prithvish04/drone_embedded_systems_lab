@@ -92,6 +92,7 @@ int main(void) {
 	m_log.sax_offset = 0;
 	m_log.say_offset = 0;
 	m_log.saz_offset = 0;
+	m_log.isRaw = false;
 
 	while (!demo_done) {
 		//static uint32_t profile;
@@ -103,6 +104,14 @@ int main(void) {
 			if (isMsg) {
 				msg = command_buf + write_idx;
 				write_idx = (write_idx + 1) % 2;
+				msg->lift_offset = command_buf[write_idx].lift_offset;
+				msg->roll_offset = command_buf[write_idx].roll_offset;
+				msg->pitch_offset = command_buf[write_idx].pitch_offset;
+				msg->yaw_offset = command_buf[write_idx].yaw_offset;
+				msg->P = command_buf[write_idx].P;
+				msg->P1 = command_buf[write_idx].P1;
+				msg->P2 = command_buf[write_idx].P2;
+				
 				//printf("debug time %ld \n", get_time_us() - profile);
 				//profile = get_time_us();
 			}

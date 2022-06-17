@@ -104,12 +104,8 @@ def plot_cuboids(positions, angles=[0,0,0], sizes=None, colors=None, **kwargs):
     return Poly3DCollection(np.concatenate(g), facecolors=np.repeat(colors,6), **kwargs)
 
 
-def convert_euler(angles, range=[-32768, 32767]):
-    radians = []
-    for angle in angles:
-        angle = (((float(angle)-range[0])*2*np.pi) / (range[1]-range[0])) + (-np.pi)
-        radians.append(angle)
-    return radians
+def convert_euler(angle, range=[-32768, 32767]):
+    return (((float(angle)-range[0])*2*np.pi) / (range[1]-range[0])) + (-np.pi)
 
 
 
@@ -156,36 +152,34 @@ class GuiApp:
         self.add_message(0.27, 0.55, 0.07, 0.05, 'mot3')
 
 
-        self.add_field(0.05, 0.7, 0.1, 0.05, 'ctrl yaw')
-        self.add_message(0.12, 0.7, 0.07, 0.05, 'js_yaw')
+        self.add_field(0.03, 0.7, 0.1, 0.05, 'yaw (q/w)')
+        self.add_message(0.12, 0.7, 0.04, 0.05, 'js_yaw')
 
-        self.add_field(0.05, 0.8, 0.1, 0.05, 'ctrl roll')
-        self.add_message(0.12, 0.8, 0.07, 0.05, 'js_roll')
+        self.add_field(0.03, 0.8, 0.1, 0.05, 'roll (left/right)')
+        self.add_message(0.12, 0.8, 0.04, 0.05, 'js_roll')
 
-        self.add_field(0.2, 0.7, 0.1, 0.05, 'ctrl pitch')
-        self.add_message(0.27, 0.7, 0.07, 0.05, 'js_pitch')
+        self.add_field(0.2, 0.7, 0.1, 0.05, 'pitch (up/down)')
+        self.add_message(0.27, 0.7, 0.04, 0.05, 'js_pitch')
 
-        self.add_field(0.2, 0.8, 0.1, 0.05, 'ctrl lift')
-        self.add_message(0.27, 0.8, 0.07, 0.05, 'js_lift')
+        self.add_field(0.2, 0.8, 0.1, 0.05, 'lift (a/z)')
+        self.add_message(0.27, 0.8, 0.04, 0.05, 'js_lift')
 
-
-        self.add_field(0.48, 0.6, 0.1, 0.05, 'yaw')
+        self.add_field(0.48, 0.6, 0.1, 0.05, 'psi')
         self.add_message(0.53, 0.6, 0.07, 0.05, 'yaw')
 
-        self.add_field(0.48, 0.7, 0.1, 0.05, 'roll')
+        self.add_field(0.48, 0.7, 0.1, 0.05, 'phi')
         self.add_message(0.53, 0.7, 0.07, 0.05, 'roll')
 
-        self.add_field(0.48, 0.8, 0.1, 0.05, 'pitch')
+        self.add_field(0.48, 0.8, 0.1, 0.05, 'theta')
         self.add_message(0.53, 0.8, 0.07, 0.05, 'pitch')
 
-
-        self.add_field(0.72, 0.6, 0.1, 0.05, 'P')
+        self.add_field(0.72, 0.6, 0.1, 0.05, 'P (u/j)')
         self.add_message(0.8, 0.6, 0.07, 0.05, 'P')
 
-        self.add_field(0.72, 0.7, 0.1, 0.05, 'P1')
+        self.add_field(0.72, 0.7, 0.1, 0.05, 'P1 (i/k)')
         self.add_message(0.8, 0.7, 0.07, 0.05, 'P1')
 
-        self.add_field(0.72, 0.8, 0.1, 0.05, 'P2')
+        self.add_field(0.72, 0.8, 0.1, 0.05, 'P2 (o/l)')
         self.add_message(0.8, 0.8, 0.07, 0.05, 'P2')
 
         self.add_field(0.72, 0.9, 0.1, 0.05, 'mode')
@@ -302,41 +296,40 @@ class GuiApp:
                             print(':(')
 
                     if datas['gui'] != []:
-                        roll, pitch, yaw = convert_euler(datas['gui'][10:13])
-                        self.plot_drone(roll, pitch, yaw)
+                        roll = convert_euler(datas['gui'][10])
+                        pitch = convert_euler(2*float(datas['gui'][11]))
+                        yaw = convert_euler(datas['gui'][12])
+                        self.plot_drone(-roll, -pitch, yaw)
 
-                        self.messages['mode'].config(text=str(datas['gui'][1]))
-                        self.messages['js_yaw'].config(text=str(datas['gui'][2]))
-                        self.messages['js_roll'].config(text=str(datas['gui'][3]))
-                        self.messages['js_pitch'].config(text=str(datas['gui'][4]))
-                        self.messages['js_lift'].config(text=str(datas['gui'][5]))
+                        self.messages['mode'].config(text=str(datas['gui'][1]), justify='center')
+                        self.messages['js_yaw'].config(text=str(datas['gui'][2]), justify='center')
+                        self.messages['js_roll'].config(text=str(datas['gui'][3]), justify='center')
+                        self.messages['js_pitch'].config(text=str(datas['gui'][4]), justify='center')
+                        self.messages['js_lift'].config(text=str(datas['gui'][5]), justify='center')
 
-                        self.messages['mot0'].config(text=str(datas['gui'][6]))
-                        self.messages['mot1'].config(text=str(datas['gui'][7]))
-                        self.messages['mot2'].config(text=str(datas['gui'][8]))
-                        self.messages['mot3'].config(text=str(datas['gui'][9]))
+                        self.messages['mot0'].config(text=str(datas['gui'][6]), justify='center')
+                        self.messages['mot1'].config(text=str(datas['gui'][7]), justify='center')
+                        self.messages['mot2'].config(text=str(datas['gui'][8]), justify='center')
+                        self.messages['mot3'].config(text=str(datas['gui'][9]), justify='center')
 
-                        # self.messages['roll'].config(text=str(np.rad2deg(roll)))
-                        # self.messages['pitch'].config(text=str(np.rad2deg(pitch)))
-                        # self.messages['yaw'].config(text=str(np.rad2deg(yaw)))
-                        self.messages['roll'].config(text=str(datas['gui'][10]))
-                        self.messages['pitch'].config(text=str(datas['gui'][11]))
-                        self.messages['yaw'].config(text=str(datas['gui'][12]))
+                        self.messages['roll'].config(text=str(np.rad2deg(roll)), justify='center')
+                        self.messages['pitch'].config(text=str(np.rad2deg(pitch)), justify='center')
+                        self.messages['yaw'].config(text=str(np.rad2deg(yaw)), justify='center')
 
-                        self.messages['P'].config(text=str(datas['gui'][13]))
-                        self.messages['P1'].config(text=str(datas['gui'][14]))
-                        self.messages['P2'].config(text=str(datas['gui'][15]))
+                        self.messages['P'].config(text=str(datas['gui'][13]), justify='center')
+                        self.messages['P1'].config(text=str(datas['gui'][14]), justify='center')
+                        self.messages['P2'].config(text=str(datas['gui'][15]), justify='center')
 
-                        self.messages['battery'].config(text=str(datas['gui'][16]))
-                        self.messages['temperature'].config(text=str(datas['gui'][17]))
-                        self.messages['pressure'].config(text=str(datas['gui'][18]))
+                        self.messages['battery'].config(text=str(datas['gui'][16]), justify='center')
+                        self.messages['temperature'].config(text=str(datas['gui'][17]), justify='center')
+                        self.messages['pressure'].config(text=str(datas['gui'][18]), justify='center')
 
                     for data in datas['debug']:
                         print(' '.join(data[1:-1]))
 
-            except Exception as e: 
-               pass
-        self.mainwindow.after(0, self.update_clock) 
+            except Exception as e: print(e)
+               
+        self.mainwindow.after(1, self.update_clock) 
 
 
 if __name__ == '__main__':

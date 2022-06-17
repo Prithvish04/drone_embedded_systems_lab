@@ -70,6 +70,7 @@ typedef struct Measurement { uint32_t timestamp;
 							 int16_t say;
 							 int16_t saz;
 							 
+							 bool isRaw;
 							 // calibration mode params
 							 int16_t phi_offset;
 							 int16_t theta_offset;
