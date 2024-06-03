@@ -1,4 +1,4 @@
-# Welcome to the Embedded Systems Laboratory software pack!
+# Instructions to use the code
 
 For starters cd to the in4073 folder, and read the in4073.c file. This is the quad side.
 In the pc_terminal folder exists a sample pc terminal. Study this as well.
@@ -46,3 +46,4 @@ directory.
 $ cd in4073
 $ make upload-run
 ```
+
